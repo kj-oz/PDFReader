@@ -1,0 +1,564 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		312571B114E01E5E00A71C5B /* KLTVTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */; };
+		312571B214E01E5E00A71C5B /* KLTVTreeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571B014E01E5E00A71C5B /* KLTVTreeViewCell.m */; };
+		312571B614E0278400A71C5B /* KLTVExpandedNode.png in Resources */ = {isa = PBXBuildFile; fileRef = 312571B414E0278400A71C5B /* KLTVExpandedNode.png */; };
+		312571B714E0278400A71C5B /* KLTVClosedNode.png in Resources */ = {isa = PBXBuildFile; fileRef = 312571B514E0278400A71C5B /* KLTVClosedNode.png */; };
+		312571BE14E2CB1900A71C5B /* KLTVTreeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571BD14E2CB1900A71C5B /* KLTVTreeManager.m */; };
+		3129181214D990A20054CE13 /* KLPVPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3129181114D990A20054CE13 /* KLPVPageView.m */; };
+		317FD43F155B277000AE52B9 /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD436155B277000AE52B9 /* closed.png */; };
+		317FD441155B277000AE52B9 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD438155B277000AE52B9 /* delete.png */; };
+		317FD443155B277000AE52B9 /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD43A155B277000AE52B9 /* detail.png */; };
+		317FD445155B277000AE52B9 /* expanded.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD43C155B277000AE52B9 /* expanded.png */; };
+		317FD447155B277000AE52B9 /* taglist.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD43E155B277000AE52B9 /* taglist.png */; };
+		317FD44B155B317500AE52B9 /* move.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD449155B317500AE52B9 /* move.png */; };
+		317FD44F155D6B9700AE52B9 /* KLPVDeleteTag.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD44D155D6B9700AE52B9 /* KLPVDeleteTag.png */; };
+		317FD450155D6B9700AE52B9 /* KLPVEditTag.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD44E155D6B9700AE52B9 /* KLPVEditTag.png */; };
+		3184489414BF2CBD00A7E5E9 /* PRTagDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3184489214BF2CBD00A7E5E9 /* PRTagDetailController.m */; };
+		3184489F14C2733C00A7E5E9 /* TagDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3184489E14C2733C00A7E5E9 /* TagDetail.xib */; };
+		318448A214C4657500A7E5E9 /* PRTextInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 318448A114C4657400A7E5E9 /* PRTextInputCell.m */; };
+		318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 318F42EE1552814400A253BA /* KLDBGUtil.m */; };
+		319FC6441437452C00B2B2FC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6431437452C00B2B2FC /* UIKit.framework */; };
+		319FC6461437452C00B2B2FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6451437452C00B2B2FC /* Foundation.framework */; };
+		319FC6481437452C00B2B2FC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6471437452C00B2B2FC /* CoreGraphics.framework */; };
+		319FC64E1437452C00B2B2FC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 319FC64C1437452C00B2B2FC /* InfoPlist.strings */; };
+		319FC6501437452C00B2B2FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC64F1437452C00B2B2FC /* main.m */; };
+		319FC6571437452C00B2B2FC /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 319FC6551437452C00B2B2FC /* MainWindow.xib */; };
+		319FC6681437482D00B2B2FC /* PRDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC6661437482D00B2B2FC /* PRDocumentController.m */; };
+		319FC6691437482D00B2B2FC /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = 319FC6671437482D00B2B2FC /* Document.xib */; };
+		319FC66C1437488A00B2B2FC /* PRAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC66B1437488A00B2B2FC /* PRAppController.m */; };
+		319FC6711437581800B2B2FC /* PRDocumentListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC66F1437581800B2B2FC /* PRDocumentListController.m */; };
+		319FC6721437581800B2B2FC /* DocumentList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 319FC6701437581800B2B2FC /* DocumentList.xib */; };
+		319FC675143758DE00B2B2FC /* PRDocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC674143758DE00B2B2FC /* PRDocumentManager.m */; };
+		319FC67814375ED500B2B2FC /* PRDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC67714375ED500B2B2FC /* PRDocument.m */; };
+		319FC67F1440131100B2B2FC /* KLPVTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC67E1440131100B2B2FC /* KLPVTiledView.m */; };
+		319FC6851441007E00B2B2FC /* PRPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC6841441007E00B2B2FC /* PRPageController.m */; };
+		319FC6871445ED7300B2B2FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6861445ED7200B2B2FC /* QuartzCore.framework */; };
+		31CFDDA214979E28004A71F5 /* PRTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CFDDA114979E28004A71F5 /* PRTag.m */; };
+		31CFDDA614A37F7C004A71F5 /* KLPVTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CFDDA514A37F7C004A71F5 /* KLPVTagView.m */; };
+		31D49C6814F9FF85007A721E /* PRTagListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D49C6614F9FF85007A721E /* PRTagListController.m */; };
+		31D49C6914F9FF85007A721E /* TagList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D49C6714F9FF85007A721E /* TagList.xib */; };
+		31E508DB150330BF00CA7B42 /* KLNetURLDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E508DA150330BF00CA7B42 /* KLNetURLDownloader.m */; };
+		31E508DE1503408D00CA7B42 /* PRConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E508DD1503408D00CA7B42 /* PRConnector.m */; };
+		31E508E2150E474C00CA7B42 /* PRDocumentDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E508E0150E474C00CA7B42 /* PRDocumentDetailController.m */; };
+		31E508E3150E474C00CA7B42 /* DocumentDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31E508E1150E474C00CA7B42 /* DocumentDetail.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		312571AD14E01E5E00A71C5B /* KLTVTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLTVTreeNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLTVTreeNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		312571AF14E01E5E00A71C5B /* KLTVTreeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLTVTreeViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		312571B014E01E5E00A71C5B /* KLTVTreeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLTVTreeViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		312571B414E0278400A71C5B /* KLTVExpandedNode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KLTVExpandedNode.png; sourceTree = "<group>"; };
+		312571B514E0278400A71C5B /* KLTVClosedNode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KLTVClosedNode.png; sourceTree = "<group>"; };
+		312571BC14E2CB1900A71C5B /* KLTVTreeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLTVTreeManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		312571BD14E2CB1900A71C5B /* KLTVTreeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLTVTreeManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3129180E14D98CFC0054CE13 /* KLPVPageViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageViewDataSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3129180F14D98D2A0054CE13 /* KLPVPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3129181014D990A20054CE13 /* KLPVPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3129181114D990A20054CE13 /* KLPVPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLPVPageView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		317FD436155B277000AE52B9 /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closed.png; sourceTree = "<group>"; };
+		317FD437155B277000AE52B9 /* closed.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = closed.svg; sourceTree = "<group>"; };
+		317FD438155B277000AE52B9 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		317FD439155B277000AE52B9 /* delete.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = delete.svg; sourceTree = "<group>"; };
+		317FD43A155B277000AE52B9 /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
+		317FD43B155B277000AE52B9 /* detail.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = detail.svg; sourceTree = "<group>"; };
+		317FD43C155B277000AE52B9 /* expanded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expanded.png; sourceTree = "<group>"; };
+		317FD43D155B277000AE52B9 /* expanded.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = expanded.svg; sourceTree = "<group>"; };
+		317FD43E155B277000AE52B9 /* taglist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taglist.png; sourceTree = "<group>"; };
+		317FD449155B317500AE52B9 /* move.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = move.png; sourceTree = "<group>"; };
+		317FD44A155B317500AE52B9 /* move.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = move.svg; sourceTree = "<group>"; };
+		317FD44D155D6B9700AE52B9 /* KLPVDeleteTag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KLPVDeleteTag.png; sourceTree = "<group>"; };
+		317FD44E155D6B9700AE52B9 /* KLPVEditTag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KLPVEditTag.png; sourceTree = "<group>"; };
+		317FD451155F7CC800AE52B9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = /Users/zak/Projects/PDFReader/PDFReader/ja.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
+		317FD452155F7CC800AE52B9 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = /Users/zak/Projects/PDFReader/PDFReader/ja.lproj/MainWindow.xib; sourceTree = "<absolute>"; };
+		3184489114BF2CBD00A7E5E9 /* PRTagDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRTagDetailController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3184489214BF2CBD00A7E5E9 /* PRTagDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRTagDetailController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3184489E14C2733C00A7E5E9 /* TagDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagDetail.xib; sourceTree = "<group>"; };
+		318448A014C4657400A7E5E9 /* PRTextInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextInputCell.h; sourceTree = "<group>"; };
+		318448A114C4657400A7E5E9 /* PRTextInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextInputCell.m; sourceTree = "<group>"; };
+		318F42ED1552814400A253BA /* KLDBGUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLDBGUtil.h; sourceTree = "<group>"; };
+		318F42EE1552814400A253BA /* KLDBGUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLDBGUtil.m; sourceTree = "<group>"; };
+		319FC63F1437452C00B2B2FC /* 付箋PDF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "付箋PDF.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		319FC6431437452C00B2B2FC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		319FC6451437452C00B2B2FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		319FC6471437452C00B2B2FC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		319FC64B1437452C00B2B2FC /* PDFReader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PDFReader-Info.plist"; sourceTree = "<group>"; };
+		319FC64D1437452C00B2B2FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		319FC64F1437452C00B2B2FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC6511437452C00B2B2FC /* PDFReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PDFReader-Prefix.pch"; sourceTree = "<group>"; };
+		319FC6561437452C00B2B2FC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		319FC6651437482D00B2B2FC /* PRDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRDocumentController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		319FC6661437482D00B2B2FC /* PRDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRDocumentController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC6671437482D00B2B2FC /* Document.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Document.xib; sourceTree = "<group>"; };
+		319FC66A1437488A00B2B2FC /* PRAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRAppController.h; sourceTree = "<group>"; };
+		319FC66B1437488A00B2B2FC /* PRAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRAppController.m; sourceTree = "<group>"; };
+		319FC66E1437581800B2B2FC /* PRDocumentListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRDocumentListController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		319FC66F1437581800B2B2FC /* PRDocumentListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRDocumentListController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC6701437581800B2B2FC /* DocumentList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentList.xib; sourceTree = "<group>"; };
+		319FC673143758DE00B2B2FC /* PRDocumentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRDocumentManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		319FC674143758DE00B2B2FC /* PRDocumentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRDocumentManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC67614375ED500B2B2FC /* PRDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRDocument.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		319FC67714375ED500B2B2FC /* PRDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC67D1440131100B2B2FC /* KLPVTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVTiledView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		319FC67E1440131100B2B2FC /* KLPVTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLPVTiledView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC6831441007E00B2B2FC /* PRPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRPageController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		319FC6841441007E00B2B2FC /* PRPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRPageController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		319FC6861445ED7200B2B2FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		31CFDDA014979E28004A71F5 /* PRTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRTag.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		31CFDDA114979E28004A71F5 /* PRTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRTag.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		31CFDDA414A37F7C004A71F5 /* KLPVTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVTagView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		31CFDDA514A37F7C004A71F5 /* KLPVTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLPVTagView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		31D49C6514F9FF85007A721E /* PRTagListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRTagListController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		31D49C6614F9FF85007A721E /* PRTagListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRTagListController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		31D49C6714F9FF85007A721E /* TagList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagList.xib; sourceTree = "<group>"; };
+		31E508D9150330BF00CA7B42 /* KLNetURLDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLNetURLDownloader.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		31E508DA150330BF00CA7B42 /* KLNetURLDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLNetURLDownloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		31E508DC1503408D00CA7B42 /* PRConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRConnector.h; sourceTree = "<group>"; };
+		31E508DD1503408D00CA7B42 /* PRConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRConnector.m; sourceTree = "<group>"; };
+		31E508DF150E474C00CA7B42 /* PRDocumentDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRDocumentDetailController.h; sourceTree = "<group>"; };
+		31E508E0150E474C00CA7B42 /* PRDocumentDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRDocumentDetailController.m; sourceTree = "<group>"; };
+		31E508E1150E474C00CA7B42 /* DocumentDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentDetail.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		319FC63C1437452C00B2B2FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				319FC6871445ED7300B2B2FC /* QuartzCore.framework in Frameworks */,
+				319FC6441437452C00B2B2FC /* UIKit.framework in Frameworks */,
+				319FC6461437452C00B2B2FC /* Foundation.framework in Frameworks */,
+				319FC6481437452C00B2B2FC /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3125719E14E01DF400A71C5B /* TreeView */ = {
+			isa = PBXGroup;
+			children = (
+				312571AD14E01E5E00A71C5B /* KLTVTreeNode.h */,
+				312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */,
+				312571AF14E01E5E00A71C5B /* KLTVTreeViewCell.h */,
+				312571B014E01E5E00A71C5B /* KLTVTreeViewCell.m */,
+				312571BC14E2CB1900A71C5B /* KLTVTreeManager.h */,
+				312571BD14E2CB1900A71C5B /* KLTVTreeManager.m */,
+			);
+			name = TreeView;
+			sourceTree = "<group>";
+		};
+		312571B314E0271400A71C5B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				317FD44D155D6B9700AE52B9 /* KLPVDeleteTag.png */,
+				317FD44E155D6B9700AE52B9 /* KLPVEditTag.png */,
+				317FD449155B317500AE52B9 /* move.png */,
+				317FD44A155B317500AE52B9 /* move.svg */,
+				317FD436155B277000AE52B9 /* closed.png */,
+				317FD437155B277000AE52B9 /* closed.svg */,
+				317FD438155B277000AE52B9 /* delete.png */,
+				317FD439155B277000AE52B9 /* delete.svg */,
+				317FD43A155B277000AE52B9 /* detail.png */,
+				317FD43B155B277000AE52B9 /* detail.svg */,
+				317FD43C155B277000AE52B9 /* expanded.png */,
+				317FD43D155B277000AE52B9 /* expanded.svg */,
+				317FD43E155B277000AE52B9 /* taglist.png */,
+				312571B414E0278400A71C5B /* KLTVExpandedNode.png */,
+				312571B514E0278400A71C5B /* KLTVClosedNode.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		3128F9CD1551834600DC31FB /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				318F42ED1552814400A253BA /* KLDBGUtil.h */,
+				318F42EE1552814400A253BA /* KLDBGUtil.m */,
+			);
+			name = Debug;
+			sourceTree = "<group>";
+		};
+		3129180C14D98CC40054CE13 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				3128F9CD1551834600DC31FB /* Debug */,
+				31D6EEBA15032B9200200440 /* Net */,
+				3125719E14E01DF400A71C5B /* TreeView */,
+				31E0EDCC14DCEECA00F185E2 /* PageView */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		319FC6341437452C00B2B2FC = {
+			isa = PBXGroup;
+			children = (
+				319FC6491437452C00B2B2FC /* PDFReader */,
+				319FC6421437452C00B2B2FC /* Frameworks */,
+				319FC6401437452C00B2B2FC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		319FC6401437452C00B2B2FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				319FC63F1437452C00B2B2FC /* 付箋PDF.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		319FC6421437452C00B2B2FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				319FC6861445ED7200B2B2FC /* QuartzCore.framework */,
+				319FC6431437452C00B2B2FC /* UIKit.framework */,
+				319FC6451437452C00B2B2FC /* Foundation.framework */,
+				319FC6471437452C00B2B2FC /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		319FC6491437452C00B2B2FC /* PDFReader */ = {
+			isa = PBXGroup;
+			children = (
+				319FC66D1437526200B2B2FC /* Resource */,
+				319FC6611437465E00B2B2FC /* Source */,
+				319FC64A1437452C00B2B2FC /* Supporting Files */,
+			);
+			path = PDFReader;
+			sourceTree = "<group>";
+		};
+		319FC64A1437452C00B2B2FC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				319FC64B1437452C00B2B2FC /* PDFReader-Info.plist */,
+				319FC64C1437452C00B2B2FC /* InfoPlist.strings */,
+				319FC64F1437452C00B2B2FC /* main.m */,
+				319FC6511437452C00B2B2FC /* PDFReader-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		319FC6611437465E00B2B2FC /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				3129180C14D98CC40054CE13 /* Library */,
+				319FC6621437468400B2B2FC /* Model */,
+				319FC6631437469200B2B2FC /* Controller */,
+				319FC664143746A800B2B2FC /* View */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		319FC6621437468400B2B2FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				319FC673143758DE00B2B2FC /* PRDocumentManager.h */,
+				319FC674143758DE00B2B2FC /* PRDocumentManager.m */,
+				319FC67614375ED500B2B2FC /* PRDocument.h */,
+				319FC67714375ED500B2B2FC /* PRDocument.m */,
+				31CFDDA014979E28004A71F5 /* PRTag.h */,
+				31CFDDA114979E28004A71F5 /* PRTag.m */,
+				31E508DC1503408D00CA7B42 /* PRConnector.h */,
+				31E508DD1503408D00CA7B42 /* PRConnector.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		319FC6631437469200B2B2FC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				319FC66A1437488A00B2B2FC /* PRAppController.h */,
+				319FC66B1437488A00B2B2FC /* PRAppController.m */,
+				319FC66E1437581800B2B2FC /* PRDocumentListController.h */,
+				319FC66F1437581800B2B2FC /* PRDocumentListController.m */,
+				319FC6651437482D00B2B2FC /* PRDocumentController.h */,
+				319FC6661437482D00B2B2FC /* PRDocumentController.m */,
+				319FC6831441007E00B2B2FC /* PRPageController.h */,
+				319FC6841441007E00B2B2FC /* PRPageController.m */,
+				3184489114BF2CBD00A7E5E9 /* PRTagDetailController.h */,
+				3184489214BF2CBD00A7E5E9 /* PRTagDetailController.m */,
+				31D49C6514F9FF85007A721E /* PRTagListController.h */,
+				31D49C6614F9FF85007A721E /* PRTagListController.m */,
+				31E508DF150E474C00CA7B42 /* PRDocumentDetailController.h */,
+				31E508E0150E474C00CA7B42 /* PRDocumentDetailController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		319FC664143746A800B2B2FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				318448A014C4657400A7E5E9 /* PRTextInputCell.h */,
+				318448A114C4657400A7E5E9 /* PRTextInputCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		319FC66D1437526200B2B2FC /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				312571B314E0271400A71C5B /* Images */,
+				319FC6551437452C00B2B2FC /* MainWindow.xib */,
+				319FC6671437482D00B2B2FC /* Document.xib */,
+				319FC6701437581800B2B2FC /* DocumentList.xib */,
+				3184489E14C2733C00A7E5E9 /* TagDetail.xib */,
+				31D49C6714F9FF85007A721E /* TagList.xib */,
+				31E508E1150E474C00CA7B42 /* DocumentDetail.xib */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		31D6EEBA15032B9200200440 /* Net */ = {
+			isa = PBXGroup;
+			children = (
+				31E508D9150330BF00CA7B42 /* KLNetURLDownloader.h */,
+				31E508DA150330BF00CA7B42 /* KLNetURLDownloader.m */,
+			);
+			name = Net;
+			sourceTree = "<group>";
+		};
+		31E0EDCC14DCEECA00F185E2 /* PageView */ = {
+			isa = PBXGroup;
+			children = (
+				3129181014D990A20054CE13 /* KLPVPageView.h */,
+				3129181114D990A20054CE13 /* KLPVPageView.m */,
+				3129180E14D98CFC0054CE13 /* KLPVPageViewDataSource.h */,
+				3129180F14D98D2A0054CE13 /* KLPVPageViewDelegate.h */,
+				319FC67D1440131100B2B2FC /* KLPVTiledView.h */,
+				319FC67E1440131100B2B2FC /* KLPVTiledView.m */,
+				31CFDDA414A37F7C004A71F5 /* KLPVTagView.h */,
+				31CFDDA514A37F7C004A71F5 /* KLPVTagView.m */,
+			);
+			name = PageView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		319FC63E1437452C00B2B2FC /* PDFReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 319FC65A1437452C00B2B2FC /* Build configuration list for PBXNativeTarget "PDFReader" */;
+			buildPhases = (
+				319FC63B1437452C00B2B2FC /* Sources */,
+				319FC63C1437452C00B2B2FC /* Frameworks */,
+				319FC63D1437452C00B2B2FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PDFReader;
+			productName = PDFReader;
+			productReference = 319FC63F1437452C00B2B2FC /* 付箋PDF.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		319FC6361437452C00B2B2FC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = KO;
+			};
+			buildConfigurationList = 319FC6391437452C00B2B2FC /* Build configuration list for PBXProject "PDFReader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				ja,
+			);
+			mainGroup = 319FC6341437452C00B2B2FC;
+			productRefGroup = 319FC6401437452C00B2B2FC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				319FC63E1437452C00B2B2FC /* PDFReader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		319FC63D1437452C00B2B2FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				319FC64E1437452C00B2B2FC /* InfoPlist.strings in Resources */,
+				319FC6571437452C00B2B2FC /* MainWindow.xib in Resources */,
+				319FC6691437482D00B2B2FC /* Document.xib in Resources */,
+				319FC6721437581800B2B2FC /* DocumentList.xib in Resources */,
+				3184489F14C2733C00A7E5E9 /* TagDetail.xib in Resources */,
+				312571B614E0278400A71C5B /* KLTVExpandedNode.png in Resources */,
+				312571B714E0278400A71C5B /* KLTVClosedNode.png in Resources */,
+				31D49C6914F9FF85007A721E /* TagList.xib in Resources */,
+				31E508E3150E474C00CA7B42 /* DocumentDetail.xib in Resources */,
+				317FD43F155B277000AE52B9 /* closed.png in Resources */,
+				317FD441155B277000AE52B9 /* delete.png in Resources */,
+				317FD443155B277000AE52B9 /* detail.png in Resources */,
+				317FD445155B277000AE52B9 /* expanded.png in Resources */,
+				317FD447155B277000AE52B9 /* taglist.png in Resources */,
+				317FD44B155B317500AE52B9 /* move.png in Resources */,
+				317FD44F155D6B9700AE52B9 /* KLPVDeleteTag.png in Resources */,
+				317FD450155D6B9700AE52B9 /* KLPVEditTag.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		319FC63B1437452C00B2B2FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				319FC6501437452C00B2B2FC /* main.m in Sources */,
+				319FC6681437482D00B2B2FC /* PRDocumentController.m in Sources */,
+				319FC66C1437488A00B2B2FC /* PRAppController.m in Sources */,
+				319FC6711437581800B2B2FC /* PRDocumentListController.m in Sources */,
+				319FC675143758DE00B2B2FC /* PRDocumentManager.m in Sources */,
+				319FC67814375ED500B2B2FC /* PRDocument.m in Sources */,
+				319FC67F1440131100B2B2FC /* KLPVTiledView.m in Sources */,
+				319FC6851441007E00B2B2FC /* PRPageController.m in Sources */,
+				31CFDDA214979E28004A71F5 /* PRTag.m in Sources */,
+				31CFDDA614A37F7C004A71F5 /* KLPVTagView.m in Sources */,
+				3184489414BF2CBD00A7E5E9 /* PRTagDetailController.m in Sources */,
+				318448A214C4657500A7E5E9 /* PRTextInputCell.m in Sources */,
+				3129181214D990A20054CE13 /* KLPVPageView.m in Sources */,
+				312571B114E01E5E00A71C5B /* KLTVTreeNode.m in Sources */,
+				312571B214E01E5E00A71C5B /* KLTVTreeViewCell.m in Sources */,
+				312571BE14E2CB1900A71C5B /* KLTVTreeManager.m in Sources */,
+				31D49C6814F9FF85007A721E /* PRTagListController.m in Sources */,
+				31E508DB150330BF00CA7B42 /* KLNetURLDownloader.m in Sources */,
+				31E508DE1503408D00CA7B42 /* PRConnector.m in Sources */,
+				31E508E2150E474C00CA7B42 /* PRDocumentDetailController.m in Sources */,
+				318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		319FC64C1437452C00B2B2FC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				319FC64D1437452C00B2B2FC /* en */,
+				317FD451155F7CC800AE52B9 /* ja */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		319FC6551437452C00B2B2FC /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				319FC6561437452C00B2B2FC /* en */,
+				317FD452155F7CC800AE52B9 /* ja */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		319FC6581437452C00B2B2FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		319FC6591437452C00B2B2FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		319FC65B1437452C00B2B2FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PDFReader/PDFReader-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
+				PRODUCT_NAME = "付箋PDF";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		319FC65C1437452C00B2B2FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PDFReader/PDFReader-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
+				PRODUCT_NAME = "付箋PDF";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		319FC6391437452C00B2B2FC /* Build configuration list for PBXProject "PDFReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				319FC6581437452C00B2B2FC /* Debug */,
+				319FC6591437452C00B2B2FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		319FC65A1437452C00B2B2FC /* Build configuration list for PBXNativeTarget "PDFReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				319FC65B1437452C00B2B2FC /* Debug */,
+				319FC65C1437452C00B2B2FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 319FC6361437452C00B2B2FC /* Project object */;
+}
