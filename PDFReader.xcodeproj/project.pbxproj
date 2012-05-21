@@ -24,7 +24,9 @@
 		3184489414BF2CBD00A7E5E9 /* PRTagDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3184489214BF2CBD00A7E5E9 /* PRTagDetailController.m */; };
 		3184489F14C2733C00A7E5E9 /* TagDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3184489E14C2733C00A7E5E9 /* TagDetail.xib */; };
 		318448A214C4657500A7E5E9 /* PRTextInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 318448A114C4657400A7E5E9 /* PRTextInputCell.m */; };
+		3185B78B1562ACD400F4474A /* app.png in Resources */ = {isa = PBXBuildFile; fileRef = 3185B7881562ABBB00F4474A /* app.png */; };
 		318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 318F42EE1552814400A253BA /* KLDBGUtil.m */; };
+		31986E741563FB67007F0E6B /* appr.png in Resources */ = {isa = PBXBuildFile; fileRef = 31986E731563FB67007F0E6B /* appr.png */; };
 		319FC6441437452C00B2B2FC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6431437452C00B2B2FC /* UIKit.framework */; };
 		319FC6461437452C00B2B2FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6451437452C00B2B2FC /* Foundation.framework */; };
 		319FC6481437452C00B2B2FC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6471437452C00B2B2FC /* CoreGraphics.framework */; };
@@ -84,8 +86,10 @@
 		3184489E14C2733C00A7E5E9 /* TagDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagDetail.xib; sourceTree = "<group>"; };
 		318448A014C4657400A7E5E9 /* PRTextInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextInputCell.h; sourceTree = "<group>"; };
 		318448A114C4657400A7E5E9 /* PRTextInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextInputCell.m; sourceTree = "<group>"; };
+		3185B7881562ABBB00F4474A /* app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app.png; sourceTree = "<group>"; };
 		318F42ED1552814400A253BA /* KLDBGUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLDBGUtil.h; sourceTree = "<group>"; };
 		318F42EE1552814400A253BA /* KLDBGUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLDBGUtil.m; sourceTree = "<group>"; };
+		31986E731563FB67007F0E6B /* appr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appr.png; sourceTree = "<group>"; };
 		319FC63F1437452C00B2B2FC /* 付箋PDF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "付箋PDF.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		319FC6431437452C00B2B2FC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		319FC6451437452C00B2B2FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -201,6 +205,8 @@
 		319FC6341437452C00B2B2FC = {
 			isa = PBXGroup;
 			children = (
+				31986E731563FB67007F0E6B /* appr.png */,
+				3185B7881562ABBB00F4474A /* app.png */,
 				319FC6491437452C00B2B2FC /* PDFReader */,
 				319FC6421437452C00B2B2FC /* Frameworks */,
 				319FC6401437452C00B2B2FC /* Products */,
@@ -410,6 +416,8 @@
 				317FD44B155B317500AE52B9 /* move.png in Resources */,
 				317FD44F155D6B9700AE52B9 /* KLPVDeleteTag.png in Resources */,
 				317FD450155D6B9700AE52B9 /* KLPVEditTag.png in Resources */,
+				3185B78B1562ACD400F4474A /* app.png in Resources */,
+				31986E741563FB67007F0E6B /* appr.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,7 +495,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -505,7 +513,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -520,6 +528,7 @@
 				GCC_PREFIX_HEADER = "PDFReader/PDFReader-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "付箋PDF";
 				WRAPPER_EXTENSION = app;
 			};
@@ -532,6 +541,7 @@
 				GCC_PREFIX_HEADER = "PDFReader/PDFReader-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "付箋PDF";
 				WRAPPER_EXTENSION = app;
 			};
