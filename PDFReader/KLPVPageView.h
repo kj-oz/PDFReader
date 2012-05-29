@@ -67,15 +67,6 @@
     // タッチの開始位置が付箋ビュー上だった場合にYESに設定する
     BOOL waitDoubleTap_;
     
-    // フリック開始時刻
-    NSTimeInterval flickStartTime_;
-    
-    // フリック開始位置
-    CGPoint flickStartPoint_;
-    
-    // フリック検出中
-    BOOL flickDetecting_;
-    
     // 付箋の編集／削除を指示するためのUI
     UIButton* editTagButton_;
     UIButton* deleteTagButton_;

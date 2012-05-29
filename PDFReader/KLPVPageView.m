@@ -9,6 +9,7 @@
 #import "KLPVPageView.h"
 #import "KLPVTiledView.h"
 #import "KLPVTagView.h"
+#import "KLUIFlickGestureRecognizer.h"
 
 @interface KLPVPageView (Private)
 
@@ -48,12 +49,6 @@
 - (void)moveToNextPage_;
 
 /**
- * 左右フリックを検出し、検出したらページ送りを行う.
- * @return フリックが検出されたかどうか
- */
-- (BOOL)checkFlicking_;
-
-/**
  * シングルタップ時の処理を行う.
  * @param touches タッチオブジェクト
  */
@@ -85,6 +80,9 @@
  * @return ページめくりの方向、-1:前ページ、0:そのまま、1:次ページ
  */
 - (NSInteger)directionToMoveForPoint_:(CGPoint)touchPosition;
+
+- (void)handleFlick_:(UIGestureRecognizer*)gestureRecognizer;
+
 
 /**
  * ページビューを構成する各種ビューを解放する.
@@ -404,6 +402,14 @@
         
         // subView側でドラッグを処理するためには以下有効にする必要がある（但しスクロールができなくなる）
         // self.canCancelContentTouches = NO;
+        
+        KLUIFlickGestureRecognizer* fgr = [[KLUIFlickGestureRecognizer alloc] 
+                                          initWithTarget:self action:@selector(handleFlick_:)];
+        fgr.permittedDirection = UISwipeGestureRecognizerDirectionRight 
+                                        | UISwipeGestureRecognizerDirectionLeft;
+        [self addGestureRecognizer:fgr];
+        [self.panGestureRecognizer requireGestureRecognizerToFail:fgr];
+        [fgr release];
     }
     return self;
 }
@@ -459,7 +465,9 @@
     
 	// 手動でcontentScaleFactorを1.0に設定しておく。これを省くと、CATiledLayerとハイレゾ・スクリーンの組み合せで
     // 半分のサイズで描画されてしまう。
-	tiledView_.contentScaleFactor = 1.0;
+    // ZoomingPDFViewのコメントにはそうあったが、1.0にするとフォントや図形がぼけたままになる。
+    // 試しに以下をコメントアウトしたが、フォントや線ははっきりし、特に問題は発生しなかった。
+    // tiledView_.contentScaleFactor = 1.0;
 }
 
 #pragma mark - タップ処理の実現
@@ -650,28 +658,29 @@
     return 0;
 }
 
+- (void)handleFlick_:(UIGestureRecognizer*)gestureRecognizer
+{
+    KLDBGPrintMethodName("▼ ");        
+    
+    KLUIFlickGestureRecognizer* fgr = (KLUIFlickGestureRecognizer*)gestureRecognizer;
+    if (fgr.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self moveToPreviousPage_];        
+    } else {
+        [self moveToNextPage_];        
+    }
+}
+
 #pragma mark - UIScrollView デリゲート
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     KLDBGPrint("▼ %s zooming:%d\n", KLDBGMethod(), self.zooming);
-//    printf("◆ scrollViewWillBeginDragging zooming:%d\n", self.zooming);
-    
-    // ズーム時にも（scrollViewWillBeginZoomingの後で）呼び出されるので、その場合フリック検出はしない
-    if (self.zooming) {
-        flickDetecting_ = NO;
-    } else {
-        flickDetecting_ = YES;
-        flickStartPoint_ = [self contentOffset];
-        flickStartTime_ = [NSDate timeIntervalSinceReferenceDate];
-    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView*)scrollView 
                   willDecelerate:(BOOL)decelerate
 {
     KLDBGPrint("▼ %s zooming:%d\n", KLDBGMethod(), (int)decelerate);
-//    printf("◆ scrollViewDidEndDragging %d\n", (int)decelerate);
     
     // スクロールされたらscrollPage_を呼び出す
     if (!decelerate) {
@@ -683,9 +692,6 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
     KLDBGPrintMethodName("▼ ");
-    if ([self checkFlicking_]) {
-        return;
-    }
     [self scrollPage_];
 }
 
@@ -693,29 +699,6 @@
 {
     KLDBGPrintMethodName("▼ ");
     [self scrollPage_];
-}
-
-- (BOOL)checkFlicking_
-{
-    BOOL flicked = NO;
-    if (flickDetecting_) {
-        flickDetecting_ = NO;
-        CGPoint pt = [self contentOffset];
-        CGFloat dx = -(pt.x - flickStartPoint_.x);
-        CGFloat dt = [NSDate timeIntervalSinceReferenceDate] - flickStartTime_;
-        
-        if (dt < 0.6 && (dx > 30 || dx < -30)) {
-            // 左右フリック
-            if (dx < 0) {
-                [self moveToNextPage_];
-            } else {
-                [self moveToPreviousPage_];
-            }
-            flicked = YES;
-        }
-        KLDBGPrint("▽ %s dt:%.2f dx:%.0f %d\n", KLDBGMethod(), dt, dx, flicked);
-    }
-    return flicked;
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -727,8 +710,6 @@
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
 {
     KLDBGPrint("▼ %s pdfScale:%.3f\n", KLDBGMethod(), scale_);
-//    printf("◆ scrollViewWillBeginZooming\n");
-//    printf(" pdfScale %.3f\n", scale_);
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView 
@@ -740,8 +721,6 @@
     // 新たなスケールでのPDFのスケールとビューのサイズを求める
     scale_ *= scale;
     KLDBGPrint(" scale %.3f pdfScale:%.3f\n", scale, scale_);
-//    printf(" scale    %.3f\n", scale);
-//    printf(" pdfScale %.3f\n", scale_);
     
     // ページ幅が画面幅以下にならない様にminimumZoomScaleを設定
     self.minimumZoomScale = minScale_ / scale_;

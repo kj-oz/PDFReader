@@ -13,6 +13,7 @@
 		312571B714E0278400A71C5B /* KLTVClosedNode.png in Resources */ = {isa = PBXBuildFile; fileRef = 312571B514E0278400A71C5B /* KLTVClosedNode.png */; };
 		312571BE14E2CB1900A71C5B /* KLTVTreeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571BD14E2CB1900A71C5B /* KLTVTreeManager.m */; };
 		3129181214D990A20054CE13 /* KLPVPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3129181114D990A20054CE13 /* KLPVPageView.m */; };
+		317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 317A82AB156A9064003F62CF /* KLUIFlickGestureRecognizer.m */; };
 		317FD43F155B277000AE52B9 /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD436155B277000AE52B9 /* closed.png */; };
 		317FD441155B277000AE52B9 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD438155B277000AE52B9 /* delete.png */; };
 		317FD443155B277000AE52B9 /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD43A155B277000AE52B9 /* detail.png */; };
@@ -66,6 +67,8 @@
 		3129180F14D98D2A0054CE13 /* KLPVPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3129181014D990A20054CE13 /* KLPVPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3129181114D990A20054CE13 /* KLPVPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLPVPageView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		317A82AA156A9064003F62CF /* KLUIFlickGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLUIFlickGestureRecognizer.h; sourceTree = "<group>"; };
+		317A82AB156A9064003F62CF /* KLUIFlickGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLUIFlickGestureRecognizer.m; sourceTree = "<group>"; };
 		317FD436155B277000AE52B9 /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closed.png; sourceTree = "<group>"; };
 		317FD437155B277000AE52B9 /* closed.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = closed.svg; sourceTree = "<group>"; };
 		317FD438155B277000AE52B9 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -194,12 +197,22 @@
 		3129180C14D98CC40054CE13 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				317A82A8156A900C003F62CF /* UI */,
 				3128F9CD1551834600DC31FB /* Debug */,
 				31D6EEBA15032B9200200440 /* Net */,
 				3125719E14E01DF400A71C5B /* TreeView */,
 				31E0EDCC14DCEECA00F185E2 /* PageView */,
 			);
 			name = Library;
+			sourceTree = "<group>";
+		};
+		317A82A8156A900C003F62CF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				317A82AA156A9064003F62CF /* KLUIFlickGestureRecognizer.h */,
+				317A82AB156A9064003F62CF /* KLUIFlickGestureRecognizer.m */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 		319FC6341437452C00B2B2FC = {
@@ -449,6 +462,7 @@
 				31E508DE1503408D00CA7B42 /* PRConnector.m in Sources */,
 				31E508E2150E474C00CA7B42 /* PRDocumentDetailController.m in Sources */,
 				318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */,
+				317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
