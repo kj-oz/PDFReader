@@ -374,6 +374,7 @@
 {
     sliding_ = YES;
     pageController_.currentPageIndex = pageSlider_.value - 1;
+    [pageView_.pageDelegate pageViewCurrentPageDidChange];
     [pageView_ renderPageWithInitialLayout];
     [self startFullScreenTimer_];
     sliding_ = NO;

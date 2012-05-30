@@ -307,7 +307,7 @@
     }
     
     // 背景画像は最小スケールで生成し、必要なサイズまで引き伸ばし
-    KLDBGPrint("▽ %s willScroll\n", __func__);
+    KLDBGPrint("▽ %s willScrollTo %d\n", KLDBGMethod(), newIndex);
     
     dataSource_.currentPageIndex = newIndex;
     [pageDelegate_ pageViewCurrentPageDidChange];
