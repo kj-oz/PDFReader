@@ -27,7 +27,9 @@
 		// ズームが終了すれば適切なサイズとスケールでKLPVTiledViewが再生成される 
         tiledLayer.levelsOfDetail = 1;
 		tiledLayer.levelsOfDetailBias = 0;
-		tiledLayer.tileSize = CGSizeMake(512.0, 512.0);
+        
+        CGFloat scale = [UIScreen mainScreen].scale;
+		tiledLayer.tileSize = CGSizeMake(512.0 * scale, 512.0 * scale);
         
         dataSource_ = dataSource;
         

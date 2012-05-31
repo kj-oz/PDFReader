@@ -42,6 +42,9 @@
     
     // ジャンプ先のページ内座標
     CGPoint targetPoint_;
+    
+    // Retina Display 用スケール（線幅調整用）
+    CGFloat pixelScale_;
 }
 
 @property (nonatomic, retain) KLPVPageView* view;

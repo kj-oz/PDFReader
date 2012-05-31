@@ -156,6 +156,7 @@ NSInteger compareTag(id a, id b, void* context)
         const CFDictionaryValueCallBacks valCB = kCFTypeDictionaryValueCallBacks;
         tagMaps_ = CFDictionaryCreateMutable(NULL, 0, &keyCB, &valCB);
         selectedTagImage_ = [[UIImage imageNamed:@"move.png"] retain];
+        pixelScale_ = [UIScreen mainScreen].scale;
     }
     return self;
 }
@@ -282,8 +283,10 @@ NSInteger compareTag(id a, id b, void* context)
     
     // 枠線
     // 4周に線が出るように寸法を調整
-    r = CGRectMake(0.0, 0.5, tag.size.width * scale - 0.5, tag.size.height * scale - 0.5);
-    CGContextSetRGBStrokeColor(context, 0.5, 0.5, 0.5, 1.0);
+    CGFloat w = 0.2 / pixelScale_;
+    r = CGRectMake(0, 0, tag.size.width * scale - w, tag.size.height * scale - w);
+    CGContextSetRGBStrokeColor(context, 0.6, 0.6, 0.6, 1.0);
+    CGContextSetLineWidth(context, 1.0 / pixelScale_);
     CGContextStrokeRect(context, r);
 }
 
