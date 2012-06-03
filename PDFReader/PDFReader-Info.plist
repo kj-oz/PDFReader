@@ -24,7 +24,7 @@
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>app.png</string>
-		<string>appr.png</string>
+		<string>app@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -33,7 +33,7 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>app.png</string>
-				<string>appr.png</string>
+				<string>app@2x.png</string>
 			</array>
 		</dict>
 	</dict>

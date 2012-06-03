@@ -283,7 +283,7 @@ NSInteger compareTag(id a, id b, void* context)
     
     // 枠線
     // 4周に線が出るように寸法を調整
-    CGFloat w = 0.2 / pixelScale_;
+    CGFloat w = 0.1 / pixelScale_;
     r = CGRectMake(0, 0, tag.size.width * scale - w, tag.size.height * scale - w);
     CGContextSetRGBStrokeColor(context, 0.6, 0.6, 0.6, 1.0);
     CGContextSetLineWidth(context, 1.0 / pixelScale_);
