@@ -153,8 +153,9 @@
 - (void)viewDidLoad
 {
     KLDBGPrintMethodName("▼ ");
-    const char* or = UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? "Landscape" : "Portrate";
-    KLDBGPrint(" orientation:%s size:%s\n", or, KLDBGSize(self.view.bounds.size));
+    KLDBGPrint(" orientation:%s size:%s\n", 
+               UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? "Landscape" : "Portrate", 
+               KLDBGSize(self.view.bounds.size));
 
     [super viewDidLoad];
     [self.view setAutoresizesSubviews:YES];
@@ -206,9 +207,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     KLDBGPrintMethodName("▼ ");
-    const char* or = UIInterfaceOrientationIsLandscape(self.interfaceOrientation) 
-                        ? "Landscape" : "Portrate";
-    KLDBGPrint(" orientation:%s size:%s\n", or, KLDBGSize(self.view.bounds.size));
+    KLDBGPrint(" orientation:%s size:%s\n", 
+               UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? "Landscape" : "Portrate", 
+               KLDBGSize(self.view.bounds.size));
     
     [super viewWillAppear:animated];
     fullScreen_ = NO;
@@ -303,10 +304,9 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation 
 {
     KLDBGPrintMethodName("▼ ");
-
-    const char* or = UIInterfaceOrientationIsLandscape(self.interfaceOrientation) 
-                            ? "Landscape" : "Portrate";
-    KLDBGPrint(" orientation:%s size:%s\n", or, KLDBGSize(self.view.bounds.size));
+    KLDBGPrint(" orientation:%s size:%s\n", 
+               UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? "Landscape" : "Portrate", 
+               KLDBGSize(self.view.bounds.size));
 
     // 回転が発生したら、カレントのページで表示を初期化
     [pageView_ renderPageWithInitialLayout];

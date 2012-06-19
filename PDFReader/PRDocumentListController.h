@@ -25,12 +25,21 @@
     
     IBOutlet UITableView* tableView_;
     IBOutlet UIBarButtonItem* addButton_;
+    IBOutlet UIBarButtonItem* shelfButton_;
+    IBOutlet UIBarButtonItem* deleteButton_;
+    IBOutlet UIBarButtonItem* moveButton_;
+    IBOutlet UIBarButtonItem* detailButton_;    
+    
     UIPopoverController* poController_;
 }
 
 @property (nonatomic, assign) id delegate;
 
 - (IBAction)addAction;
+- (IBAction)shelfAction;
+- (IBAction)deleteAction;
+- (IBAction)moveAction;
+- (IBAction)detailAction;
 
 /**
  * 指定のドキュメントをドキュメント画面で表示する.

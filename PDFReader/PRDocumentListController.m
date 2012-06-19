@@ -11,6 +11,7 @@
 #import "KLTVTreeNode.h"
 #import "KLTVTreeViewCell.h"
 #import "PRDocumentManager.h"
+#import "PRShelf.h"
 #import "PRDocument.h"
 #import "PRTag.h"
 #import "PRDocumentController.h"
@@ -86,6 +87,22 @@
 - (void)handleDownloadingErrorWithDocument_:(PRDocument*)doc message:(NSString*)message;
 
 /**
+ * 選択されているドキュメントを削除する.
+ */
+- (void)removeSelectedDocuments_;
+
+- (void)moveSelectedDocumentsToShelf_:(PRShelf*)shelf;
+
+
+- (NSArray*)selectedDocumentNodes_;
+
+- (NSArray*)selectedDocuments_;
+
+- (NSArray*)selectedRows_;
+
+- (void)removeSelectedDocumentsFromTable_;
+
+/**
  * 与えられたドキュメントを表示するセルのインデックスを得る.
  * @param doc ドキュメント
  * @return セルのインデックス
@@ -132,6 +149,10 @@
 {
     [tableView_ release], tableView_ = nil;
     [addButton_ release], addButton_ = nil;
+    [shelfButton_ release], shelfButton_ = nil;
+    [deleteButton_ release], deleteButton_ = nil;
+    [moveButton_ release], moveButton_ = nil;
+    [detailButton_ release], detailButton_ = nil;
     
     // Outletではないが、tableView_と同期しているのでここでrelease
     [treeManager_ release], treeManager_ = nil;
@@ -212,6 +233,7 @@
     // navigationController:willShowViewController:animated:は、このメソッドの後で呼び出されるため
     // タイミングとして間に合わない
     PRDocumentManager* dm = [PRDocumentManager sharedManager];
+    self.title = dm.currentShelf.name;
     if (dm.currentDocument) {
         NSInteger index = [self indexForDocument_:dm.currentDocument];
         KLTVTreeNode* docNode = [treeManager_ nodeAtIndex:index];
@@ -257,7 +279,7 @@
 {
     [treeManager_ clear];
     
-    for (PRDocument* doc in [PRDocumentManager sharedManager].documents) {
+    for (PRDocument* doc in [PRDocumentManager sharedManager].currentShelf.documents) {
         KLTVTreeNode* docNode = [[KLTVTreeNode alloc] initWithData:doc];
         docNode.expanded = doc.tagOpened;
         [treeManager_ addTopNode:docNode];
@@ -285,9 +307,13 @@
     KLDBGPrintMethodName("▼ ");
     [super viewDidLoad];
     
+    // 複数選択を可能に
+    tableView_.allowsMultipleSelectionDuringEditing = YES;
+    deleteButton_.tintColor = [UIColor redColor];
+    
     treeManager_ = [[KLTVTreeManager alloc] init];
-    treeManager_.expandedIcon = [[UIImage imageNamed:@"expanded.png"] retain];
-    treeManager_.closedIcon = [[UIImage imageNamed:@"closed.png"] retain];
+    treeManager_.expandedIcon = [UIImage imageNamed:@"expanded.png"];
+    treeManager_.closedIcon = [UIImage imageNamed:@"closed.png"];
     treeManager_.levelIndent = 24.0;
     treeManager_.handleWidth = 32.0;
     
@@ -342,11 +368,18 @@
 
 - (void)updateNavigationItemAnimated_:(BOOL)animated
 {
-    [self.navigationItem setLeftBarButtonItem:[self editButtonItem] animated:animated];
+    // setLeftBarButtonItems と setLeftBarButtonItem を状況によって使い分けると、setLeftBarButtonItem 
+    // 実行時にエラーになるので１つしかない場合も、setLeftBarButtonItems を使用する
     if (self.editing) {
-        [self.navigationItem setRightBarButtonItem:nil animated:animated];
+        [self.navigationItem setLeftBarButtonItems:
+         [NSArray arrayWithObjects:detailButton_, moveButton_, deleteButton_, nil] animated:animated];
+        [self.navigationItem setRightBarButtonItems:
+         [NSArray arrayWithObjects:[self editButtonItem], nil] animated:animated];
     } else {
-        [self.navigationItem setRightBarButtonItem:addButton_ animated:animated];
+        [self.navigationItem setLeftBarButtonItems:
+         [NSArray arrayWithObjects:shelfButton_, nil] animated:animated];
+        [self.navigationItem setRightBarButtonItems:
+         [NSArray arrayWithObjects:[self editButtonItem], addButton_, nil] animated:animated];
     }
 }
 
@@ -397,11 +430,12 @@
     
     // アクセサリの設定
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    if (isDocument(node)) {
-        cell.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    } else {
-        cell.editingAccessoryType = UITableViewCellAccessoryNone;
-    }
+    cell.editingAccessoryType = UITableViewCellAccessoryNone;
+//    if (isDocument(node)) {
+//        cell.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+//    } else {
+//        cell.editingAccessoryType = UITableViewCellAccessoryNone;
+//    }
     
     cell.delegate = self;
 }
@@ -446,6 +480,38 @@
     }
 }
 
+- (IBAction)shelfAction
+{
+    //TODO: implement
+}
+
+- (IBAction)deleteAction
+{
+    // アラートを表示する
+    NSString* target = [tableView_ indexPathsForSelectedRows].count == 1 ? 
+                @"選択されているPDF" : @"選択されている複数のPDF";
+    UIAlertView* alert = [[UIAlertView alloc] 
+                          initWithTitle:@"PDFの削除" 
+                          message:[NSString stringWithFormat:@"%@を削除してもよろしいですか？", target]
+                          delegate:self
+                          cancelButtonTitle:@"いいえ" otherButtonTitles:@"はい", nil];
+    [alert autorelease];
+    [alert show];
+}
+
+- (IBAction)moveAction
+{
+    //TODO: implement
+}
+
+- (IBAction)detailAction
+{
+    NSIndexPath* indexPath = [tableView_ indexPathForSelectedRow];
+    KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
+    PRDocument* doc = (PRDocument*)node.data;
+    [self showDocumentDetailPopover_:doc];
+}
+
 #pragma mark - UITableView データソース
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -477,6 +543,7 @@
         commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
         forRowAtIndexPath:(NSIndexPath*)indexPath
 {
+    //TODO 後で全てコメントアウト
     KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
     
     // 削除操作の場合
@@ -633,8 +700,7 @@
 {
     KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
     if (tableView_.isEditing) {
-        PRDocument* doc = (PRDocument*)node.data;
-        [self showDocumentDetailPopover_:doc];
+        detailButton_.enabled = [tableView_ indexPathsForSelectedRows].count == 1;
     } else {
         if (isDocument(node)) {
             PRDocument* doc = (PRDocument*)node.data;
@@ -644,6 +710,13 @@
             PRTag* tag = (PRTag*)node.data;
             [self showDocument:doc atTag:tag animated:YES];
         }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView_.isEditing) {
+        detailButton_.enabled = [tableView_ indexPathsForSelectedRows].count == 1;
     }
 }
 
@@ -870,6 +943,107 @@
                    withRowAnimation:UITableViewRowAnimationRight];
     [tableView_ endUpdates];
 }                             
+
+#pragma mark UIAlertViewデリゲート
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        [self removeSelectedDocuments_];
+    }
+}
+
+- (void)removeSelectedDocuments_
+{
+    NSArray* docs = [self selectedDocuments_];
+    
+    // 実体を削除する
+    for (PRDocument* doc in docs) {
+        NSString* path = [NSString stringWithFormat:@"%@/%@", 
+                          [PRDocumentManager sharedManager].documentDirectory, doc.fileName];
+        NSError* error;
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+    }
+            
+    // ドキュメントオブジェクトの削除
+    [self removeSelectedDocumentsFromTable_];
+}
+
+- (void)moveSelectedDocumentsToShelf_:(PRShelf*)shelf
+{
+    NSArray* docs = [self selectedDocuments_];
+    
+    // 実体を移動する
+    for (PRDocument* doc in docs) {
+        [shelf addDocument:doc];
+    }
+    
+    // ドキュメントオブジェクトの削除
+    [self removeSelectedDocumentsFromTable_];
+}
+
+- (NSArray*)selectedDocumentNodes_
+{
+    NSArray* indexPaths = [tableView_ indexPathsForSelectedRows];
+    NSMutableArray* nodes = [NSMutableArray array];
+    for (NSIndexPath* indexPath in indexPaths) {
+        KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
+        if (isDocument(node)) {
+            [nodes addObject:node];
+        }
+    }    
+    return nodes;
+}
+
+- (NSArray*)selectedDocuments_
+{
+    NSArray* indexPaths = [tableView_ indexPathsForSelectedRows];
+    NSMutableArray* docs = [NSMutableArray array];
+    for (NSIndexPath* indexPath in indexPaths) {
+        KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
+        if (isDocument(node)) {
+            [docs addObject:node.data];
+        }
+    }    
+    return docs;
+}
+
+- (NSArray*)selectedRows_
+{
+    NSArray* indexPaths = [tableView_ indexPathsForSelectedRows];
+    NSMutableArray* rows = [NSMutableArray array];
+    for (NSIndexPath* indexPath in indexPaths) {
+        [rows addObject:indexPath];
+        KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
+        if (isDocument(node) && node.expanded) {
+            NSUInteger descendantCount = node.visibleDescendantCount;
+            NSArray* indexes = [self createIndexPathsForRowsFrom_:indexPath.row+1
+                                                            count:descendantCount inSection:indexPath.section];
+            [rows addObjectsFromArray:indexes];
+        }
+    }    
+    return rows;
+}
+
+- (void)removeSelectedDocumentsFromTable_
+{
+    NSArray* indexPaths = [self selectedRows_];
+    NSArray* nodes = [self selectedDocumentNodes_];    
+    NSArray* docs = [self selectedDocuments_];
+    
+    // ドキュメントを削除する
+    [[PRDocumentManager sharedManager] removeDocuments:docs];
+    [[PRDocumentManager sharedManager] save];
+    
+    // 先にノードを削除しないと、以下の処理でエラーになる
+    [treeManager_ removeTopNodes:nodes];
+    
+    // テーブルの行を削除する
+    [tableView_ beginUpdates];
+    [tableView_ deleteRowsAtIndexPaths:indexPaths
+                      withRowAnimation:UITableViewRowAnimationRight];
+    [tableView_ endUpdates];
+}
 
 #pragma mark - ヘルパメソッド
 

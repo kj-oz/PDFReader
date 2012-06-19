@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3124899F1580FC4500C11AE4 /* PRShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = 3124899E1580FC4500C11AE4 /* PRShelf.m */; };
 		312571B114E01E5E00A71C5B /* KLTVTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */; };
 		312571B214E01E5E00A71C5B /* KLTVTreeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571B014E01E5E00A71C5B /* KLTVTreeViewCell.m */; };
 		312571B614E0278400A71C5B /* KLTVExpandedNode.png in Resources */ = {isa = PBXBuildFile; fileRef = 312571B414E0278400A71C5B /* KLTVExpandedNode.png */; };
@@ -62,6 +63,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3124899D1580FC4500C11AE4 /* PRShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRShelf.h; sourceTree = "<group>"; };
+		3124899E1580FC4500C11AE4 /* PRShelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRShelf.m; sourceTree = "<group>"; };
 		312571AD14E01E5E00A71C5B /* KLTVTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLTVTreeNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLTVTreeNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		312571AF14E01E5E00A71C5B /* KLTVTreeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLTVTreeViewCell.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -311,6 +314,8 @@
 				31CFDDA114979E28004A71F5 /* PRTag.m */,
 				31E508DC1503408D00CA7B42 /* PRConnector.h */,
 				31E508DD1503408D00CA7B42 /* PRConnector.m */,
+				3124899D1580FC4500C11AE4 /* PRShelf.h */,
+				3124899E1580FC4500C11AE4 /* PRShelf.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -493,6 +498,7 @@
 				31E508E2150E474C00CA7B42 /* PRDocumentDetailController.m in Sources */,
 				318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */,
 				317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */,
+				3124899F1580FC4500C11AE4 /* PRShelf.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,7 +578,7 @@
 				GCC_PREFIX_HEADER = "PDFReader/PDFReader-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "付箋PDF";
 				WRAPPER_EXTENSION = app;
 			};
@@ -585,7 +591,7 @@
 				GCC_PREFIX_HEADER = "PDFReader/PDFReader-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "付箋PDF";
 				WRAPPER_EXTENSION = app;
 			};

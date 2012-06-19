@@ -152,6 +152,12 @@
     [self invaldate_];
 }
 
+- (void)removeChildren:(NSArray*)children
+{
+    [children_ removeObjectsInArray:children];
+    [self invaldate_];
+}
+
 - (void)removeAllChildren
 {
     [children_ removeAllObjects];

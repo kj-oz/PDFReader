@@ -91,6 +91,11 @@
     [root_ removeChild:node];
 }
 
+- (void)removeTopNodes:(NSArray*)nodes
+{
+    [root_ removeChildren:nodes];
+}
+
 - (void)clear
 {
 	[flattenedElements_ release], flattenedElements_ = nil;

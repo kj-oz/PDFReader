@@ -104,14 +104,21 @@
 
 /**
  * 指定の子ノードを除外する.
- * 他にそのノードがどこからも参照されていなければ、そのノードはdeallocされる.
+ * 他にその子ノードがどこからも参照されていなければ、その子ノードはdeallocされる.
  * @param child 子ノード
  */
 - (void)removeChild:(KLTVTreeNode*)child;
 
 /**
+ * 指定の複数の子ノードを除外する.
+ * 他にその子ノードがどこからも参照されていなければ、その子ノードはdeallocされる.
+ * @param children 子ノードの配列
+ */
+- (void)removeChildren:(NSArray*)children;
+
+/**
  * 全ての子ノードを除外する.
- * 他にそれらのノードがどこからも参照されていなければ、それらのノードはdeallocされる.
+ * 他にその子ノードがどこからも参照されていなければ、それらの子ノードはdeallocされる.
  */
 - (void)removeAllChildren;
 

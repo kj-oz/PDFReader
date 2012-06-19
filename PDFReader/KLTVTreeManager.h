@@ -72,6 +72,12 @@
 - (void)removeTopNode:(KLTVTreeNode*)node;
 
 /**
+ * 最上位の複数のノードを削除する.
+ * @param nodes ノードの配列
+ */
+- (void)removeTopNodes:(NSArray*)nodes;
+
+/**
  * 全てのノードをクリアする.
  */
 - (void)clear;

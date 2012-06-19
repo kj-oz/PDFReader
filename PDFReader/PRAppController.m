@@ -11,6 +11,7 @@
 #import "PRDocument.h"
 #import "PRDocumentListController.h"
 #import "PRConnector.h"
+#import "PRShelf.h"
 
 @interface PRAppController (Private)
 
@@ -93,6 +94,7 @@ static PRAppController*    sharaedInstance_ = nil;
 {
     // 他のアプリケーションから起動された場合の対象PDFのURLを得る
     NSURL* url = (NSURL*)[options objectForKey:UIApplicationLaunchOptionsURLKey];
+    KLDBGPrint("▼ %s url:%s", KLDBGMethod(), url.path.UTF8String);
     
     // データを読み込む
     PRDocumentManager* dm = [PRDocumentManager sharedManager];
@@ -100,9 +102,21 @@ static PRAppController*    sharaedInstance_ = nil;
     
     // 最後に開いていたドキュメントを得る
     if (!url) {
+        NSString* lastShelf = [[NSUserDefaults standardUserDefaults] stringForKey:@"lastShelf"];
+        if (lastShelf) {
+            for (PRShelf* shelf in dm.shelves) {
+                if ([shelf.name isEqualToString:lastShelf]) {
+                    dm.currentShelf = shelf;
+                    break;
+                }
+            }
+        } else {
+            dm.currentShelf = [dm.shelves objectAtIndex:0]; 
+        }
+
         NSString* lastDocument = [[NSUserDefaults standardUserDefaults] stringForKey:@"lastDocument"];
         if (lastDocument) {
-            for (PRDocument* doc in dm.documents) {
+            for (PRDocument* doc in dm.currentShelf.documents) {
                 if ([doc.fileName isEqualToString:lastDocument]) {
                     dm.currentDocument = doc;
                     break;
@@ -181,6 +195,7 @@ static PRAppController*    sharaedInstance_ = nil;
     }
 
     // ドキュメントの表示
+    dm.currentShelf = [dm.shelves objectAtIndex:0];
     [documentListController_ showDocument:doc animated:NO];
     return YES;
 }
