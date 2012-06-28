@@ -85,7 +85,7 @@
     // その他のリソースの解放
 }
 
-#pragma mark - View lifecycle
+#pragma mark - ビューのライフサイクル
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -133,7 +133,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
 	return YES;
 }
 

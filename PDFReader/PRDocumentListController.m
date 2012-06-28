@@ -18,6 +18,7 @@
 #import "KLNetURLDownloader.h"
 #import "PRConnector.h"
 #import "PRDocumentDetailController.h"
+#import "PRShelfListController.h"
 
 #define isDocument(node)        (node.level == 0)
 
@@ -62,6 +63,8 @@
  * @param doc 対象ドキュメント、新規ドキュメント追加時はnil
  */
 - (void)showDocumentDetailPopover_:(PRDocument*)doc;
+
+- (void)showShelfListPopover_;
 
 /**
  * 与えられた条件の複数のインデクスパスの配列を得る.
@@ -482,7 +485,30 @@
 
 - (IBAction)shelfAction
 {
-    //TODO: implement
+    [self showShelfListPopover_];
+}
+
+- (void)showShelfListPopover_
+{
+    // コントローラを作成する
+    PRShelfListController*  controller;
+    controller = [[PRShelfListController alloc] init];
+    controller.delegate = self;
+    [controller autorelease];
+    
+    // 独自のナビゲーションコントローラに追加する
+    UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:controller];
+    [navController autorelease];
+    
+    // Popoverとして表示
+    CGFloat height = 320;
+    controller.contentSizeForViewInPopover = CGSizeMake(320.0, height);
+    poController_ = [[UIPopoverController alloc]
+                     initWithContentViewController:navController];
+    poController_.delegate = self;
+    
+    // ナビゲーションバーのボタンからのPopover
+    [poController_ presentPopoverFromBarButtonItem:shelfButton_ permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 - (IBAction)deleteAction
@@ -827,6 +853,18 @@
         UITableViewCell* cell = [tableView_ cellForRowAtIndexPath:indexPath];
         [self updateCell_:(KLTVTreeViewCell*)cell atIndexPath:indexPath];
     }
+    
+    // コントローラを隠す
+    [poController_ dismissPopoverAnimated:YES];
+    [poController_ release], poController_ = nil;
+}
+
+#pragma mark - PRShelfListControllerデリゲート
+
+- (void)shelfListControllerShelfDidSelect:(PRShelfListController*)controller
+{
+    [PRDocumentManager sharedManager].currentShelf = controller.selectedShelf;
+    self.title = controller.selectedShelf.name;
     
     // コントローラを隠す
     [poController_ dismissPopoverAnimated:YES];

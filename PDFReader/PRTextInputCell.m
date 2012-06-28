@@ -43,7 +43,8 @@
 #pragma mark - 描画処理
 
 - (void)layoutSubviews {
-    textField_.frame = CGRectInset(self.contentView.bounds, 20, 0);
+    [super layoutSubviews];
+    textField_.frame = CGRectInset(self.contentView.bounds, 2, 2);
 }
 
 @end
