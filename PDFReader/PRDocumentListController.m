@@ -889,6 +889,8 @@
     if (shelfListReason_ == shelfButton_) {
         [PRDocumentManager sharedManager].currentShelf = controller.selectedShelf;
         self.title = controller.selectedShelf.name;
+        [self createTree_];
+        [tableView_ reloadData];
     } else {
         [self moveSelectedDocumentsToShelf_:controller.selectedShelf];
     }
@@ -1018,6 +1020,8 @@
     }
 }
 
+#pragma mark - ヘルパメソッド
+
 - (void)removeSelectedDocuments_
 {
     NSArray* docs = [self selectedDocuments_];
@@ -1109,8 +1113,6 @@
                       withRowAnimation:UITableViewRowAnimationRight];
     [tableView_ endUpdates];
 }
-
-#pragma mark - ヘルパメソッド
 
 - (NSInteger)indexForDocument_:(PRDocument*)doc
 {
