@@ -64,7 +64,11 @@
  */
 - (void)showDocumentDetailPopover_:(PRDocument*)doc;
 
-- (void)showShelfListPopover_;
+/**
+ * 本棚一覧画面を表示する.
+ * @param reason 本棚一覧を表示する元になったボタン
+ */
+- (void)showShelfListPopover_:(UIBarButtonItem*)reason;
 
 /**
  * 与えられた条件の複数のインデクスパスの配列を得る.
@@ -94,15 +98,33 @@
  */
 - (void)removeSelectedDocuments_;
 
+/**
+ * 選択されている複数の書類を指定の本棚に移動する.
+ * @param shelf 移動先の本棚
+ */
 - (void)moveSelectedDocumentsToShelf_:(PRShelf*)shelf;
 
-
+/**
+ * 選択されているドキュメントのノードの配列を得る.
+ * @return 選択されているドキュメントのノードの配列
+ */
 - (NSArray*)selectedDocumentNodes_;
 
+/**
+ * 選択されているドキュメントの配列を得る.
+ * @return 選択されているドキュメントの配列
+ */
 - (NSArray*)selectedDocuments_;
 
+/**
+ * 選択されている行の配列を得る.
+ * @return 選択されている行の配列
+ */
 - (NSArray*)selectedRows_;
 
+/**
+ * 選択されているドキュメントを一覧から削除する.
+ */
 - (void)removeSelectedDocumentsFromTable_;
 
 /**
@@ -122,7 +144,6 @@
 
 - (void)init_
 {
-    self.title = NSLocalizedString(@"書庫", nil);
 }
 
 - (id)init
@@ -485,11 +506,13 @@
 
 - (IBAction)shelfAction
 {
-    [self showShelfListPopover_];
+    [self showShelfListPopover_:shelfButton_];
 }
 
-- (void)showShelfListPopover_
+- (void)showShelfListPopover_:(UIBarButtonItem*)reason
 {
+    shelfListReason_ = reason;
+    
     // コントローラを作成する
     PRShelfListController*  controller;
     controller = [[PRShelfListController alloc] init];
@@ -508,7 +531,7 @@
     poController_.delegate = self;
     
     // ナビゲーションバーのボタンからのPopover
-    [poController_ presentPopoverFromBarButtonItem:shelfButton_ permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    [poController_ presentPopoverFromBarButtonItem:reason permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 - (IBAction)deleteAction
@@ -527,7 +550,7 @@
 
 - (IBAction)moveAction
 {
-    //TODO: implement
+    [self showShelfListPopover_:moveButton_];
 }
 
 - (IBAction)detailAction
@@ -863,8 +886,12 @@
 
 - (void)shelfListControllerShelfDidSelect:(PRShelfListController*)controller
 {
-    [PRDocumentManager sharedManager].currentShelf = controller.selectedShelf;
-    self.title = controller.selectedShelf.name;
+    if (shelfListReason_ == shelfButton_) {
+        [PRDocumentManager sharedManager].currentShelf = controller.selectedShelf;
+        self.title = controller.selectedShelf.name;
+    } else {
+        [self moveSelectedDocumentsToShelf_:controller.selectedShelf];
+    }
     
     // コントローラを隠す
     [poController_ dismissPopoverAnimated:YES];

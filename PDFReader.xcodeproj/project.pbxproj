@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3124899F1580FC4500C11AE4 /* PRShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = 3124899E1580FC4500C11AE4 /* PRShelf.m */; };
-		312489AA1590B83B00C11AE4 /* PRShelfListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 312489A91590B83B00C11AE4 /* PRShelfListController.m */; };
 		312489AC1590BC3100C11AE4 /* ShelfList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 312489AB1590BC3100C11AE4 /* ShelfList.xib */; };
 		312571B114E01E5E00A71C5B /* KLTVTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */; };
 		312571B214E01E5E00A71C5B /* KLTVTreeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571B014E01E5E00A71C5B /* KLTVTreeViewCell.m */; };
@@ -62,13 +61,12 @@
 		31E508DE1503408D00CA7B42 /* PRConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E508DD1503408D00CA7B42 /* PRConnector.m */; };
 		31E508E2150E474C00CA7B42 /* PRDocumentDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E508E0150E474C00CA7B42 /* PRDocumentDetailController.m */; };
 		31E508E3150E474C00CA7B42 /* DocumentDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31E508E1150E474C00CA7B42 /* DocumentDetail.xib */; };
+		31F49E9F159F38B1000EE05F /* PRShelfListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F49E9E159F38B1000EE05F /* PRShelfListController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3124899D1580FC4500C11AE4 /* PRShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRShelf.h; sourceTree = "<group>"; };
 		3124899E1580FC4500C11AE4 /* PRShelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRShelf.m; sourceTree = "<group>"; };
-		312489A81590B83B00C11AE4 /* PRShelfListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PRShelfListController.h; path = ../PRShelfListController.h; sourceTree = "<group>"; };
-		312489A91590B83B00C11AE4 /* PRShelfListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PRShelfListController.m; path = ../PRShelfListController.m; sourceTree = "<group>"; };
 		312489AB1590BC3100C11AE4 /* ShelfList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelfList.xib; sourceTree = "<group>"; };
 		312571AD14E01E5E00A71C5B /* KLTVTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLTVTreeNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		312571AE14E01E5E00A71C5B /* KLTVTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLTVTreeNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -156,6 +154,8 @@
 		31E508DF150E474C00CA7B42 /* PRDocumentDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRDocumentDetailController.h; sourceTree = "<group>"; };
 		31E508E0150E474C00CA7B42 /* PRDocumentDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRDocumentDetailController.m; sourceTree = "<group>"; };
 		31E508E1150E474C00CA7B42 /* DocumentDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentDetail.xib; sourceTree = "<group>"; };
+		31F49E9D159F38B1000EE05F /* PRShelfListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRShelfListController.h; sourceTree = "<group>"; };
+		31F49E9E159F38B1000EE05F /* PRShelfListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRShelfListController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,8 +328,8 @@
 		319FC6631437469200B2B2FC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				312489A81590B83B00C11AE4 /* PRShelfListController.h */,
-				312489A91590B83B00C11AE4 /* PRShelfListController.m */,
+				31F49E9D159F38B1000EE05F /* PRShelfListController.h */,
+				31F49E9E159F38B1000EE05F /* PRShelfListController.m */,
 				319FC66A1437488A00B2B2FC /* PRAppController.h */,
 				319FC66B1437488A00B2B2FC /* PRAppController.m */,
 				319FC66E1437581800B2B2FC /* PRDocumentListController.h */,
@@ -508,7 +508,7 @@
 				318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */,
 				317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */,
 				3124899F1580FC4500C11AE4 /* PRShelf.m in Sources */,
-				312489AA1590B83B00C11AE4 /* PRShelfListController.m in Sources */,
+				31F49E9F159F38B1000EE05F /* PRShelfListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

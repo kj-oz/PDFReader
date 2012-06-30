@@ -27,6 +27,9 @@
     // 既存本棚の名称変更中フラグ
     BOOL renaming_;
     
+    // 削除対象の行
+    NSInteger deletingRow_;
+    
     IBOutlet UITableView* tableView_;
     IBOutlet UIBarButtonItem* addButton_;
     IBOutlet UIBarButtonItem* endButton_;

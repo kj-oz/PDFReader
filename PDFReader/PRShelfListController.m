@@ -290,19 +290,20 @@
         commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
         forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    // 削除操作の場合
+    PRShelf* shelf = [[PRDocumentManager sharedManager].shelves objectAtIndex:indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-       // ドキュメントを削除する
-        [[PRDocumentManager sharedManager] removeShelfAtIndex:indexPath.row];
-        
-        // 情報を保存する
-        [[PRDocumentManager sharedManager] save];
-        
-        // テーブルの行を削除する
-        [tableView_ beginUpdates];
-        [tableView_ deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
-                          withRowAnimation:UITableViewRowAnimationRight];
-        [tableView_ endUpdates];
+        if (shelf.documentCount > 0) {
+            // 削除操作の場合
+            // アラートを表示する
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"本棚の削除" 
+                    message:[NSString stringWithFormat:
+                    @"ドキュメントが含まれていますが、%@を削除してもよろしいですか？", shelf.name]
+                    delegate:self cancelButtonTitle:@"いいえ" otherButtonTitles:@"はい", nil];
+            [alert autorelease];
+            [alert show];
+        } else {
+            [self removeSelectedShelf_];
+        }
     }
 }
 
@@ -405,6 +406,31 @@
         }
     }
     return nil;
+}
+
+#pragma mark UIAlertViewデリゲート
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        [self removeSelectedShelf_];
+    }
+}
+
+- (void)removeSelectedShelf_
+{
+    // ドキュメントを削除する
+    [[PRDocumentManager sharedManager] removeShelfAtIndex:deletingRow_];
+    
+    // 情報を保存する
+    [[PRDocumentManager sharedManager] save];
+    
+    // テーブルの行を削除する
+    [tableView_ beginUpdates];
+    [tableView_ deleteRowsAtIndexPaths:[NSArray arrayWithObject:
+                    [NSIndexPath indexPathForRow:deletingRow_ inSection:0]] 
+                    withRowAnimation:UITableViewRowAnimationRight];
+    [tableView_ endUpdates];
 }
 
 @end

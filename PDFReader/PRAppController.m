@@ -101,6 +101,7 @@ static PRAppController*    sharaedInstance_ = nil;
     [dm load];
     
     // 最後に開いていたドキュメントを得る
+    dm.currentShelf = [dm.shelves objectAtIndex:0]; 
     if (!url) {
         NSString* lastShelf = [[NSUserDefaults standardUserDefaults] stringForKey:@"lastShelf"];
         if (lastShelf) {
@@ -110,8 +111,6 @@ static PRAppController*    sharaedInstance_ = nil;
                     break;
                 }
             }
-        } else {
-            dm.currentShelf = [dm.shelves objectAtIndex:0]; 
         }
 
         NSString* lastDocument = [[NSUserDefaults standardUserDefaults] stringForKey:@"lastDocument"];
@@ -182,11 +181,11 @@ static PRAppController*    sharaedInstance_ = nil;
         return NO;
     }
     
-    // ドキュメントとして追加
+    // ドキュメントとして「新着」本棚に追加
     PRDocumentManager* dm = [PRDocumentManager sharedManager];
     PRDocument* doc = [[PRDocument alloc] initWithPath:pdfPath];
     [doc loadContents];
-    [dm addDocument:doc];
+    [[dm.shelves objectAtIndex:0] addDocument:doc];
     [doc release];
     
     // 他のドキュメントを表示中であれば、一覧まで戻す

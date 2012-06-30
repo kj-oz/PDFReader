@@ -20,8 +20,11 @@
     // 呼び出し元への参照
     id delegate_; // Assign
     
-    //  ツリー情報管理オブジェクト
+    // ツリー情報管理オブジェクト
     KLTVTreeManager* treeManager_;
+    
+    // 本棚リスト表示の元になったボタン
+    UIBarButtonItem* shelfListReason_;
     
     IBOutlet UITableView* tableView_;
     IBOutlet UIBarButtonItem* addButton_;
@@ -42,14 +45,14 @@
 - (IBAction)detailAction;
 
 /**
- * 指定のドキュメントをドキュメント画面で表示する.
+ * （カレントの本棚に含まれる）指定のドキュメントをドキュメント画面で表示する.
  * @param doc 対象ドキュメント
  * @param animated アニメーションを伴うかどうか
  */
 - (void)showDocument:(PRDocument*)doc animated:(BOOL)animated;
 
 /**
- * 指定のドキュメントの指定のページをドキュメント画面で表示する.
+ * （カレントの本棚に含まれる）指定のドキュメントの指定のページをドキュメント画面で表示する.
  * @param doc 対象ドキュメント
  * @param tag 対象付箋
  * @param animated アニメーションを伴うかどうか
