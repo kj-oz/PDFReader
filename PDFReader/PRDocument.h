@@ -22,7 +22,7 @@
     // ページ毎の付箋配列の配列
     NSMutableArray* tagArrays_;
     
-    // 付箋を表示する状態
+    // ドキュメント一覧上で付箋を表示する状態
     BOOL tagOpened_;
     
     // ディレクトリを含まないPDFファイル名
@@ -30,6 +30,12 @@
     
     // ドキュメントのタイトル
     NSString* title_;
+    
+    // ドキュメントの著者
+    NSString* author_;
+    
+    // 最終更新日
+    NSString* modDate_;
     
     // 総ページ数
     NSUInteger numPages_;
@@ -44,6 +50,8 @@
 @property (nonatomic, assign) BOOL tagOpened;
 @property (nonatomic, copy) NSString* fileName;
 @property (nonatomic, copy) NSString* title;
+@property (nonatomic, copy) NSString* author;
+@property (nonatomic, copy) NSString* modDate;
 @property (nonatomic, readonly) NSUInteger numPages;
 @property (nonatomic, assign) NSInteger currentPageIndex;
 

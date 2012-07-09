@@ -30,6 +30,7 @@
     IBOutlet UITableView* tableView_;
     IBOutlet UIBarButtonItem* cancelButton_;
     IBOutlet UIBarButtonItem* doneButton_;
+    IBOutlet UIBarButtonItem* downloadButton_;
 }
 
 @property (nonatomic, assign) id delegate;
@@ -38,6 +39,7 @@
 
 - (IBAction)cancelAction;
 - (IBAction)doneAction;
+- (IBAction)downloadAction;
 
 @end
 

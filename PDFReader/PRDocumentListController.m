@@ -71,6 +71,11 @@
 - (void)showShelfListPopover_:(UIBarButtonItem*)reason;
 
 /**
+ * 各種ポップオーバー画面を隠す.
+ */
+- (void)dismissPopover_;
+
+/**
  * 与えられた条件の複数のインデクスパスの配列を得る.
  * @param row 開始行番号
  * @param count インデクスパスの数
@@ -251,6 +256,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 
     [self updateNavigationItemAnimated_:animated];
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
     
     // ドキュメント画面から遷移してきた場合（dm.currentDocument != nill）で、そのドキュメントのノードが
     // 開いていれば、そのドキュメントの子ノードを再構築
@@ -421,16 +427,26 @@
         cell.textLabel.text = doc.title;
         if (downloader) {
             // ダウンロード中
-            CGFloat percent = (CGFloat)downloader.downloadedSize * 100.0 / 
-                                            (CGFloat)downloader.expectedSize;
+            CGFloat percent = downloader.downloadedSize > 0 ? 
+                (CGFloat)downloader.downloadedSize * 100.0 / (CGFloat)downloader.expectedSize :
+                0.0;
             cell.detailTextLabel.text = 
                 [NSString stringWithFormat:@"ダウンロード中　%.1f %% ( %d / %d )", 
                 percent, downloader.downloadedSize, downloader.expectedSize];
         } else {
-            NSString* currentPageString = doc.currentPageIndex >= 0 ?
-                [NSString stringWithFormat:@"%d / ", doc.currentPageIndex + 1] : @"";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@　　%@%dページ", 
-                                         doc.fileName, currentPageString, doc.numPages];
+            NSMutableString* text = [NSMutableString stringWithCapacity:100];
+            if (doc.modDate.length > 0) {
+                [text appendFormat:@"%@  ", doc.modDate];
+            }
+            if (doc.author.length > 0) {
+                [text appendFormat:@"%@  ", doc.author];
+            }
+            [text appendFormat:@"%@  ", doc.fileName];
+            if (doc.currentPageIndex >= 0) {
+                [text appendFormat:@"%d / ", doc.currentPageIndex + 1];
+            }
+            [text appendFormat:@"%d ページ", doc.numPages];
+            cell.detailTextLabel.text = [text copy];
         }
         // 付箋アイコン削除（これがないと、再利用時にドキュメントノードにも付箋アイコンが現れる）
         cell.imageView.image = nil;
@@ -455,12 +471,7 @@
     // アクセサリの設定
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.editingAccessoryType = UITableViewCellAccessoryNone;
-//    if (isDocument(node)) {
-//        cell.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-//    } else {
-//        cell.editingAccessoryType = UITableViewCellAccessoryNone;
-//    }
-    
+
     cell.delegate = self;
 }
 
@@ -485,12 +496,13 @@
     [navController autorelease];
     
     // Popoverとして表示
-    CGFloat height = doc ? 180 : 280;
+    CGFloat height = doc ? 360 : 90;
     controller.contentSizeForViewInPopover = CGSizeMake(320.0, height);
     poController_ = [[UIPopoverController alloc]
                      initWithContentViewController:navController];
     poController_.delegate = self;
     
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
     if (doc) {
         // 編集時はセルからのPopover
         NSInteger index = [self indexForDocument_:doc];
@@ -531,6 +543,8 @@
     poController_.delegate = self;
     
     // ナビゲーションバーのボタンからのPopover
+    // ナビゲーションバーのenabledをNoにしないと、Popoverを表示したままナビゲーションバーの操作ができてしまう.
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
     [poController_ presentPopoverFromBarButtonItem:reason permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
@@ -858,8 +872,17 @@
 - (void)documentDetailControllerDidCancel:(PRDocumentDetailController*)controller
 {
     // コントローラを隠す
+    [self dismissPopover_];
+}
+
+- (void)dismissPopover_
+{
+    // コントローラを隠す
     [poController_ dismissPopoverAnimated:YES];
     [poController_ release], poController_ = nil;
+    
+    // 強制的にdismissした場合、PopoverのpopoverControllerDidDismissPopover:は呼び出されない
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 
 - (void)documentDetailControllerDidSave:(PRDocumentDetailController *)controller
@@ -878,8 +901,7 @@
     }
     
     // コントローラを隠す
-    [poController_ dismissPopoverAnimated:YES];
-    [poController_ release], poController_ = nil;
+    [self dismissPopover_];
 }
 
 #pragma mark - PRShelfListControllerデリゲート
@@ -896,14 +918,15 @@
     }
     
     // コントローラを隠す
-    [poController_ dismissPopoverAnimated:YES];
-    [poController_ release], poController_ = nil;
+    [self dismissPopover_];
 }
 
 #pragma mark - PRConnector 通知
 
 - (void)connectorDidBeginDownload:(NSNotification*)notification
 {
+    KLDBGPrintMethodName("▽ ");
+
     // ダウンロードオブジェクトを取得する
     PRDocument* doc = [[notification userInfo] objectForKey:@"document"];
     [[PRDocumentManager sharedManager] addDocument:doc];
@@ -1010,6 +1033,15 @@
                    withRowAnimation:UITableViewRowAnimationRight];
     [tableView_ endUpdates];
 }                             
+
+#pragma mark UIPopoverControllerデリゲート
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    // ここで元に戻す
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
+    [poController_ release], poController_ = nil;
+}
 
 #pragma mark UIAlertViewデリゲート
 

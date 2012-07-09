@@ -422,7 +422,7 @@
 		319FC6361437452C00B2B2FC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = KO;
 			};
 			buildConfigurationList = 319FC6391437452C00B2B2FC /* Build configuration list for PBXProject "PDFReader" */;

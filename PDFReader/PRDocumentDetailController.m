@@ -135,10 +135,12 @@
     
     // ナビゲーションアイテムの設定を行う
     if (new_) {
-        doneButton_.title = @"ダウンロード";
+        [self.navigationItem setLeftBarButtonItem:cancelButton_ animated:animated];
+        [self.navigationItem setRightBarButtonItem:downloadButton_ animated:animated];
+    } else {
+        [self.navigationItem setLeftBarButtonItem:cancelButton_ animated:animated];
+        [self.navigationItem setRightBarButtonItem:doneButton_ animated:animated];
     }
-    [self.navigationItem setLeftBarButtonItem:cancelButton_ animated:animated];
-    [self.navigationItem setRightBarButtonItem:doneButton_ animated:animated];
 }
 
 #pragma mark - 回転のサポート
@@ -160,38 +162,15 @@
 
 - (IBAction)doneAction
 {
-    // 新規の場合空のドキュメントを準備
-    if (!document_) {
-        document_ = [[PRDocument alloc] init];
-    }
-    
-    // URL
-    if (new_) {
-        PRTextInputCell* urlCell = (PRTextInputCell*)[self cellAtSection_:0 row:0];
-        url_ = urlCell.textField.text;
-        // URLが入力されていることをチェック
-        if (url_.length == 0) {
-            // アラートを表示する
-            UIAlertView* alert = [[UIAlertView alloc] 
-                                  initWithTitle:@"文書の追加" 
-                                  message:@"URLを入力して下さい。" 
-                                  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert autorelease];
-            [alert show];
-            return;
-        }
-    }        
-    
+    PRTextInputCell* cell = nil;
+
     // タイトル
-    NSInteger section = new_ ? 1 : 0;
-    PRTextInputCell* titleCell = (PRTextInputCell*)[self cellAtSection_:section row:0];
-    document_.title = titleCell.textField.text;
-    // タイトルが入力されていることをチェック
+    cell = (PRTextInputCell*)[self cellAtSection_:0 row:0];
+    document_.title = cell.textField.text;
     if (document_.title.length == 0) {
-        NSString* header = new_ ? @"文書の追加" : @"文書の変更";
         // アラートを表示する
         UIAlertView* alert = [[UIAlertView alloc] 
-                              initWithTitle:header 
+                              initWithTitle:@"文書の変更" 
                               message:@"タイトルを入力して下さい。" 
                               delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert autorelease];
@@ -199,44 +178,78 @@
         return;
     }
     
+    // 著者
+    cell = (PRTextInputCell*)[self cellAtSection_:1 row:0];
+    document_.author = cell.textField.text;
+    
+    // 最終更新日
+    cell = (PRTextInputCell*)[self cellAtSection_:2 row:0];
+    document_.modDate = cell.textField.text;
+    
+    // デリゲートに通知する
+    if ([delegate_ respondsToSelector:@selector(documentDetailControllerDidSave:)]) {
+        [delegate_ documentDetailControllerDidSave:self];
+    }
+}
+
+- (IBAction)downloadAction
+{
+    // 新規の場合空のドキュメントを準備
+    if (!document_) {
+        document_ = [[PRDocument alloc] init];
+    }
+    
+    PRTextInputCell* cell = nil;
+
+    // URL
+    cell = (PRTextInputCell*)[self cellAtSection_:0 row:0];
+    url_ = cell.textField.text;
+    if (url_.length == 0) {
+        // アラートを表示する
+        UIAlertView* alert = [[UIAlertView alloc] 
+                              initWithTitle:@"文書の追加" 
+                              message:@"URLを入力して下さい。" 
+                              delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert autorelease];
+        [alert show];
+        return;
+    } else if ([[url_ substringFromIndex:url_.length - 3] compare:@"pdf" 
+                                                          options:NSCaseInsensitiveSearch] != NSOrderedSame) {
+        // アラートを表示する
+        UIAlertView* alert = [[UIAlertView alloc] 
+                              initWithTitle:@"文書の追加" 
+                              message:@"PDFファイルのURLを指定して下さい。" 
+                              delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert autorelease];
+        [alert show];
+        return;
+    }
+        
     // ファイル名
-    if (new_) {
-        PRTextInputCell* fileNameCell = (PRTextInputCell*)[self cellAtSection_:2 row:0];
-        document_.fileName = fileNameCell.textField.text;
-
-        // ファイル名が入力されていることをチェック
-        if (document_.fileName.length == 0) {
-            // アラートを表示する
-            UIAlertView* alert = [[UIAlertView alloc] 
-                                  initWithTitle:@"文書の追加" 
-                                  message:@"ファイル名を入力して下さい。" 
-                                  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert autorelease];
-            [alert show];
-            return;
-        }
-
-        // 同じ名称の既存のファイルの存在チェック
-        NSString* pdfPath = [NSString stringWithFormat:@"%@/%@", 
-                    [PRDocumentManager sharedManager].documentDirectory, document_.fileName];
+    NSString* name = url_.lastPathComponent;
+    NSString* seed = [name stringByDeletingPathExtension];
+    name = seed;
+    
+    // 同じ名称の既存のファイルの存在チェック
+    for (NSInteger i = 2; ; i++) {
+        NSString* pdfPath = [NSString stringWithFormat:@"%@/%@.pdf", 
+                             [PRDocumentManager sharedManager].documentDirectory, name];
         
         NSFileManager* fileManager = [NSFileManager defaultManager];
-        if (new_ && [fileManager fileExistsAtPath:pdfPath]) {
-            // アラートを表示する
-            UIAlertView* alert = [[UIAlertView alloc] 
-                        initWithTitle:@"文書の追加" 
-                        message:@"既に存在するファイル名です。別な名前を指定して下さい。" 
-                        delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert autorelease];
-            [alert show];
-            return;
+        if ([fileManager fileExistsAtPath:pdfPath]) {
+            name = [NSString stringWithFormat:@"%@(%d)", seed, i];
+        } else {
+            break;
         }
-
-        // ドキュメントのダウンロード開始
-        PRConnector* connector = [PRConnector sharedConnector];
-        [connector downloadDocument:document_ withUrlString:url_];
-    }    
-
+    }
+    
+    document_.fileName = [NSString stringWithFormat:@"%@.pdf", name];
+    document_.title = document_.fileName;
+    
+    // ドキュメントのダウンロード開始
+    PRConnector* connector = [PRConnector sharedConnector];
+    [connector downloadDocument:document_ withUrlString:url_];
+    
     // デリゲートに通知する
     if ([delegate_ respondsToSelector:@selector(documentDetailControllerDidSave:)]) {
         [delegate_ documentDetailControllerDidSave:self];
@@ -247,7 +260,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return new_ ? 3 : 2;
+    return new_ ? 1 : 4;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -257,15 +270,14 @@
 
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (!new_) {
-        section++;
-    }
     switch (section) {
         case 0:
-            return @"URL";
+            return new_ ? @"URL" : @"タイトル";
         case 1:
-            return @"タイトル";
+            return @"作者";
         case 2:
+            return @"最終更新日";
+        case 3:
             return @"ファイル名";
     }
     return nil;
@@ -281,28 +293,36 @@
     }
     
     PRTextInputCell* tiCell = (PRTextInputCell*)cell;
-    NSInteger section = new_ ? indexPath.section : indexPath.section + 1;
-    switch (section) {
+    switch (indexPath.section) {
         case 0:
-            tiCell.textField.text = url_;
-            tiCell.textField.keyboardType = UIKeyboardTypeURL;
-            tiCell.textField.delegate = self;
-            tiCell.textField.placeholder = @"URL";
+            if (new_) {
+                tiCell.textField.text = url_;
+                tiCell.textField.keyboardType = UIKeyboardTypeURL;
+                tiCell.textField.placeholder = @"URL";
+            } else {
+                tiCell.textField.text = document_.title;
+                tiCell.textField.keyboardType = UIKeyboardTypeDefault;
+                tiCell.textField.placeholder = @"タイトル";
+            }
             break;
             
         case 1:
-            tiCell.textField.text = document_.title;
+            tiCell.textField.text = document_.author;
             tiCell.textField.keyboardType = UIKeyboardTypeDefault;
-            tiCell.textField.placeholder = @"タイトル";
+            tiCell.textField.placeholder = @"作者";
             break;
             
         case 2:
+            tiCell.textField.text = document_.modDate;
+            tiCell.textField.keyboardType = UIKeyboardTypeDefault;
+            tiCell.textField.placeholder = @"最終更新日";
+            break;
+            
+        case 3:
             tiCell.textField.text = document_.fileName;
             tiCell.textField.keyboardType = UIKeyboardTypeDefault;
-            if (!new_) {
-                tiCell.textField.enabled = NO;
-            }
             tiCell.textField.placeholder = @"ファイル名";
+            tiCell.userInteractionEnabled = false;
             break;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -319,25 +339,25 @@
     return NO;
 }
 
-#pragma mark - UITextField デリゲート
-
-- (void)textFieldDidEndEditing:(UITextField*)textField
-{
-    // 他のセルが空の状態でURLを入力した場合、タイトルとファイル名にもその名称が設定される
-    NSString* url = textField.text;
-    if (url.length > 0) {
-        NSString* fileName = url.lastPathComponent;
-        UITableViewCell* cell = [self cellAtSection_:1 row:0];
-        PRTextInputCell* tiCell = (PRTextInputCell*)cell;
-        if (tiCell.textField.text.length == 0) {
-            tiCell.textField.text = fileName;
-        }
-        cell = [self cellAtSection_:2 row:0];
-        tiCell = (PRTextInputCell*)cell;
-        if (tiCell.textField.text.length == 0) {
-            tiCell.textField.text = fileName;
-        }
-    }
-}
+//#pragma mark - UITextField デリゲート
+//
+//- (void)textFieldDidEndEditing:(UITextField*)textField
+//{
+//    // 他のセルが空の状態でURLを入力した場合、タイトルとファイル名にもその名称が設定される
+//    NSString* url = textField.text;
+//    if (url.length > 0) {
+//        NSString* fileName = url.lastPathComponent;
+//        UITableViewCell* cell = [self cellAtSection_:1 row:0];
+//        PRTextInputCell* tiCell = (PRTextInputCell*)cell;
+//        if (tiCell.textField.text.length == 0) {
+//            tiCell.textField.text = fileName;
+//        }
+//        cell = [self cellAtSection_:2 row:0];
+//        tiCell = (PRTextInputCell*)cell;
+//        if (tiCell.textField.text.length == 0) {
+//            tiCell.textField.text = fileName;
+//        }
+//    }
+//}
 
 @end

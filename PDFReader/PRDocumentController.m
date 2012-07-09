@@ -74,6 +74,11 @@
  */
 - (void)showTagListPopover_:(id)sender;
 
+/**
+ * 各種のPopover画面を強制的に隠す.
+ */
+- (void)dismissPopover_;
+
 @end
 
 @implementation PRDocumentController
@@ -404,6 +409,7 @@
     poController_.delegate = self;
     
     // ナビゲーションバーのボタンからのPopover
+    self.navigationController.toolbar.userInteractionEnabled = NO;
     [poController_ presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
     // Popover表示中はナビゲーションバーを消さない
@@ -452,6 +458,7 @@
                      initWithContentViewController:navController];
     poController_.delegate = self;
     
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
     if (tagView) {
         // 編集時はtagViewからのPopover
         CGRect frame = [pageView_ convertRect:tagView.bounds fromView:tagView];
@@ -493,15 +500,16 @@
 
 - (void)tagDetailControllerDidCancel:(PRTagDetailController*)controller
 {
+    KLDBGPrintMethodName("▼ ");
+
     // コントローラを隠す
-    [poController_ dismissPopoverAnimated:YES];
-    [poController_ release], poController_ = nil;
-    
-    [self startFullScreenTimer_];
+    [self dismissPopover_];
 }
 
 - (void)tagDetailControllerDidSave:(PRTagDetailController *)controller
 {
+    KLDBGPrintMethodName("▼ ");
+
     if (controller.isNew) {
         [pageController_ insertNewTag:controller.tag];
         KLPVTagView* tagView = [pageController_ createTagViewOfTag:controller.tag 
@@ -514,9 +522,17 @@
     [[PRDocumentManager sharedManager].currentDocument saveContents];
     
     // コントローラを隠す
+    [self dismissPopover_];
+}
+
+- (void)dismissPopover_
+{
+    // コントローラを隠す
     [poController_ dismissPopoverAnimated:YES];
     [poController_ release], poController_ = nil;
     
+    // 強制的にdismissした場合、PopoverのpopoverControllerDidDismissPopover:は呼び出されない
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
     [self startFullScreenTimer_];
 }
 
@@ -529,10 +545,7 @@
     [pageView_ renderPageWithInitialLayout];
     
     // コントローラを隠す
-    [poController_ dismissPopoverAnimated:YES];
-    [poController_ release], poController_ = nil;
-    
-    [self startFullScreenTimer_];
+    [self dismissPopover_];
 }
 
 #pragma mark UIPopoverControllerデリゲート
@@ -542,6 +555,8 @@
     KLDBGPrintMethodName("▼ ");
 
     // コントローラを隠す
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
+    self.navigationController.toolbar.userInteractionEnabled = YES;
     [poController_ release], poController_ = nil;
     
     [self startFullScreenTimer_];
