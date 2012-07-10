@@ -242,9 +242,7 @@
             break;
         }
     }
-    
     document_.fileName = [NSString stringWithFormat:@"%@.pdf", name];
-    document_.title = document_.fileName;
     
     // ドキュメントのダウンロード開始
     PRConnector* connector = [PRConnector sharedConnector];

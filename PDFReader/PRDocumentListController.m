@@ -427,21 +427,22 @@
         cell.textLabel.text = doc.title;
         if (downloader) {
             // ダウンロード中
-            CGFloat percent = downloader.downloadedSize > 0 ? 
-                (CGFloat)downloader.downloadedSize * 100.0 / (CGFloat)downloader.expectedSize :
-                0.0;
+            cell.textLabel.text = doc.fileName;
+            NSInteger downloadedSize = downloader.downloadedSize > 0 ? downloader.downloadedSize : 0;
+            CGFloat percent = downloadedSize * 100.0 / (CGFloat)downloader.expectedSize;
             cell.detailTextLabel.text = 
                 [NSString stringWithFormat:@"ダウンロード中　%.1f %% ( %d / %d )", 
-                percent, downloader.downloadedSize, downloader.expectedSize];
+                percent, downloadedSize, downloader.expectedSize];
         } else {
+            cell.textLabel.text = doc.title;
             NSMutableString* text = [NSMutableString stringWithCapacity:100];
+            [text appendFormat:@"%@  ", doc.fileName];
             if (doc.modDate.length > 0) {
                 [text appendFormat:@"%@  ", doc.modDate];
             }
             if (doc.author.length > 0) {
                 [text appendFormat:@"%@  ", doc.author];
             }
-            [text appendFormat:@"%@  ", doc.fileName];
             if (doc.currentPageIndex >= 0) {
                 [text appendFormat:@"%d / ", doc.currentPageIndex + 1];
             }

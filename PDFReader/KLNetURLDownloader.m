@@ -22,6 +22,7 @@
 @synthesize delegate = delegate_;
 @synthesize urlString = urlString_;
 @synthesize networkState = networkState_;
+@synthesize backgroundTaskID = backgroundTaskID_;
 @synthesize expectedSize = expectedSize_;
 @synthesize downloadedSize = downloadedSize_;
 @synthesize downloadedData = downloadedData_;
@@ -90,6 +91,13 @@
     connection_ = [[NSURLConnection 
         connectionWithRequest:request delegate:self] retain];
     
+    // アプリ中断時のダウンロード継続のため
+    backgroundTaskID_ = [[UIApplication sharedApplication] 
+                             beginBackgroundTaskWithExpirationHandler:^{
+        // Cancel the connection
+        [self cancel];
+    }];
+    
     // ネットワークアクセス状態の設定
     self.networkState = KLNetNetworkStateInProgress;
 }
@@ -141,6 +149,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection*)connection
 {
     networkState_ = KLNetNetworkStateFinished;
+    [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskID_];
     
     // デリゲートに通知
     if ([delegate_ respondsToSelector:@selector(downloaderDidFinishLoading:)]) {
@@ -159,6 +168,7 @@
     
     // ネットワークアクセス状態の設定
     networkState_ = KLNetNetworkStateError;
+    [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskID_];
     
     // デリゲートに通知
     if ([delegate_ respondsToSelector:@selector(downloader:didFailWithError:)]) {

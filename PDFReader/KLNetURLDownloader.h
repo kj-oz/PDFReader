@@ -34,6 +34,9 @@ enum
     // ネットワークの状態
     NSInteger networkState_;
     
+    // バックグラウンドタスクのID
+    UIBackgroundTaskIdentifier backgroundTaskID_;
+    
     // ダウンロード対象のファイルのサイズ
     NSInteger expectedSize_;
     
@@ -52,7 +55,8 @@ enum
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, readonly) NSString* urlString;
-@property NSInteger networkState;
+@property (nonatomic, assign) NSInteger networkState;
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
 @property (nonatomic, readonly) NSInteger expectedSize;
 @property (nonatomic, readonly) NSUInteger downloadedSize;
 @property (nonatomic, readonly) NSMutableData* downloadedData;

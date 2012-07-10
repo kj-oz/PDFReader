@@ -54,6 +54,10 @@ static PRAppController*    sharaedInstance_ = nil;
         sharaedInstance_ = self;
     }
     
+    // キー値監視の登録
+    [[PRConnector sharedConnector] 
+     addObserver:self forKeyPath:@"networkAccessing" options:0 context:NULL];
+    
     return self;
 }
 
@@ -84,7 +88,7 @@ static PRAppController*    sharaedInstance_ = nil;
 {
     // ネットワークアクティビティを更新する
     [UIApplication sharedApplication].networkActivityIndicatorVisible = 
-    [PRConnector sharedConnector].networkAccessing;
+                                [PRConnector sharedConnector].networkAccessing;
 }
 
 #pragma mark - UIApplication デリゲート
@@ -210,4 +214,15 @@ static PRAppController*    sharaedInstance_ = nil;
     [self saveData_];
 }
 
+#pragma mark - NSKeyValueObserving プロトコル
+
+- (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object 
+                        change:(NSDictionary*)change context:(void*)context
+{
+    // networkAccessingキーの場合
+    if ([keyPath isEqualToString:@"networkAccessing"]) {
+        // 画面を更新する
+        [self updateNetworkActivity_];
+    }
+}
 @end
