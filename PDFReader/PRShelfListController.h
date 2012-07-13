@@ -3,7 +3,7 @@
 //  PDFReader
 //
 //  Created by KO on 12/06/19.
-//  Copyright (c) 2012年 KO All rights reserved.
+//  Copyright (c) 2012年 KO. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

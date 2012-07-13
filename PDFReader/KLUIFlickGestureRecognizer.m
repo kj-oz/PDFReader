@@ -3,7 +3,7 @@
 //  KLib UI
 //
 //  Created by KO on 12/05/22.
-//  Copyright (c) 2012年 KO All rights reserved.
+//  Copyright (c) 2012年 KO. All rights reserved.
 //
 
 #import "KLUIFlickGestureRecognizer.h"

@@ -3,7 +3,7 @@
 //  KLib PageView
 //
 //  Created by KO on 11/10/08.
-//  Copyright 2011年 KO All rights reserved.
+//  Copyright 2011年 KO. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

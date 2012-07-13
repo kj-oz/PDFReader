@@ -3,7 +3,7 @@
 //  KLib PageView
 //
 //  Created by KO on 12/02/02.
-//  Copyright (c) 2012年 KO All rights reserved.
+//  Copyright (c) 2012年 KO. All rights reserved.
 //
 
 #import "KLPVPageView.h"

@@ -3,7 +3,7 @@
 //  PDFReader
 //
 //  Created by KO on 12/06/08.
-//  Copyright (c) 2012年 KO All rights reserved.
+//  Copyright (c) 2012年 KO. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

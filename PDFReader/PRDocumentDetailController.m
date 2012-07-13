@@ -3,7 +3,7 @@
 //  PDFReader
 //
 //  Created by KO on 12/03/13.
-//  Copyright (c) 2012年 KO All rights reserved.
+//  Copyright (c) 2012年 KO. All rights reserved.
 //
 
 #import "PRDocumentDetailController.h"
@@ -336,26 +336,5 @@
 {
     return NO;
 }
-
-//#pragma mark - UITextField デリゲート
-//
-//- (void)textFieldDidEndEditing:(UITextField*)textField
-//{
-//    // 他のセルが空の状態でURLを入力した場合、タイトルとファイル名にもその名称が設定される
-//    NSString* url = textField.text;
-//    if (url.length > 0) {
-//        NSString* fileName = url.lastPathComponent;
-//        UITableViewCell* cell = [self cellAtSection_:1 row:0];
-//        PRTextInputCell* tiCell = (PRTextInputCell*)cell;
-//        if (tiCell.textField.text.length == 0) {
-//            tiCell.textField.text = fileName;
-//        }
-//        cell = [self cellAtSection_:2 row:0];
-//        tiCell = (PRTextInputCell*)cell;
-//        if (tiCell.textField.text.length == 0) {
-//            tiCell.textField.text = fileName;
-//        }
-//    }
-//}
 
 @end

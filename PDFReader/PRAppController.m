@@ -3,7 +3,7 @@
 //  PDFReader
 //
 //  Created by KO on 11/10/01.
-//  Copyright 2011年 KO All rights reserved.
+//  Copyright 2011年 KO. All rights reserved.
 //
 
 #import "PRAppController.h"

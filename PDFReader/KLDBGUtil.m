@@ -3,7 +3,7 @@
 //  KLib Util
 //
 //  Created by KO on 12/05/03.
-//  Copyright (c) 2012年 KO All rights reserved.
+//  Copyright (c) 2012年 KO. All rights reserved.
 //
 
 #import "KLDBGUtil.h"
