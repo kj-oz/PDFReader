@@ -349,7 +349,9 @@
                               withRowAnimation:UITableViewRowAnimationBottom];
             [tableView_ endUpdates];
         } else {
-            [[PRDocumentManager sharedManager] addShelf:[[PRShelf alloc] initWithName:text]];
+            PRShelf* shelf = [[PRShelf alloc] initWithName:text];
+            [[PRDocumentManager sharedManager] addShelf:shelf];
+            [shelf release];
             textField.enabled = NO;
         }
     } else {

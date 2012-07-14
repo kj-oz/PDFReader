@@ -158,27 +158,13 @@ static PRAppController*    sharaedInstance_ = nil;
     KLDBGPrint("▼ %s url:%s", KLDBGMethod(), url.path.UTF8String);
     
     // 同じ名称の既存のファイルの存在チェック
-    NSString* fileName = url.lastPathComponent;
+    NSString* fileName = [[PRDocumentManager sharedManager] findUniqName:url.lastPathComponent];
     NSString* pdfPath = [NSString stringWithFormat:@"%@/%@", 
                          [PRDocumentManager sharedManager].documentDirectory, fileName];
     
-    NSFileManager* fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:pdfPath]) {
-        // 名称が重複していた場合、XXXX.n.pdfに名称を変更
-        NSArray* parts = [fileName componentsSeparatedByString:@"."];
-        for (NSInteger i = 1; i < 1000; i++) {
-            fileName = [NSString stringWithFormat:@"%@.%d.%@", [parts objectAtIndex:0],
-                        i, [parts objectAtIndex:1]];
-            pdfPath = [NSString stringWithFormat:@"%@/%@", 
-                        [PRDocumentManager sharedManager].documentDirectory, fileName];
-            if (![fileManager fileExistsAtPath:pdfPath]) {
-                break;
-            }
-        }
-    }
-    
     // ファイル移動（他のアプリケーションから呼び出されると Documents/InBoxの下にコピーされている）
     NSError* error = nil;
+    NSFileManager* fileManager = [NSFileManager defaultManager];
     [fileManager moveItemAtURL:url toURL:[NSURL fileURLWithPath:pdfPath] error:&error];
     if (error) {
         KLDBGPrint("File Move Error: %s\n", error.localizedDescription.UTF8String);
@@ -198,7 +184,7 @@ static PRAppController*    sharaedInstance_ = nil;
     }
 
     // ドキュメントの表示
-    dm.currentShelf = [dm.shelves objectAtIndex:0];
+    [documentListController_ changeShelf:[dm.shelves objectAtIndex:0]];
     [documentListController_ showDocument:doc animated:NO];
     return YES;
 }

@@ -179,7 +179,7 @@ static PRDocumentManager*    sharaedInstance_ = nil;
     NSArray* dirArray = [fileManager 
                          contentsOfDirectoryAtPath:documentDirectory_ error:&error];
     
-    // 直接dirArray.countを使用すると、Analyze時に２３０行目でgabage value を使おうとしているというメッセージがでる
+    // 直接dirArray.countを使用すると、Analyze時に230行目でgabage value を使おうとしているというメッセージがでる
     NSUInteger len = dirArray.count;
     BOOL docExists[len];
     for (NSUInteger i = 0; i < len; i++) {
@@ -240,6 +240,24 @@ static PRDocumentManager*    sharaedInstance_ = nil;
     [NSKeyedArchiver archiveRootObject:shelves_ toFile:dataPath];
 }
 
+- (NSString*)findUniqName:(NSString*)original
+{
+    NSString* seed = [original stringByDeletingPathExtension];
+    NSString* name = seed;
 
+    // 同じ名称の既存のファイルの存在チェック
+    for (NSInteger i = 2; ; i++) {
+        NSString* pdfPath = [NSString stringWithFormat:@"%@/%@.pdf", 
+                             [PRDocumentManager sharedManager].documentDirectory, name];
+        
+        NSFileManager* fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:pdfPath]) {
+            name = [NSString stringWithFormat:@"%@(%d)", seed, i];
+        } else {
+            break;
+        }
+    }
+    return [NSString stringWithFormat:@"%@.pdf", name];
+}
 
 @end

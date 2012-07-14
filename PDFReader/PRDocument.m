@@ -188,13 +188,17 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
     
     CGPDFStringRef pdfStr;
     if (CGPDFDictionaryGetString(dic, "Title", &pdfStr)) {
-        self.title = (NSString*)CGPDFStringCopyTextString(pdfStr);
+        NSString* str = (NSString*)CGPDFStringCopyTextString(pdfStr);
+        self.title = str;
+        [str release];
     } else {
         self.title = self.fileName;
     }
     
     if (CGPDFDictionaryGetString(dic, "Author", &pdfStr)) {
-        self.author = (NSString*)CGPDFStringCopyTextString(pdfStr);
+        NSString* str = (NSString*)CGPDFStringCopyTextString(pdfStr);
+        self.author = str;
+        [str release];
     } else {
         self.author = @"";
     }
@@ -205,6 +209,7 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
                        [str substringWithRange:NSMakeRange(2, 4)],
                        [str substringWithRange:NSMakeRange(6, 2)],
                        [str substringWithRange:NSMakeRange(8, 2)]];
+        [str release];
     } else {
         self.modDate = @"";
     }

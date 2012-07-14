@@ -11,6 +11,7 @@
 @class KLTVTreeManager;
 @class PRDocument;
 @class PRTag;
+@class PRShelf;
 
 /**
  * ドキュメント一覧画面のコントローラ.
@@ -57,6 +58,12 @@
  * @param tag 対象付箋
  * @param animated アニメーションを伴うかどうか
  */
-- (void)showDocument:(PRDocument *)doc atTag:(PRTag*)tag animated:(BOOL)animated;
+- (void)showDocument:(PRDocument*)doc atTag:(PRTag*)tag animated:(BOOL)animated;
+
+/**
+ * カレントの本棚を変更する.
+ * @param shelf 本棚
+ */
+- (void)changeShelf:(PRShelf*)shelf;
 
 @end

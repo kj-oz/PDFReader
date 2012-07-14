@@ -226,23 +226,7 @@
     }
         
     // ファイル名
-    NSString* name = url_.lastPathComponent;
-    NSString* seed = [name stringByDeletingPathExtension];
-    name = seed;
-    
-    // 同じ名称の既存のファイルの存在チェック
-    for (NSInteger i = 2; ; i++) {
-        NSString* pdfPath = [NSString stringWithFormat:@"%@/%@.pdf", 
-                             [PRDocumentManager sharedManager].documentDirectory, name];
-        
-        NSFileManager* fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:pdfPath]) {
-            name = [NSString stringWithFormat:@"%@(%d)", seed, i];
-        } else {
-            break;
-        }
-    }
-    document_.fileName = [NSString stringWithFormat:@"%@.pdf", name];
+    document_.fileName = [[PRDocumentManager sharedManager] findUniqName:url_.lastPathComponent];
     
     // ドキュメントのダウンロード開始
     PRConnector* connector = [PRConnector sharedConnector];

@@ -120,4 +120,11 @@
  */
 - (void)save;
 
+/**
+ * 既存のファイルと重複しない名称を返す.
+ * @param original 元の名称
+ * @return 重複しない名称（元の名称がabc.pdfの場合、abc(n).pdf）
+ */
+- (NSString*)findUniqName:(NSString*)original;
+
 @end

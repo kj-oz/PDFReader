@@ -231,6 +231,7 @@
     controller.targetPoint = tag ? tag.center : CGPointZero;
     
     // ナビゲーションコントローラに追加する
+    self.title = dm.currentShelf.name;
     [self.navigationController pushViewController:controller animated:animated];
     [controller release];
 }
@@ -294,7 +295,7 @@
                   atIndexPath:[tableView_ indexPathForCell:cell]];
         }
     }
-    
+
     // 通知の登録
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(connectorDidBeginDownload:) 
@@ -447,7 +448,7 @@
                 [text appendFormat:@"%d / ", doc.currentPageIndex + 1];
             }
             [text appendFormat:@"%d ページ", doc.numPages];
-            cell.detailTextLabel.text = [text copy];
+            cell.detailTextLabel.text = text;
         }
         // 付箋アイコン削除（これがないと、再利用時にドキュメントノードにも付箋アイコンが現れる）
         cell.imageView.image = nil;
@@ -907,13 +908,19 @@
 
 #pragma mark - PRShelfListControllerデリゲート
 
+- (void)changeShelf:(PRShelf*)shelf
+{
+    [PRDocumentManager sharedManager].currentShelf = shelf;
+    self.title = shelf.name;
+    [self createTree_];
+    [tableView_ reloadData];
+}
+
+
 - (void)shelfListControllerShelfDidSelect:(PRShelfListController*)controller
 {
     if (shelfListReason_ == shelfButton_) {
-        [PRDocumentManager sharedManager].currentShelf = controller.selectedShelf;
-        self.title = controller.selectedShelf.name;
-        [self createTree_];
-        [tableView_ reloadData];
+        [self changeShelf:controller.selectedShelf];
     } else {
         [self moveSelectedDocumentsToShelf_:controller.selectedShelf];
     }
