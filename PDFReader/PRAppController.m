@@ -78,6 +78,10 @@ static PRAppController*    sharaedInstance_ = nil;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"lastDocument"];        
     }
     
+    // カレントの本棚の情報も標準の設定ファイルに保存する
+    [[NSUserDefaults standardUserDefaults] 
+        setValue:dm.currentShelf.name forKey:@"lastShelf"];
+
     // 実データを保存
     [dm save];
 }
