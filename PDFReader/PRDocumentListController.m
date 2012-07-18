@@ -966,9 +966,11 @@
     
     // 対象セルの検索
     NSInteger index = [self indexForDocument_:doc];
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    [self updateCell_:(KLTVTreeViewCell*)[tableView_ cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+    // カレントの本棚が変えられていると見つからないこともある
+    if (index >= 0) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [self updateCell_:(KLTVTreeViewCell*)[tableView_ cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+    }
 }
 
 - (void)connectorDidFinishDownload:(NSNotification*)notification
@@ -983,12 +985,14 @@
         NSString* message = [NSString stringWithFormat:
                              @"ファイル%@のダウンロードがキャンセルされました。", doc.fileName];
         [self handleDownloadingErrorWithDocument_:doc message:message];
+        return;
     } else if (downloader.networkState == KLNetNetworkStateError) {
         NSString* message = [NSString stringWithFormat:
                              @"ファイル%@のダウンロードでエラーが発生しました。\nエラー%d：%@", 
                              doc.fileName, downloader.error.code,
                              downloader.error.localizedDescription];
         [self handleDownloadingErrorWithDocument_:doc message:message];
+        return;
     }
     
     // ファイルの保存
@@ -1002,6 +1006,7 @@
                              doc.fileName, downloader.error.code,
                              downloader.error.localizedDescription];
         [self handleDownloadingErrorWithDocument_:doc message:message];
+        return;
     }
     
     // docのリフレッシュ
@@ -1015,9 +1020,10 @@
     
     // 対象セルの検索
     NSInteger index = [self indexForDocument_:doc];
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    [self updateCell_:(KLTVTreeViewCell*)[tableView_ cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+    if (index >= 0) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [self updateCell_:(KLTVTreeViewCell*)[tableView_ cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+    }
 }
       
 - (void)handleDownloadingErrorWithDocument_:(PRDocument*)doc message:(NSString*)message
@@ -1028,7 +1034,16 @@
                        cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     [alert autorelease];
     [alert show];
-     
+    
+    // ファイルの削除
+    NSString* path = [NSString stringWithFormat:@"%@/%@", 
+                      [PRDocumentManager sharedManager].documentDirectory, doc.fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:path]) {
+        NSError* error;
+        [fileManager removeItemAtPath:path error:&error];
+    }
+
     // 対象セルの検索
     NSInteger index = [self indexForDocument_:doc];
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];

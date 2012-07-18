@@ -125,4 +125,9 @@
     [document release];
 }
 
+- (BOOL)containsDocument:(PRDocument*)doc
+{
+    return [documents_ containsObject:doc];
+}
+
 @end
