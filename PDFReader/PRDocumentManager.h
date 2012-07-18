@@ -54,7 +54,7 @@
 - (void)insertDocument:(PRDocument*)document atIndex:(NSUInteger)index;
 
 /**
- * 指定のドキュメントを（いずれかの本棚から）削除する.
+ * カレントの本棚の指定のドキュメントを削除する.
  * @param document 削除するドキュメント
  */
 - (void)removeDocument:(PRDocument*)document;
@@ -66,10 +66,10 @@
 - (void)removeDocumentAtIndex:(NSUInteger)index;
 
 /**
- * 指定の複数のドキュメントを（いずれかの本棚から）削除する.
+ * カレントの本棚の指定の複数のドキュメントを削除する.
  * @param documents 削除する複数のドキュメント
  */
-- (void)removeDocuments:(NSArray*)documents;
+- (void)removeDocuments:(NSArray*)documentss;
 
 /**
  * カレントの本棚の指定の位置のドキュメントを別な位置に移動する.

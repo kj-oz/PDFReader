@@ -75,7 +75,6 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
             CFRelease(uuid);
             tagOpened_ = YES;
         }
-        [self release], self = nil;
     }    
     return self;
 }

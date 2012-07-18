@@ -76,11 +76,4 @@
  */
 - (void)moveDocumentAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 
-/**
- * 指定のドキュメントが含まれているかどうかを確かめる.
- * @param doc 対象のドキュメント
- * @return 含まれていればYES
- */
-- (BOOL)containsDocument:(PRDocument*)doc;
-
 @end
