@@ -81,7 +81,15 @@ static PRDocumentManager*    sharaedInstance_ = nil;
 
 - (void)removeDocument:(PRDocument*)document
 {
-    [currentShelf_ removeDocument:document];
+    if ([currentShelf_ containsDocument:document]) {
+        [currentShelf_ removeDocument:document];
+    } else {
+        for (PRShelf* shelf in shelves_) {
+            if (shelf != currentShelf_ && [shelf containsDocument:document]) {
+                [shelf removeDocument:document];
+            }
+        }
+    }
 }
 
 - (void)removeDocumentAtIndex:(NSUInteger)index
@@ -91,7 +99,9 @@ static PRDocumentManager*    sharaedInstance_ = nil;
 
 - (void)removeDocuments:(NSArray*)documents
 {
-    [currentShelf_ removeDocuments:documents];
+    for (PRDocument* doc in documents) {
+        [self removeDocument:doc];
+    }
 }
 
 - (void)moveDocumentAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
@@ -209,12 +219,21 @@ static PRDocumentManager*    sharaedInstance_ = nil;
     for (NSUInteger i = 0; i < len; i++) {
         if (docExists[i] == NO) {
             NSString* fileName = [dirArray objectAtIndex:i];
+            NSString* path = [NSString stringWithFormat:@"%@/%@", documentDirectory_, fileName];
             if ([[[fileName pathExtension] lowercaseString] isEqualToString:@"pdf"]) {
                 // まだ未登録のPDFを「新着」に追加
-                PRDocument* doc = [[PRDocument alloc] initWithPath:
-                            [NSString stringWithFormat:@"%@/%@", documentDirectory_, fileName]];
-                [shelf addDocument:doc];
-                [doc release];
+                PRDocument* doc = [[PRDocument alloc] initWithPath:path];
+                if (doc) {
+                    [shelf addDocument:doc];
+                    [doc release];
+                } else {
+                    // 不完全なPDF
+                    [fileManager removeItemAtPath:path error:&error];
+                    path = [NSString stringWithFormat:@"%@.annotation", path];
+                    if ([fileManager fileExistsAtPath:path]) {
+                        [fileManager removeItemAtPath:path error:&error];
+                    }
+                }
             }
         }
     }
@@ -246,11 +265,11 @@ static PRDocumentManager*    sharaedInstance_ = nil;
     NSString* name = seed;
 
     // 同じ名称の既存のファイルの存在チェック
+    NSFileManager* fileManager = [NSFileManager defaultManager];
     for (NSInteger i = 2; ; i++) {
         NSString* pdfPath = [NSString stringWithFormat:@"%@/%@.pdf", 
                              [PRDocumentManager sharedManager].documentDirectory, name];
         
-        NSFileManager* fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:pdfPath]) {
             name = [NSString stringWithFormat:@"%@(%d)", seed, i];
         } else {
