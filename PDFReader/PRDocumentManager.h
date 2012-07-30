@@ -79,6 +79,13 @@
 - (void)moveDocumentAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 
 /**
+ * カレントの本棚に指定のドキュメントが含まれているかどうかを確かめる.
+ * @param doc 対象のドキュメント
+ * @return 含まれていればYES
+ */
+- (BOOL)containsDocument:(PRDocument*)doc;
+
+/**
  * 本棚を追加する.
  * @param shelf 追加する本棚
  */

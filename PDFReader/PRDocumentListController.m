@@ -425,7 +425,6 @@
         KLNetURLDownloader* downloader = [[PRConnector sharedConnector] 
                                           downloaderForDocument:doc];
         
-        cell.textLabel.text = doc.title;
         if (downloader) {
             // ダウンロード中
             cell.textLabel.text = doc.fileName;
@@ -759,8 +758,16 @@
 - (NSIndexPath*)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
-    if (tableView_.isEditing && !isDocument(node)) {
-        return nil;
+    if (isDocument(node)) {
+        PRDocument* doc = (PRDocument*)node.data;
+        if ([[PRConnector sharedConnector] downloaderForDocument:doc]) {
+            // ダウンロード途中も選択不可
+            return nil;
+        }
+    } else {
+        if (tableView_.isEditing) {
+            return nil;
+        }
     }
     return indexPath;
 }
@@ -769,7 +776,10 @@
 {
     KLTVTreeNode* node = [treeManager_ nodeAtIndex:indexPath.row];
     if (tableView_.isEditing) {
-        detailButton_.enabled = [tableView_ indexPathsForSelectedRows].count == 1;
+        NSUInteger selectedCount = [tableView_ indexPathsForSelectedRows].count;
+        detailButton_.enabled = selectedCount == 1;
+        deleteButton_.enabled = selectedCount > 0;
+        moveButton_.enabled = selectedCount > 0;
     } else {
         if (isDocument(node)) {
             PRDocument* doc = (PRDocument*)node.data;
@@ -933,6 +943,13 @@
     [self dismissPopover_];
 }
 
+- (void)shelfListControllerShelfDidRename:(PRShelf *)shelf
+{
+    if ([PRDocumentManager sharedManager].currentShelf == shelf) {
+        self.title = shelf.name;
+    }
+}
+
 #pragma mark - PRConnector 通知
 
 - (void)connectorDidBeginDownload:(NSNotification*)notification
@@ -941,7 +958,13 @@
 
     // ダウンロードオブジェクトを取得する
     PRDocument* doc = [[notification userInfo] objectForKey:@"document"];
-    [[PRDocumentManager sharedManager] addDocument:doc];
+    PRDocumentManager* dm = [PRDocumentManager sharedManager];
+    if ([dm containsDocument:doc]) {
+        // まれに原因不明だがダウンロード中のドキュメントが２行表示されてしまうことがあるので
+        // 念のため既にあるかどうかをチェックする
+        return;
+    }
+    [dm addDocument:doc];
     
     // ツリーへのノードの追加
     KLTVTreeNode* docNode = [[KLTVTreeNode alloc] initWithData:doc];
@@ -1068,6 +1091,8 @@
     // ここで元に戻す
     self.navigationController.navigationBar.userInteractionEnabled = YES;
     [poController_ release], poController_ = nil;
+    
+    // 
 }
 
 #pragma mark UIAlertViewデリゲート

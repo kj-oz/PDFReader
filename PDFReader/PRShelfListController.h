@@ -54,4 +54,10 @@
  */
 - (void)shelfListControllerShelfDidSelect:(PRShelfListController*)controller;
 
+/**
+ * 本棚一覧画面で本棚が名称変更された場合に呼び出されるハンドラ.
+ * @param shlef 名称が変更された本棚
+ */
+- (void)shelfListControllerShelfDidRename:(PRShelf*)shelf;
+
 @end

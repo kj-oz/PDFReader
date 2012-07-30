@@ -93,7 +93,7 @@ static CGFloat presetColors_[][4] = {
 
 - (void)setText:(NSString*)text
 {
-    if (![text_ compare:text]) {
+    if ([text_ compare:text] != NSOrderedSame) {
         [text_ release], text_ = nil;
         text_ = [[text copy] retain];
     }

@@ -109,6 +109,11 @@ static PRDocumentManager*    sharaedInstance_ = nil;
     [currentShelf_ moveDocumentAtIndex:fromIndex toIndex:toIndex];
 }
 
+- (BOOL)containsDocument:(PRDocument*)doc
+{
+    return [currentShelf_ containsDocument:doc];
+}
+
 #pragma mark - shelfの操作
 
 - (void)addShelf:(PRDocument*)shelf

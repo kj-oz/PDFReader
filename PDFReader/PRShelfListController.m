@@ -366,6 +366,7 @@
                 // 本棚の名称を変更する
                 shelf.name = text;
                 [[PRDocumentManager sharedManager] save];
+                [delegate_ shelfListControllerShelfDidRename:shelf];
             }
         } else {
             textField.text = shelf.name;
