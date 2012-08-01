@@ -122,7 +122,7 @@
 		318448A114C4657400A7E5E9 /* PRTextInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextInputCell.m; sourceTree = "<group>"; };
 		318F42ED1552814400A253BA /* KLDBGUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLDBGUtil.h; sourceTree = "<group>"; };
 		318F42EE1552814400A253BA /* KLDBGUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLDBGUtil.m; sourceTree = "<group>"; };
-		319FC63F1437452C00B2B2FC /* 付箋PDF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "付箋PDF.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		319FC63F1437452C00B2B2FC /* TagPDF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TagPDF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		319FC6431437452C00B2B2FC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		319FC6451437452C00B2B2FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		319FC6471437452C00B2B2FC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -272,7 +272,7 @@
 		319FC6401437452C00B2B2FC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				319FC63F1437452C00B2B2FC /* 付箋PDF.app */,
+				319FC63F1437452C00B2B2FC /* TagPDF.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,7 +425,7 @@
 			);
 			name = PDFReader;
 			productName = PDFReader;
-			productReference = 319FC63F1437452C00B2B2FC /* 付箋PDF.app */;
+			productReference = 319FC63F1437452C00B2B2FC /* TagPDF.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -605,7 +605,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "付箋PDF";
+				PRODUCT_NAME = TagPDF;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -618,7 +618,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFReader/PDFReader-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "付箋PDF";
+				PRODUCT_NAME = TagPDF;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

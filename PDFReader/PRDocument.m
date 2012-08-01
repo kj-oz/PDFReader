@@ -74,8 +74,9 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
             uid_ = (NSString*)CFUUIDCreateString(NULL, uuid);
             CFRelease(uuid);
             tagOpened_ = YES;
+        } else {
+            [self release], self = nil;
         }
-        [self release], self = nil;
     }    
     return self;
 }
@@ -206,10 +207,14 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
     
     if (CGPDFDictionaryGetString(dic, "ModDate", &pdfStr)) {
         NSString* str = (NSString*)CGPDFStringCopyTextString(pdfStr);
-        self.modDate = [NSString stringWithFormat:@"%@/%@/%@",
-                       [str substringWithRange:NSMakeRange(2, 4)],
-                       [str substringWithRange:NSMakeRange(6, 2)],
-                       [str substringWithRange:NSMakeRange(8, 2)]];
+        NSRange range = NSMakeRange(2, 4);
+        NSString* strYear = [str substringWithRange:range];
+        range = NSMakeRange(6, 2);
+        NSString* strMonth = [str substringWithRange:range];
+        range = NSMakeRange(8, 2);
+        NSString* strDay = [str substringWithRange:range];
+        
+        self.modDate = [NSString stringWithFormat:@"%@/%@/%@", strYear, strMonth, strDay];
         [str release];
     } else {
         self.modDate = @"";

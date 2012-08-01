@@ -533,6 +533,7 @@
     
     // 強制的にdismissした場合、PopoverのpopoverControllerDidDismissPopover:は呼び出されない
     self.navigationController.navigationBar.userInteractionEnabled = YES;
+    self.navigationController.toolbar.userInteractionEnabled = YES;
     [self startFullScreenTimer_];
 }
 
