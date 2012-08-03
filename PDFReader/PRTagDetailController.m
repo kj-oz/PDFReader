@@ -176,15 +176,13 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
     PRTextAreaCell* textCell = (PRTextAreaCell*)[self cellAtSection_:0 row:0];
     tag_.text = textCell.textView.text;
     
-    UITableViewCell* colorCell = [self cellAtSection_:1 row:selectedColorRow_];
-    tag_.color = colorCell.backgroundColor;
-    
     NSInteger selectedPresetColorIndex = selectedColorRow_;
     if (originalColor_) {
         selectedPresetColorIndex--;
     }
     if (selectedPresetColorIndex >= 0) {
         lastSelectedPresetColorIndex_ = selectedPresetColorIndex;
+        tag_.color = [PRTag presetColorAtIndex:selectedPresetColorIndex];
     }
     
     // デリゲートに通知する
