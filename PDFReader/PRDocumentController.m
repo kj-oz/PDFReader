@@ -449,7 +449,7 @@
     [navController autorelease];
     
     // Popoverとして表示
-    CGFloat height = 140.0 + [PRTag presetColorCount] * 44.0;
+    CGFloat height = 164.0 + [PRTag presetColorCount] * 44.0;
     if (tagView && controller.hasOriginalColor) {
         height += 44.0;
     }

@@ -27,6 +27,9 @@
     // ダウンロード元URL
     NSString* url_;
     
+    // 各テキスト入力フィールド
+    UITextField* tf_[3];
+    
     IBOutlet UITableView* tableView_;
     IBOutlet UIBarButtonItem* cancelButton_;
     IBOutlet UIBarButtonItem* doneButton_;

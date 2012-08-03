@@ -306,7 +306,10 @@
             tiCell.textField.placeholder = @"ファイル名";
             tiCell.userInteractionEnabled = false;
             break;
+            
     }
+    tiCell.textField.delegate = self;
+    tf_[indexPath.section] = tiCell.textField;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -319,6 +322,26 @@
 - (BOOL)tableView:(UITableView*)tableView canMoveRowAtIndexPath:(NSIndexPath*)indexPath
 {
     return NO;
+}
+
+#pragma mark - UITextField デリゲート
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    for (NSInteger i = 0; i < 3; i++) {
+        if (tf_[i] == textField) {
+            i++;
+            if (i == 3) {
+                i = 0;
+            }
+            if ([tf_[i] canBecomeFirstResponder]) {
+                [tf_[i] becomeFirstResponder];
+            }
+            break;
+        }
+    }
+    return YES;
 }
 
 @end

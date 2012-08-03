@@ -7,7 +7,7 @@
 //
 
 #import "PRTagDetailController.h"
-#import "PRTextInputCell.h"
+#import "PRTextAreaCell.h"
 #import "PRTag.h"
 
 // 付箋追加/編集画面で最後に選択されたプリセット色のインデックス
@@ -173,8 +173,8 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
         tag_.origin = CGPointMake(0.0, tag_.size.width);        
     }
     
-    PRTextInputCell* textCell = (PRTextInputCell*)[self cellAtSection_:0 row:0];
-    tag_.text = textCell.textField.text;
+    PRTextAreaCell* textCell = (PRTextAreaCell*)[self cellAtSection_:0 row:0];
+    tag_.text = textCell.textView.text;
     
     UITableViewCell* colorCell = [self cellAtSection_:1 row:selectedColorRow_];
     tag_.color = colorCell.backgroundColor;
@@ -228,16 +228,15 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
     UITableViewCell* cell = nil;
     switch (indexPath.section) {
         case 0:
-            cell = [tableView_ dequeueReusableCellWithIdentifier:@"TextInputCell"];
+            cell = [tableView_ dequeueReusableCellWithIdentifier:@"TextViewCell"];
             if (!cell) {
-                cell = [[PRTextInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextInputCell"];
+                cell = [[PRTextAreaCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextViewCell"];
                 [cell autorelease];
             }
             
-            PRTextInputCell* tiCell = (PRTextInputCell*)cell;
-            tiCell.textField.text = tag_.text;
-            tiCell.textField.placeholder = @"ラベル文字列";
-            tiCell.textField.keyboardType = UIKeyboardTypeDefault;
+            PRTextAreaCell* tiCell = (PRTextAreaCell*)cell;
+            tiCell.textView.text = tag_.text;
+            tiCell.textView.keyboardType = UIKeyboardTypeDefault;
             break;
             
         case 1:
@@ -250,15 +249,25 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
             }
             
             // セルの値を更新する
+            UIColor* color;
             if (originalColor_ && indexPath.row == 0) {
-                cell.backgroundColor = tag_.color;
+                color = tag_.color;
             } else {
                 NSUInteger presetIndex = indexPath.row;
                 if (originalColor_) {
                     presetIndex--;
                 }
-                cell.backgroundColor = [PRTag presetColorAtIndex:presetIndex];
+                color = [PRTag presetColorAtIndex:presetIndex];
             }
+            
+            UIGraphicsBeginImageContext(CGSizeMake(236.0, 16.0));
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            CGContextSetFillColorWithColor(context, color.CGColor);
+            CGRect rect = CGRectMake(48.0, 0.0, 188.0, 16.0);
+            CGContextFillRect(context, rect);
+            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            cell.imageView.image = image;
             
             if (indexPath.row == selectedColorRow_) {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -283,6 +292,15 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
 }
 
 #pragma mark - UITableView デリゲート
+
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if (indexPath.section == 0) {
+        return 68.0;
+    } else {
+        return 44.0;
+    }
+}
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {

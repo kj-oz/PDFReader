@@ -57,6 +57,7 @@
 		319FC67F1440131100B2B2FC /* KLPVTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC67E1440131100B2B2FC /* KLPVTiledView.m */; };
 		319FC6851441007E00B2B2FC /* PRPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC6841441007E00B2B2FC /* PRPageController.m */; };
 		319FC6871445ED7300B2B2FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6861445ED7200B2B2FC /* QuartzCore.framework */; };
+		31C8C1D815C9968500AED9DF /* PRTextAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C8C1D715C9968500AED9DF /* PRTextAreaCell.m */; };
 		31CFDDA214979E28004A71F5 /* PRTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CFDDA114979E28004A71F5 /* PRTag.m */; };
 		31CFDDA614A37F7C004A71F5 /* KLPVTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CFDDA514A37F7C004A71F5 /* KLPVTagView.m */; };
 		31D49C6814F9FF85007A721E /* PRTagListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D49C6614F9FF85007A721E /* PRTagListController.m */; };
@@ -148,6 +149,8 @@
 		319FC6831441007E00B2B2FC /* PRPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRPageController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		319FC6841441007E00B2B2FC /* PRPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRPageController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		319FC6861445ED7200B2B2FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		31C8C1D615C9968500AED9DF /* PRTextAreaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextAreaCell.h; sourceTree = "<group>"; };
+		31C8C1D715C9968500AED9DF /* PRTextAreaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextAreaCell.m; sourceTree = "<group>"; };
 		31CFDDA014979E28004A71F5 /* PRTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRTag.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		31CFDDA114979E28004A71F5 /* PRTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRTag.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		31CFDDA414A37F7C004A71F5 /* KLPVTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVTagView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -365,6 +368,8 @@
 			children = (
 				318448A014C4657400A7E5E9 /* PRTextInputCell.h */,
 				318448A114C4657400A7E5E9 /* PRTextInputCell.m */,
+				31C8C1D615C9968500AED9DF /* PRTextAreaCell.h */,
+				31C8C1D715C9968500AED9DF /* PRTextAreaCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 				317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */,
 				3124899F1580FC4500C11AE4 /* PRShelf.m in Sources */,
 				31F49E9F159F38B1000EE05F /* PRShelfListController.m in Sources */,
+				31C8C1D815C9968500AED9DF /* PRTextAreaCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
