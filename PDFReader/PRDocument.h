@@ -9,6 +9,16 @@
 #import <Foundation/Foundation.h>
 
 /**
+ * ドキュメントの状態
+ */
+enum 
+{
+    PRDocumentStatusNotStarted = 0,     // 未読 
+    PRDocumentStatusReading,            // 読書中
+    PRDocumentStatusHasRead,            // 読了
+};
+
+/**
  * ドキュメントデータ.
  */
 @interface PRDocument : NSObject <NSCoding>
@@ -42,6 +52,9 @@
     
     // 最後にアクセスしたページ番号（最初のページが0、一度も開いていない場合-1）
     NSInteger currentPageIndex_;
+    
+    // ドキュメントの読了状態
+    NSInteger status_;
 }
 
 @property (nonatomic, readonly) NSString* uid;
@@ -54,6 +67,7 @@
 @property (nonatomic, copy) NSString* modDate;
 @property (nonatomic, readonly) NSUInteger numPages;
 @property (nonatomic, assign) NSInteger currentPageIndex;
+@property (nonatomic, assign) NSInteger status;
 
 /**
  * 指定のページの付箋の配列を得る.

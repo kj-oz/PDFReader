@@ -46,6 +46,13 @@
 - (IBAction)detailAction;
 
 /**
+ * 指定のステータスのラベルの色を返す.
+ * @param status ドキュメントのステータス
+ * @return 色
+ */
++ (UIColor*)labelColorAtStatus:(NSUInteger)status;
+
+/**
  * （カレントの本棚に含まれる）指定のドキュメントをドキュメント画面で表示する.
  * @param doc 対象ドキュメント
  * @param animated アニメーションを伴うかどうか

@@ -9,7 +9,7 @@
 #import "PRShelfListController.h"
 #import "PRDocumentManager.h"
 #import "PRShelf.h"
-#import "PRTextInputCell.h"
+#import "PRTextFieldCell.h"
 
 @interface PRShelfListController (Private)
 
@@ -35,13 +35,13 @@
  * @param textField テキストフィールド
  * @return 指定のテキストフィールドの含まれるセル
  */
-- (PRTextInputCell*)findCellForTextField_:(UITextField*)textField;
+- (PRTextFieldCell*)findCellForTextField_:(UITextField*)textField;
 
 /**
  * 入力中のテキストフィールドの含まれるセルを返す
  * @return 入力中のテキストフィールドの含まれるセル
  */
-- (PRTextInputCell*)findRenamingCell_;
+- (PRTextFieldCell*)findRenamingCell_;
 
 @end
 
@@ -141,7 +141,7 @@
     [tableView_ setEditing:editing animated:animated];
     
     for (UITableViewCell* cell in [tableView_ visibleCells]) {
-        UITextField* tf = ((PRTextInputCell*)cell).textField;
+        UITextField* tf = ((PRTextFieldCell*)cell).textField;
         if (editing) {
             tf.enabled = YES;
         } else {
@@ -184,11 +184,12 @@
         shelf = [shelves objectAtIndex:indexPath.row];
         text = shelf.name;
     }
-    UITextField* tf = ((PRTextInputCell*)cell).textField;
+    UITextField* tf = ((PRTextFieldCell*)cell).textField;
     tf.text = text;
     tf.textAlignment = UITextAlignmentCenter;
     tf.returnKeyType = UIReturnKeyDone;
     tf.delegate = self;
+    tf.tag = indexPath.row;
     
     // 新規追加時の最終行および編集モード時の2行目以降は編集可、それ以外は編集不可
     if ((adding_ && indexPath.row == shelves.count) || (self.editing && indexPath.row > 0)) {
@@ -224,13 +225,13 @@
                       atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
     // フォーカスの設定
-    PRTextInputCell* cell = (PRTextInputCell*)[tableView_ cellForRowAtIndexPath:indexPath];
+    PRTextFieldCell* cell = (PRTextFieldCell*)[tableView_ cellForRowAtIndexPath:indexPath];
     [cell.textField becomeFirstResponder];
 }
 
 - (IBAction)endAction
 {
-    PRTextInputCell* cell = [self findReanamingCell];
+    PRTextFieldCell* cell = [self findReanamingCell];
     [cell.textField resignFirstResponder];
 }
 
@@ -245,7 +246,7 @@
 {
     UITableViewCell* cell = [tableView_ dequeueReusableCellWithIdentifier:@"ShelfListCell"];
     if (!cell) {
-        cell = [[PRTextInputCell alloc] initWithStyle:UITableViewCellStyleSubtitle 
+        cell = [[PRTextFieldCell alloc] initWithStyle:UITableViewCellStyleSubtitle 
                                       reuseIdentifier:@"ShelfListCell"];
         [cell autorelease];
     }
@@ -356,7 +357,7 @@
         }
     } else {
         renaming_ = NO;
-        PRTextInputCell* cell = [self findCellForTextField_:textField];
+        PRTextFieldCell* cell = [self findCellForTextField_:textField];
         NSIndexPath* indexPath = [tableView_ indexPathForCell:cell];            
         PRShelf* shelf = [[PRDocumentManager sharedManager].shelves 
                           objectAtIndex:indexPath.row];
@@ -384,29 +385,22 @@
     return YES;
 }
 
-- (PRTextInputCell*)findCellForTextField_:(UITextField*)textField
+- (PRTextFieldCell*)findCellForTextField_:(UITextField*)textField
 {
-    NSInteger nRows = [tableView_ numberOfRowsInSection:0];
-    for (NSInteger row = 0; row < nRows; row++) {
-        UITableViewCell* cell = [tableView_ cellForRowAtIndexPath:
-                                 [NSIndexPath indexPathForRow:row inSection:0]];
-        UITextField* tf = ((PRTextInputCell*)cell).textField;
-        if (tf == textField) {
-            return (PRTextInputCell*)cell;
-        }
-    }
-    return nil;
+    UITableViewCell* cell = [tableView_ cellForRowAtIndexPath:
+                             [NSIndexPath indexPathForRow:textField.tag inSection:0]];
+    return (PRTextFieldCell*)cell;
 }
 
-- (PRTextInputCell*)findReanamingCell
+- (PRTextFieldCell*)findReanamingCell
 {
     NSInteger nRows = [tableView_ numberOfRowsInSection:0];
     for (NSInteger row = 0; row < nRows; row++) {
         UITableViewCell* cell = [tableView_ cellForRowAtIndexPath:
                                  [NSIndexPath indexPathForRow:row inSection:0]];
-        UITextField* tf = ((PRTextInputCell*)cell).textField;
+        UITextField* tf = ((PRTextFieldCell*)cell).textField;
         if (tf.isFirstResponder) {
-            return (PRTextInputCell*)cell;
+            return (PRTextFieldCell*)cell;
         }
     }
     return nil;

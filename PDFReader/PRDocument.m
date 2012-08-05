@@ -39,6 +39,7 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
 @synthesize modDate = modDate_;
 @synthesize numPages = numPages_;
 @synthesize currentPageIndex = currentPageIndex_;
+@synthesize status = status_;
 
 #pragma mark - アクセッサ
 
@@ -114,6 +115,7 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
         modDate_ = [[decoder decodeObjectForKey:@"modDate"] retain];
         currentPageIndex_ = [decoder decodeIntegerForKey:@"currentPageIndex"];
         numPages_ = [decoder decodeIntegerForKey:@"numPages"];
+        status_ = [decoder decodeIntegerForKey:@"status"];
     }    
     return self;
 }
@@ -128,6 +130,7 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
     [encoder encodeObject:modDate_ forKey:@"modDate"];
     [encoder encodeInteger:currentPageIndex_ forKey:@"currentPageIndex"];
     [encoder encodeInteger:numPages_ forKey:@"numPages"];
+    [encoder encodeInteger:status_ forKey:@"status"];
 }
 
 #pragma mark - 読み込み・保存

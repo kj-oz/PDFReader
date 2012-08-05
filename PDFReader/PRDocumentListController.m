@@ -22,6 +22,12 @@
 
 #define isDocument(node)        (node.level == 0)
 
+static CGFloat labelColors_[][4] = {
+    { 0.5, 0.5, 1.0, 1.0 },
+    { 0.0, 0.0, 1.0, 1.0 },
+    { 0.0, 0.0, 0.0, 1.0 },
+};
+
 @interface PRDocumentListController (Private)
 
 /**
@@ -144,6 +150,13 @@
 @implementation PRDocumentListController
 
 @synthesize delegate = delegate_;
+
+#pragma mark - クラスメソッド
+
++ (UIColor*)labelColorAtStatus:(NSUInteger)status {
+    return [UIColor colorWithRed:labelColors_[status][0] green:labelColors_[status][1] 
+                            blue:labelColors_[status][2] alpha:labelColors_[status][3]];
+}
 
 #pragma mark - 初期化
 
@@ -428,6 +441,7 @@
         if (downloader) {
             // ダウンロード中
             cell.textLabel.text = doc.fileName;
+            cell.textLabel.textColor = [PRDocumentListController labelColorAtStatus:PRDocumentStatusNotStarted];
             if (downloader.downloadedSize > 0) {
                 NSInteger downloadedSize = downloader.downloadedSize;
                 CGFloat percent = downloadedSize * 100.0 / (CGFloat)downloader.expectedSize;
@@ -439,6 +453,7 @@
             }
         } else {
             cell.textLabel.text = doc.title;
+            cell.textLabel.textColor = [PRDocumentListController labelColorAtStatus:doc.status];
             NSMutableString* text = [NSMutableString stringWithCapacity:100];
             [text appendFormat:@"%@  ", doc.fileName];
             if (doc.modDate.length > 0) {
@@ -501,7 +516,7 @@
     [navController autorelease];
     
     // Popoverとして表示
-    CGFloat height = doc ? 360 : 90;
+    CGFloat height = doc ? 450 : 90;
     controller.contentSizeForViewInPopover = CGSizeMake(320.0, height);
     poController_ = [[UIPopoverController alloc]
                      initWithContentViewController:navController];

@@ -7,7 +7,8 @@
 //
 
 #import "PRDocumentDetailController.h"
-#import "PRTextInputCell.h"
+#import "PRTextFieldCell.h"
+#import "PRSegmentedCell.h"
 #import "PRDocument.h"
 #import "PRDocumentManager.h"
 #import "PRConnector.h"
@@ -162,10 +163,10 @@
 
 - (IBAction)doneAction
 {
-    PRTextInputCell* cell = nil;
+    PRTextFieldCell* cell = nil;
 
     // タイトル
-    cell = (PRTextInputCell*)[self cellAtSection_:0 row:0];
+    cell = (PRTextFieldCell*)[self cellAtSection_:0 row:0];
     document_.title = cell.textField.text;
     if (document_.title.length == 0) {
         // アラートを表示する
@@ -179,12 +180,16 @@
     }
     
     // 著者
-    cell = (PRTextInputCell*)[self cellAtSection_:1 row:0];
+    cell = (PRTextFieldCell*)[self cellAtSection_:1 row:0];
     document_.author = cell.textField.text;
     
     // 最終更新日
-    cell = (PRTextInputCell*)[self cellAtSection_:2 row:0];
+    cell = (PRTextFieldCell*)[self cellAtSection_:2 row:0];
     document_.modDate = cell.textField.text;
+    
+    // 状態
+    PRSegmentedCell* sCell = (PRSegmentedCell*)[self cellAtSection_:3 row:0];
+    document_.status = sCell.segmentedCtrl.selectedSegmentIndex;
     
     // デリゲートに通知する
     if ([delegate_ respondsToSelector:@selector(documentDetailControllerDidSave:)]) {
@@ -199,10 +204,10 @@
         document_ = [[PRDocument alloc] init];
     }
     
-    PRTextInputCell* cell = nil;
+    PRTextFieldCell* cell = nil;
 
     // URL
-    cell = (PRTextInputCell*)[self cellAtSection_:0 row:0];
+    cell = (PRTextFieldCell*)[self cellAtSection_:0 row:0];
     url_ = cell.textField.text;
     if (url_.length == 0) {
         // アラートを表示する
@@ -242,7 +247,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return new_ ? 1 : 4;
+    return new_ ? 1 : 5;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -260,6 +265,8 @@
         case 2:
             return @"最終更新日";
         case 3:
+            return @"状態";
+        case 4:
             return @"ファイル名";
     }
     return nil;
@@ -268,49 +275,68 @@
 - (UITableViewCell*)tableView:(UITableView*)tableView 
         cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    UITableViewCell* cell = [tableView_ dequeueReusableCellWithIdentifier:@"TextInputCell"];
-    if (!cell) {
-        cell = [[PRTextInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextInputCell"];
-        [cell autorelease];
+    UITableViewCell* cell = nil;
+    if (indexPath.section == 3) {
+        cell = [tableView_ dequeueReusableCellWithIdentifier:@"SegmentedCell"];
+        if (!cell) {
+            cell = [[PRSegmentedCell alloc] initWithStyle:UITableViewCellStyleDefault 
+                                        items:[NSArray arrayWithObjects:@"未読", @"途中", @"読了", nil]
+                                        reuseIdentifier:@"SegmentedCell"];
+            [cell autorelease];
+        }
+        
+        
+        PRSegmentedCell* sCell = (PRSegmentedCell*)cell;
+        if (!new_) {
+            sCell.segmentedCtrl.selectedSegmentIndex = document_.status;
+        } else {
+            sCell.segmentedCtrl.selectedSegmentIndex = 0;
+        }
+    } else {
+        cell = [tableView_ dequeueReusableCellWithIdentifier:@"TextInputCell"];
+        if (!cell) {
+            cell = [[PRTextFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextInputCell"];
+            [cell autorelease];
+        }
+        
+        PRTextFieldCell* tfCell = (PRTextFieldCell*)cell;
+        switch (indexPath.section) {
+            case 0:
+                if (new_) {
+                    tfCell.textField.text = url_;
+                    tfCell.textField.keyboardType = UIKeyboardTypeURL;
+                    tfCell.textField.placeholder = @"URL";
+                } else {
+                    tfCell.textField.text = document_.title;
+                    tfCell.textField.keyboardType = UIKeyboardTypeDefault;
+                    tfCell.textField.placeholder = @"タイトル";
+                }
+                break;
+                
+            case 1:
+                tfCell.textField.text = document_.author;
+                tfCell.textField.keyboardType = UIKeyboardTypeDefault;
+                tfCell.textField.placeholder = @"作者";
+                break;
+                
+            case 2:
+                tfCell.textField.text = document_.modDate;
+                tfCell.textField.keyboardType = UIKeyboardTypeDefault;
+                tfCell.textField.placeholder = @"最終更新日";
+                break;
+                
+            case 4:
+                tfCell.textField.text = document_.fileName;
+                tfCell.textField.keyboardType = UIKeyboardTypeDefault;
+                tfCell.textField.placeholder = @"ファイル名";
+                tfCell.userInteractionEnabled = false;
+                break;
+                
+        }
+        tfCell.textField.delegate = self;
+        tfCell.textField.tag = indexPath.section;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
-    PRTextInputCell* tiCell = (PRTextInputCell*)cell;
-    switch (indexPath.section) {
-        case 0:
-            if (new_) {
-                tiCell.textField.text = url_;
-                tiCell.textField.keyboardType = UIKeyboardTypeURL;
-                tiCell.textField.placeholder = @"URL";
-            } else {
-                tiCell.textField.text = document_.title;
-                tiCell.textField.keyboardType = UIKeyboardTypeDefault;
-                tiCell.textField.placeholder = @"タイトル";
-            }
-            break;
-            
-        case 1:
-            tiCell.textField.text = document_.author;
-            tiCell.textField.keyboardType = UIKeyboardTypeDefault;
-            tiCell.textField.placeholder = @"作者";
-            break;
-            
-        case 2:
-            tiCell.textField.text = document_.modDate;
-            tiCell.textField.keyboardType = UIKeyboardTypeDefault;
-            tiCell.textField.placeholder = @"最終更新日";
-            break;
-            
-        case 3:
-            tiCell.textField.text = document_.fileName;
-            tiCell.textField.keyboardType = UIKeyboardTypeDefault;
-            tiCell.textField.placeholder = @"ファイル名";
-            tiCell.userInteractionEnabled = false;
-            break;
-            
-    }
-    tiCell.textField.delegate = self;
-    tf_[indexPath.section] = tiCell.textField;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -329,17 +355,16 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    for (NSInteger i = 0; i < 3; i++) {
-        if (tf_[i] == textField) {
-            i++;
-            if (i == 3) {
-                i = 0;
-            }
-            if ([tf_[i] canBecomeFirstResponder]) {
-                [tf_[i] becomeFirstResponder];
-            }
-            break;
-        }
+    NSInteger next = textField.tag + 1;
+    if (next == 3) {
+        next = 0;
+    }
+    
+    UITableViewCell* cell = [tableView_ cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:next]];
+    PRTextFieldCell* tfCell = (PRTextFieldCell*)cell;
+    UITextField* tf = tfCell.textField;
+    if ([tf canBecomeFirstResponder]) {
+        [tf becomeFirstResponder];
     }
     return YES;
 }

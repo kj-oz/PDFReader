@@ -7,7 +7,7 @@
 //
 
 #import "PRTagDetailController.h"
-#import "PRTextAreaCell.h"
+#import "PRTextViewCell.h"
 #import "PRTag.h"
 
 // 付箋追加/編集画面で最後に選択されたプリセット色のインデックス
@@ -173,7 +173,7 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
         tag_.origin = CGPointMake(0.0, tag_.size.width);        
     }
     
-    PRTextAreaCell* textCell = (PRTextAreaCell*)[self cellAtSection_:0 row:0];
+    PRTextViewCell* textCell = (PRTextViewCell*)[self cellAtSection_:0 row:0];
     tag_.text = textCell.textView.text;
     
     NSInteger selectedPresetColorIndex = selectedColorRow_;
@@ -228,13 +228,14 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
         case 0:
             cell = [tableView_ dequeueReusableCellWithIdentifier:@"TextViewCell"];
             if (!cell) {
-                cell = [[PRTextAreaCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextViewCell"];
+                cell = [[PRTextViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextViewCell"];
                 [cell autorelease];
             }
             
-            PRTextAreaCell* tiCell = (PRTextAreaCell*)cell;
-            tiCell.textView.text = tag_.text;
-            tiCell.textView.keyboardType = UIKeyboardTypeDefault;
+            PRTextViewCell* tvCell = (PRTextViewCell*)cell;
+            tvCell.maxLine = 2;
+            tvCell.textView.text = tag_.text;
+            tvCell.textView.keyboardType = UIKeyboardTypeDefault;
             break;
             
         case 1:

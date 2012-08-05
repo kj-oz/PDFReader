@@ -39,7 +39,7 @@
 		317FD450155D6B9700AE52B9 /* KLPVEditTag.png in Resources */ = {isa = PBXBuildFile; fileRef = 317FD44E155D6B9700AE52B9 /* KLPVEditTag.png */; };
 		3184489414BF2CBD00A7E5E9 /* PRTagDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3184489214BF2CBD00A7E5E9 /* PRTagDetailController.m */; };
 		3184489F14C2733C00A7E5E9 /* TagDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3184489E14C2733C00A7E5E9 /* TagDetail.xib */; };
-		318448A214C4657500A7E5E9 /* PRTextInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 318448A114C4657400A7E5E9 /* PRTextInputCell.m */; };
+		318448A214C4657500A7E5E9 /* PRTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 318448A114C4657400A7E5E9 /* PRTextFieldCell.m */; };
 		318F42EF1552814400A253BA /* KLDBGUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 318F42EE1552814400A253BA /* KLDBGUtil.m */; };
 		319FC6441437452C00B2B2FC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6431437452C00B2B2FC /* UIKit.framework */; };
 		319FC6461437452C00B2B2FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6451437452C00B2B2FC /* Foundation.framework */; };
@@ -57,7 +57,8 @@
 		319FC67F1440131100B2B2FC /* KLPVTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC67E1440131100B2B2FC /* KLPVTiledView.m */; };
 		319FC6851441007E00B2B2FC /* PRPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319FC6841441007E00B2B2FC /* PRPageController.m */; };
 		319FC6871445ED7300B2B2FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 319FC6861445ED7200B2B2FC /* QuartzCore.framework */; };
-		31C8C1D815C9968500AED9DF /* PRTextAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C8C1D715C9968500AED9DF /* PRTextAreaCell.m */; };
+		31C8C1D815C9968500AED9DF /* PRTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C8C1D715C9968500AED9DF /* PRTextViewCell.m */; };
+		31C8C1E415CCD63000AED9DF /* PRSegmentedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C8C1E315CCD62F00AED9DF /* PRSegmentedCell.m */; };
 		31CFDDA214979E28004A71F5 /* PRTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CFDDA114979E28004A71F5 /* PRTag.m */; };
 		31CFDDA614A37F7C004A71F5 /* KLPVTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CFDDA514A37F7C004A71F5 /* KLPVTagView.m */; };
 		31D49C6814F9FF85007A721E /* PRTagListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D49C6614F9FF85007A721E /* PRTagListController.m */; };
@@ -119,8 +120,8 @@
 		3184489114BF2CBD00A7E5E9 /* PRTagDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRTagDetailController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3184489214BF2CBD00A7E5E9 /* PRTagDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRTagDetailController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3184489E14C2733C00A7E5E9 /* TagDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagDetail.xib; sourceTree = "<group>"; };
-		318448A014C4657400A7E5E9 /* PRTextInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextInputCell.h; sourceTree = "<group>"; };
-		318448A114C4657400A7E5E9 /* PRTextInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextInputCell.m; sourceTree = "<group>"; };
+		318448A014C4657400A7E5E9 /* PRTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextFieldCell.h; sourceTree = "<group>"; };
+		318448A114C4657400A7E5E9 /* PRTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextFieldCell.m; sourceTree = "<group>"; };
 		318F42ED1552814400A253BA /* KLDBGUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLDBGUtil.h; sourceTree = "<group>"; };
 		318F42EE1552814400A253BA /* KLDBGUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLDBGUtil.m; sourceTree = "<group>"; };
 		319FC63F1437452C00B2B2FC /* TagPDF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TagPDF.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,8 +150,10 @@
 		319FC6831441007E00B2B2FC /* PRPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRPageController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		319FC6841441007E00B2B2FC /* PRPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRPageController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		319FC6861445ED7200B2B2FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		31C8C1D615C9968500AED9DF /* PRTextAreaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextAreaCell.h; sourceTree = "<group>"; };
-		31C8C1D715C9968500AED9DF /* PRTextAreaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextAreaCell.m; sourceTree = "<group>"; };
+		31C8C1D615C9968500AED9DF /* PRTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTextViewCell.h; sourceTree = "<group>"; };
+		31C8C1D715C9968500AED9DF /* PRTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTextViewCell.m; sourceTree = "<group>"; };
+		31C8C1E215CCD62F00AED9DF /* PRSegmentedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRSegmentedCell.h; sourceTree = "<group>"; };
+		31C8C1E315CCD62F00AED9DF /* PRSegmentedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRSegmentedCell.m; sourceTree = "<group>"; };
 		31CFDDA014979E28004A71F5 /* PRTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PRTag.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		31CFDDA114979E28004A71F5 /* PRTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PRTag.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		31CFDDA414A37F7C004A71F5 /* KLPVTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVTagView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -366,10 +369,12 @@
 		319FC664143746A800B2B2FC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				318448A014C4657400A7E5E9 /* PRTextInputCell.h */,
-				318448A114C4657400A7E5E9 /* PRTextInputCell.m */,
-				31C8C1D615C9968500AED9DF /* PRTextAreaCell.h */,
-				31C8C1D715C9968500AED9DF /* PRTextAreaCell.m */,
+				318448A014C4657400A7E5E9 /* PRTextFieldCell.h */,
+				318448A114C4657400A7E5E9 /* PRTextFieldCell.m */,
+				31C8C1D615C9968500AED9DF /* PRTextViewCell.h */,
+				31C8C1D715C9968500AED9DF /* PRTextViewCell.m */,
+				31C8C1E215CCD62F00AED9DF /* PRSegmentedCell.h */,
+				31C8C1E315CCD62F00AED9DF /* PRSegmentedCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -517,7 +522,7 @@
 				31CFDDA214979E28004A71F5 /* PRTag.m in Sources */,
 				31CFDDA614A37F7C004A71F5 /* KLPVTagView.m in Sources */,
 				3184489414BF2CBD00A7E5E9 /* PRTagDetailController.m in Sources */,
-				318448A214C4657500A7E5E9 /* PRTextInputCell.m in Sources */,
+				318448A214C4657500A7E5E9 /* PRTextFieldCell.m in Sources */,
 				3129181214D990A20054CE13 /* KLPVPageView.m in Sources */,
 				312571B114E01E5E00A71C5B /* KLTVTreeNode.m in Sources */,
 				312571B214E01E5E00A71C5B /* KLTVTreeViewCell.m in Sources */,
@@ -530,7 +535,8 @@
 				317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */,
 				3124899F1580FC4500C11AE4 /* PRShelf.m in Sources */,
 				31F49E9F159F38B1000EE05F /* PRShelfListController.m in Sources */,
-				31C8C1D815C9968500AED9DF /* PRTextAreaCell.m in Sources */,
+				31C8C1D815C9968500AED9DF /* PRTextViewCell.m in Sources */,
+				31C8C1E415CCD63000AED9DF /* PRSegmentedCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
