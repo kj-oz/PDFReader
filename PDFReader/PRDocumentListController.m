@@ -475,6 +475,7 @@ static CGFloat labelColors_[][4] = {
         // 付箋
         PRTag* tag = (PRTag*)node.data;
         cell.textLabel.text = tag.text;
+        cell.textLabel.textColor = [UIColor blackColor];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%dページ", tag.page + 1];
         
         // 付箋アイコン
@@ -529,7 +530,7 @@ static CGFloat labelColors_[][4] = {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
         UITableViewCell* cell = [tableView_ cellForRowAtIndexPath:indexPath];
         CGRect frame = cell.contentView.bounds;
-        [poController_ presentPopoverFromRect:frame inView:cell.contentView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [poController_ presentPopoverFromRect:frame inView:cell.contentView permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
     } else {
         // 追加時はナビゲーションバーのボタンからのPopover
         [poController_ presentPopoverFromBarButtonItem:addButton_ permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
