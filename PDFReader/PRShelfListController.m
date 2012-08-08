@@ -24,24 +24,35 @@
 - (void)releaseOutlets_;
 
 /**
- * セルの表示を更新する
+ * ナビゲーションバーを更新する.
+ * @param animated アニメーションの有無
+ */
+- (void)updateNavigationItemAnimated_:(BOOL)animated;
+
+/**
+ * セルの表示を更新する.
  * @param cell セルオブジェクト
  * @param indexPath インデックス
  */
 - (void)updateCell_:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 
 /**
- * 指定のテキストフィールドの含まれるセルを返す
+ * 指定のテキストフィールドの含まれるセルを返す.
  * @param textField テキストフィールド
  * @return 指定のテキストフィールドの含まれるセル
  */
 - (PRTextFieldCell*)findCellForTextField_:(UITextField*)textField;
 
 /**
- * 入力中のテキストフィールドの含まれるセルを返す
+ * 入力中のテキストフィールドの含まれるセルを返す.
  * @return 入力中のテキストフィールドの含まれるセル
  */
 - (PRTextFieldCell*)findRenamingCell_;
+
+/**
+ * 洗濯されている本棚を削除する.
+ */
+- (void)removeSelectedShelf_;
 
 @end
 
@@ -231,7 +242,7 @@
 
 - (IBAction)endAction
 {
-    PRTextFieldCell* cell = [self findReanamingCell];
+    PRTextFieldCell* cell = [self findRenamingCell_];
     [cell.textField resignFirstResponder];
 }
 
@@ -392,7 +403,7 @@
     return (PRTextFieldCell*)cell;
 }
 
-- (PRTextFieldCell*)findReanamingCell
+- (PRTextFieldCell*)findRenamingCell_
 {
     NSInteger nRows = [tableView_ numberOfRowsInSection:0];
     for (NSInteger row = 0; row < nRows; row++) {
