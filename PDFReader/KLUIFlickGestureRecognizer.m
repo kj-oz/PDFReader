@@ -30,7 +30,8 @@
 - (void)init_
 {
     minmumDistance_ = 30.0;
-    maximumDuration_ = 0.6;
+    // 当初0.6にしてみたが、ドラッグがスムースに出来ないので0.2に変更
+    maximumDuration_ = 0.2;
 }
 
 - (id)init
@@ -60,6 +61,25 @@
     flickStartTime_ = [NSDate timeIntervalSinceReferenceDate];
 }
 
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // このメソッドでチェックしないと、指が離れるまでドラッグが発生しない
+    KLDBGPrintMethodName("▼ ");
+    [super touchesEnded:touches withEvent:event];
+    
+    // ジェスチャー開始時からの時間と距離
+    CGPoint pt = [self locationInView:self.view];
+    CGFloat dx = pt.x - flickStartPoint_.x;
+    CGFloat dy = pt.y - flickStartPoint_.y;    
+    CGFloat dt = [NSDate timeIntervalSinceReferenceDate] - flickStartTime_;
+    
+    KLDBGPrint(" M dx:%.1f dy:%.1f dt:%.3f\n", dx, dy, dt);
+    if (dt > maximumDuration_ ) {
+        // 時間が長過ぎる：認識対象外
+        self.state = UIGestureRecognizerStateFailed;
+    }
+}
+
 - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
     KLDBGPrintMethodName("▼ ");
@@ -71,7 +91,7 @@
     CGFloat dy = pt.y - flickStartPoint_.y;    
     CGFloat dt = [NSDate timeIntervalSinceReferenceDate] - flickStartTime_;
     
-    KLDBGPrint(" dx:%.1f dy:%.1f dt:%.3f\n", dx, dy, dt);
+    KLDBGPrint(" E dx:%.1f dy:%.1f dt:%.3f\n", dx, dy, dt);
     direction_ = 0;
     if (dt > maximumDuration_ || (ABS(dx) < minmumDistance_ && ABS(dy) < minmumDistance_)
                               || (ABS(dx) > minmumDistance_ && ABS(dy) > minmumDistance_)) {

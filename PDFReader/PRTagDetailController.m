@@ -213,7 +213,7 @@ static NSUInteger lastSelectedPresetColorIndex_ = 0;
 {
     switch (section) {
         case 0:
-            return @"ラベル";
+            return @"コメント";
         case 1:
             return @"色";
     }
