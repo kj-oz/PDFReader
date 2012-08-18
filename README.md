@@ -27,10 +27,10 @@ PDFReaderは、Objective-Cで書かれたiPad専用のPDFリーダーです。
 iOS 5.0以上、iPad専用
 
 ライセンス
--------
+-----
  [MIT License][mit]. の元で公開します。  
 
-----------
+-----
 Copyright &copy; 2012 Kj Oz  
 
 [AppStore]: http://fusen-pdf.blogspot.jp
