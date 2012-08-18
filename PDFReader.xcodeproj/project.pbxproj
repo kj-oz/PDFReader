@@ -19,7 +19,6 @@
 		312571B714E0278400A71C5B /* KLTVClosedNode.png in Resources */ = {isa = PBXBuildFile; fileRef = 312571B514E0278400A71C5B /* KLTVClosedNode.png */; };
 		312571BE14E2CB1900A71C5B /* KLTVTreeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 312571BD14E2CB1900A71C5B /* KLTVTreeManager.m */; };
 		3129181214D990A20054CE13 /* KLPVPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3129181114D990A20054CE13 /* KLPVPageView.m */; };
-		3177F05C15DF7ADB009055A0 /* README.md.jp in Resources */ = {isa = PBXBuildFile; fileRef = 3177F05B15DF7ADB009055A0 /* README.md.jp */; };
 		317A82AC156A9064003F62CF /* KLUIFlickGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 317A82AB156A9064003F62CF /* KLUIFlickGestureRecognizer.m */; };
 		317A82BC157B2F5C003F62CF /* app.png in Resources */ = {isa = PBXBuildFile; fileRef = 317A82B6157B2F5C003F62CF /* app.png */; };
 		317A82BE157B2F5C003F62CF /* app@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 317A82B8157B2F5C003F62CF /* app@2x.png */; };
@@ -91,7 +90,7 @@
 		3129180F14D98D2A0054CE13 /* KLPVPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageViewDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3129181014D990A20054CE13 /* KLPVPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KLPVPageView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3129181114D990A20054CE13 /* KLPVPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KLPVPageView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		3177F05B15DF7ADB009055A0 /* README.md.jp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md.jp; path = PDFReader/README.md.jp; sourceTree = "<group>"; };
+		3177F06715DF7D0F009055A0 /* README.md.jp */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md.jp; sourceTree = "<group>"; };
 		317A82AA156A9064003F62CF /* KLUIFlickGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLUIFlickGestureRecognizer.h; sourceTree = "<group>"; };
 		317A82AB156A9064003F62CF /* KLUIFlickGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLUIFlickGestureRecognizer.m; sourceTree = "<group>"; };
 		317A82B6157B2F5C003F62CF /* app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app.png; sourceTree = "<group>"; };
@@ -271,7 +270,7 @@
 		319FC6341437452C00B2B2FC = {
 			isa = PBXGroup;
 			children = (
-				3177F05B15DF7ADB009055A0 /* README.md.jp */,
+				3177F06715DF7D0F009055A0 /* README.md.jp */,
 				319FC6491437452C00B2B2FC /* PDFReader */,
 				319FC6421437452C00B2B2FC /* Frameworks */,
 				319FC6401437452C00B2B2FC /* Products */,
@@ -504,7 +503,6 @@
 				31116C8115B298FD009314B5 /* Default-Landscape~ipad.png in Resources */,
 				31116C8215B298FD009314B5 /* Default-Portrait@2x~ipad.png in Resources */,
 				31116C8315B298FD009314B5 /* Default-Portrait~ipad.png in Resources */,
-				3177F05C15DF7ADB009055A0 /* README.md.jp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
