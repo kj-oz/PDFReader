@@ -1,8 +1,9 @@
-付箋PDF
+PDFReader
 ======================
-付箋PDFは、Objective-Cで書かれたiPad専用のPDFリーダーです。  
+PDFReaderは、Objective-Cで書かれたiPad専用のPDFリーダーです。  
 
-アプリケーションは、Apple社のAppStoreで無料で配信予定（2012/8/16現在申請中）です。  
+このソースからビルドされるアプリケーションは、Apple社のAppStoreで **付箋PDF** という名称で
+無料で配信予定（2012/8/16現在申請中）です。  
 　[http://fusen-pdf.blogspot.jp][AppStore] 
 
 画面イメージや使い方は、以下のページをご覧下さい。  
@@ -17,7 +18,7 @@
 ###ソースコードの特徴###
 
 * ARCは使用していません。
-* StoryBoardも使用していません。
+* Storyboardも使用していません。
 * コメントは全て日本語です。メソッド定義等はJavaDocの形式で記述しています。
 
 
