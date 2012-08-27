@@ -3,8 +3,8 @@ PDFReader
 PDFReaderは、Objective-Cで書かれたiPad専用のPDFリーダーです。  
 
 このソースからビルドされるアプリケーションは、Apple社のAppStoreで **付箋PDF** という名称で
-無料で配信予定（2012/8/16現在申請中）です。  
-　[http://fusen-pdf.blogspot.jp][AppStore] 
+無料で配信中です。  
+　[http://itunes.apple.com/us/app/fu-jianpdf/id553217792?l=ja&ls=1&mt=8][AppStore] 
 
 画面イメージや使い方は、以下のページをご覧下さい。  
 　[http://fusen-pdf.blogspot.jp][Blogger]  
@@ -33,6 +33,6 @@ iOS 5.0以上、iPad専用
 -----
 Copyright &copy; 2012 Kj Oz  
 
-[AppStore]: http://fusen-pdf.blogspot.jp
+[AppStore]: http://itunes.apple.com/us/app/fu-jianpdf/id553217792?l=ja&ls=1&mt=8
 [Blogger]: http://fusen-pdf.blogspot.jp
 [MIT]: http://www.opensource.org/licenses/mit-license.php
