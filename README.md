@@ -23,7 +23,7 @@ PDFReaderは、Objective-Cで書かれたiPad専用のPDFリーダーです。
 
 ###開発環境###
 
-* 2013/05/08現在、Mac 0S X 10.7.4（Lion）、Xcode 4.6.2
+* 2013/05/08現在、Mac 0S X 10.7.5（Lion）、Xcode 4.6.2
 
 ###ビルド時の注意点###
 
