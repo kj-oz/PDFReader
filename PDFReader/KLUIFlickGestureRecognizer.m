@@ -65,7 +65,7 @@
 {
     // このメソッドでチェックしないと、指が離れるまでドラッグが発生しない
     KLDBGPrintMethodName("▼ ");
-    [super touchesEnded:touches withEvent:event];
+    [super touchesMoved:touches withEvent:event];
     
     // ジェスチャー開始時からの時間と距離
     CGPoint pt = [self locationInView:self.view];

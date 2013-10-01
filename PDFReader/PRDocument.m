@@ -149,10 +149,16 @@ void enumratePDFInfo(const char *key, CGPDFObjectRef object, void *info)
     NSFileManager* fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:annotationPath]) {
         tagArrays_ = [[NSKeyedUnarchiver unarchiveObjectWithFile:annotationPath] retain];
+        NSUInteger arlen = [tagArrays_ count];
         for (NSUInteger i = 0 ; i < numPages_; i++) {
-            NSArray* tags = [tagArrays_ objectAtIndex:i];
-            for (PRTag* tag in tags) {
-                tag.page = i;
+            if (i >= arlen) {
+                // 何かの拍子にページ数より少ない配列が保存されることがある
+                [tagArrays_ addObject:[NSMutableArray array]];                
+            } else {
+                NSArray* tags = [tagArrays_ objectAtIndex:i];
+                for (PRTag* tag in tags) {
+                    tag.page = i;
+                }
             }
         }
     } else {

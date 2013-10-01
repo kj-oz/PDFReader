@@ -390,7 +390,7 @@
         dataSource_ = dataSource;
         self.delegate = self;
         
-        // 付箋ビュー選択時に表示されるボタンを予め生成しておく.
+        // 付箋ビュー選択時に表示されるボlタンを予め生成しておく.
         // スクロールを有効にするため、ボタンのイベントは使用しない.
         // UIButtonTypeCustomを使用するとうまく画像が表示されないため、ダミーでUIButtonTypeContactAddを使用
         UIImage* editImage = [UIImage imageNamed:@"KLPVEditTag.png"];
