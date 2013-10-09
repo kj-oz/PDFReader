@@ -484,7 +484,7 @@
     [alert show];
 }
 
-- (void)tappedWithTouch:(UITouch *)touch
+- (void)tappedWithTouch:(CGPoint)location
 {
     KLDBGPrintMethodName("▼ ");
     if (fullScreen_) {

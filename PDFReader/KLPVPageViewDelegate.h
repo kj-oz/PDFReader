@@ -35,6 +35,6 @@
  * ページビューの中では解釈されないタップが発生した場合に呼び出されるメソッド.
  * @param touch タッチオブジェクト
  */
-- (void)tappedWithTouch:(UITouch*)touch;
+- (void)tappedWithTouch:(CGPoint)location;
 
 @end

@@ -81,7 +81,12 @@
  */
 - (NSInteger)directionToMoveForPoint_:(CGPoint)touchPosition;
 
-- (void)handleFlick_:(UIGestureRecognizer*)gestureRecognizer;
+- (void)handleFlick_:(UISwipeGestureRecognizerDirection)direction;
+
+//- (void)leftSwiped_:(UISwipeGestureRecognizer *)gestureRicognizer;
+//- (void)righttSwiped_:(UISwipeGestureRecognizer *)gestureRicognizer;
+//- (void)singleTapped_:(UITapGestureRecognizer *)gestureRicognizer;
+//- (void)panned_:(UIPanGestureRecognizer *)gestureRicognizer;
 
 
 /**
@@ -277,21 +282,21 @@
         dir = 0;
     }
     
-    // ページ遷移には不十分でも、移動量がある程度あれば、まず十分な移動量になるまでアニメーションでスクロールする。
-    if (newIndex == oldIndex) {
-        if (offset.x <= dataSource_.previousPageFrame.size.width * scale_ - 
-            self.frame.size.width * 0.2) {
-            // 前のページへ移動
-            [self moveToPreviousPage_];
-            return;
-        }
-        if (offset.x >= dataSource_.nextPageFrame.origin.x * scale_ - 
-            self.frame.size.width * 0.8) {
-            // 次のページへ移動
-            [self moveToNextPage_];
-            return;
-        }
-    }
+//    // ページ遷移には不十分でも、移動量がある程度あれば、まず十分な移動量になるまでアニメーションでスクロールする。
+//    if (newIndex == oldIndex) {
+//        if (offset.x <= dataSource_.previousPageFrame.size.width * scale_ - 
+//            self.frame.size.width * 0.2) {
+//            // 前のページへ移動
+//            [self moveToPreviousPage_];
+//            return;
+//        }
+//        if (offset.x >= dataSource_.nextPageFrame.origin.x * scale_ - 
+//            self.frame.size.width * 0.8) {
+//            // 次のページへ移動
+//            [self moveToNextPage_];
+//            return;
+//        }
+//    }
     
     // ページ番号の範囲をチェック
     if (newIndex < 0) {
@@ -403,16 +408,65 @@
         // subView側でドラッグを処理するためには以下有効にする必要がある（但しスクロールができなくなる）
         // self.canCancelContentTouches = NO;
         
-        KLUIFlickGestureRecognizer* fgr = [[KLUIFlickGestureRecognizer alloc] 
-                                          initWithTarget:self action:@selector(handleFlick_:)];
-        fgr.permittedDirection = UISwipeGestureRecognizerDirectionRight 
-                                        | UISwipeGestureRecognizerDirectionLeft;
-        [self addGestureRecognizer:fgr];
-        [self.panGestureRecognizer requireGestureRecognizerToFail:fgr];
-        [fgr release];
+        // 自前でパンを実装すると、フリックがうまく認識されないため、フリックも自前実装に
+//        KLUIFlickGestureRecognizer* fgr = [[KLUIFlickGestureRecognizer alloc] 
+//                                          initWithTarget:self action:@selector(handleFlick_:)];
+//        fgr.permittedDirection = UISwipeGestureRecognizerDirectionRight 
+//                                        | UISwipeGestureRecognizerDirectionLeft;
+//        [self addGestureRecognizer:fgr];
+//        [self.panGestureRecognizer requireGestureRecognizerToFail:fgr];
+//        [fgr release];
+        
+        minmumDistance_ = 30.0;
+        // 当初0.6にしてみたが、ドラッグがスムースに出来ないので0.2に変更
+        maximumDuration_ = 0.2;
+
+//        swipeLeftRecognizer_ = [[UISwipeGestureRecognizer alloc]
+//                                initWithTarget:self action:@selector(leftSwiped_:)];
+//        swipeLeftRecognizer_.direction = UISwipeGestureRecognizerDirectionLeft;
+//        [self addGestureRecognizer:swipeLeftRecognizer_];
+//        
+//        swipeRightRecognizer_ = [[UISwipeGestureRecognizer alloc]
+//                                 initWithTarget:self action:@selector(rightSwiped_:)];
+//        swipeRightRecognizer_.direction = UISwipeGestureRecognizerDirectionRight;
+//        [self addGestureRecognizer:swipeRightRecognizer_];
+//        
+//        singleTapRecognizer_ = [[UITapGestureRecognizer alloc]
+//                                initWithTarget:self action:@selector(singleTapped_:)];
+//        singleTapRecognizer_.numberOfTapsRequired = 1;
+//        [self addGestureRecognizer:singleTapRecognizer_];
+//        
+//        doubleTapRecognizer_ = [[UITapGestureRecognizer alloc]
+//                                initWithTarget:self action:@selector(doubleTapped_:)];
+//        doubleTapRecognizer_.numberOfTapsRequired = 2;
+//        [self addGestureRecognizer:doubleTapRecognizer_];
+//
+//        panRecognizer_ = [[UIPanGestureRecognizer alloc]
+//                                initWithTarget:self action:@selector(panned_:)];
+//        [self addGestureRecognizer:panRecognizer_];
+//        
+//        [singleTapRecognizer_ requireGestureRecognizerToFail:doubleTapRecognizer_];
+//        [panRecognizer_ requireGestureRecognizerToFail:swipeLeftRecognizer_];
+//        [panRecognizer_ requireGestureRecognizerToFail:swipeRightRecognizer_];
+
+        self.panGestureRecognizer.delegate = self;
+//        [self.panGestureRecognizer requireGestureRecognizerToFail:panRecognizer_];
+        
+//        [self.panGestureRecognizer requireGestureRecognizerToFail:swipeLeftRecognizer_];
+//        [self.panGestureRecognizer requireGestureRecognizerToFail:swipeRightRecognizer_];
     }
     return self;
 }
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer == self.panGestureRecognizer) {
+        return NO;
+    }
+    return YES;
+}
+
+
 
 /**
  * ビューの参照の解放
@@ -472,8 +526,14 @@
 
 #pragma mark - タップ処理の実現
 
+// UIGestureRecognizerを利用してみたが、肝心のページ送りのシングルタップのレスポンスが悪いので、
+// 独自処理に戻す。ゆっくりパンすると他のタッチを受け付けなくなる問題は、ScrollViewに組み込みの
+// PanGestureRecognizerをdelegateで動作不能にすることで回避する
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event 
 {
+    flickStartPoint_ = [[touches anyObject] locationInView:self];
+    flickStartTime_ = [NSDate timeIntervalSinceReferenceDate];
+    
     singleTapped_ = NO;
     waitDoubleTap_ = NO;
     if (selectedTagView_) {
@@ -502,7 +562,7 @@
             return;
         }
     }
-    
+
     // 新たな付箋ビューを選択（ダブルタップ）しようとしている可能性があるか判定する
     CGPoint pt = [[touches anyObject] locationInView:self];
     KLPVTagView* tagView = [self findTagViewAtPoint_:pt];
@@ -531,6 +591,38 @@
             selectedTagView_.transform = 
             CGAffineTransformTranslate(selectedTagView_.transform, dx, 0.0);
         }
+    } else {
+        // ScrollViewのPanGestureRecognizerのバグを回避するためページのパンも自前実装
+        // ページをまたがるパンは必要がないと判断、パンの可能範囲をページ内に限定
+        CGPoint pt = [[touches anyObject] locationInView:self];
+        CGPoint prevPt = [[touches anyObject] previousLocationInView:self];
+        CGFloat dx = pt.x - prevPt.x;
+        CGFloat dy = pt.y - prevPt.y;
+        
+        CGRect cpFrame = dataSource_.currentPageFrame;
+        CGFloat ymin = cpFrame.origin.y * scale_;
+        CGFloat ymax = (cpFrame.origin.y + cpFrame.size.height) * scale_ - self.frame.size.height;
+        CGFloat xmin = cpFrame.origin.x * scale_;
+        CGFloat xmax = (cpFrame.origin.x + cpFrame.size.width) * scale_ - self.frame.size.width;
+        KLDBGPrint("■ bounds:%.1f/%.1f %.1f/%.1f\n", xmin, ymin, xmax, ymax);
+        
+        CGPoint offset = self.contentOffset;
+        KLDBGPrint("□ before:%s\n", KLDBGPoint(offset));
+        offset.y = offset.y - dy;
+        if (offset.y < ymin){
+            offset.y = ymin;
+        } else if (offset.y > ymax) {
+            offset.y = ymax;
+        }
+        offset.x = offset.x - dx;
+        if (offset.x < xmin){
+            offset.x = xmin;
+        } else if (offset.x > xmax) {
+            offset.x = xmax;
+        }
+        self.contentOffset = offset;
+        
+        KLDBGPrint("□ after :%s\n", KLDBGPoint(offset));
     }
 }
 
@@ -544,15 +636,34 @@
         }
         dragTagStarted_ = NO;
     } else if ([[touches anyObject] tapCount] < 2) {
-        // 最初のタップの場合
-        singleTapped_ = YES;
-        if (waitDoubleTap_) {
-            // 付箋ビュー上であれば、ダブルタップの可能性があるので、0.3秒待つ
-            [self performSelector:@selector(performSingleTapWithTouches_:) 
-                       withObject:touches afterDelay:0.3F];
+        // ジェスチャー開始時からの時間と距離
+        CGPoint pt = [[touches anyObject] locationInView:self];
+        CGFloat dx = pt.x - flickStartPoint_.x;
+        CGFloat dy = pt.y - flickStartPoint_.y;
+        
+        if (ABS(dx) < minmumDistance_ && ABS(dy) < minmumDistance_) {
+            // 移動していない
+            // 最初のタップの場合
+            singleTapped_ = YES;
+            if (waitDoubleTap_) {
+                // 付箋ビュー上であれば、ダブルタップの可能性があるので、0.3秒待つ
+                [self performSelector:@selector(performSingleTapWithTouches_:)
+                           withObject:touches afterDelay:0.3F];
+            } else {
+                // それ以外は直接シングルタップ処理を実行
+                [self performSingleTapWithTouches_:touches];
+            }
         } else {
-            // それ以外は直接シングルタップ処理を実行
-            [self performSingleTapWithTouches_:touches];
+            CGFloat dt = [NSDate timeIntervalSinceReferenceDate] - flickStartTime_;
+            
+            KLDBGPrint(" E dx:%.1f dy:%.1f dt:%.3f\n", dx, dy, dt);
+            if (dt > maximumDuration_ || ABS(dy) > minmumDistance_) {
+                // 時間が長過ぎる、縦に移動している：水平フリックではない
+            } else if (ABS(dx) > minmumDistance_) {
+                UISwipeGestureRecognizerDirection direction = dx > 0 ?
+                    UISwipeGestureRecognizerDirectionRight : UISwipeGestureRecognizerDirectionLeft;
+                [self handleFlick_:direction];
+            }
         }
     } else {
         // ２度目のタップの場合
@@ -595,7 +706,7 @@
                 [self moveToNextPage_];
                 break;
             default:
-                [pageDelegate_ tappedWithTouch:[touches anyObject]]; 
+                [pageDelegate_ tappedWithTouch:pt];
                 break;
         }
         return;
@@ -658,17 +769,144 @@
     return 0;
 }
 
-- (void)handleFlick_:(UIGestureRecognizer*)gestureRecognizer
+- (void)handleFlick_:(UISwipeGestureRecognizerDirection)direction
 {
     KLDBGPrintMethodName("▼ ");        
     
-    KLUIFlickGestureRecognizer* fgr = (KLUIFlickGestureRecognizer*)gestureRecognizer;
-    if (fgr.direction == UISwipeGestureRecognizerDirectionRight) {
+    if (direction == UISwipeGestureRecognizerDirectionRight) {
         [self moveToPreviousPage_];        
-    } else {
+    } else if (direction == UISwipeGestureRecognizerDirectionLeft) {
         [self moveToNextPage_];        
     }
 }
+
+//- (void)leftSwiped_:(UISwipeGestureRecognizer *)gestureRicognizer
+//{
+//    [self moveToNextPage_];
+//}
+//
+//- (void)rightSwiped_:(UISwipeGestureRecognizer *)gestureRicognizer
+//{
+//    [self moveToPreviousPage_];
+//}
+//
+//- (void)singleTapped_:(UITapGestureRecognizer *)gestureRicognizer
+//{
+//    if (self.selectedTagView) {
+//        // 付箋ビューが選択状態の場合、編集ボタン／削除ボタンが押下されたかをチェック
+//        if (CGRectContainsPoint(editTagButton_.bounds,
+//                                            [gestureRicognizer locationInView:editTagButton_])) {
+//            [pageDelegate_ editTagAction:editTagButton_];
+//            return;
+//        }
+//        if (CGRectContainsPoint(deleteTagButton_.bounds,
+//                                            [gestureRicognizer locationInView:deleteTagButton_])) {
+//            [pageDelegate_ deleteTagAction:deleteTagButton_];
+//            return;
+//        }
+//        
+//        // それ以外の箇所の場合は、(Beginで保留した)現在の付箋ビューの選択状態を解除する
+//        self.selectedTagView = nil;
+//        [editTagButton_ removeFromSuperview];
+//        [deleteTagButton_ removeFromSuperview];
+//        return;
+//    }
+//    
+//    // ページの左右端部の場合はページ送り、それ以外はビューコントローラに委譲する.
+//    CGPoint pt = [gestureRicognizer locationInView:self.superview];
+//    switch ([self directionToMoveForPoint_:pt]) {
+//        case -1:
+//            [self moveToPreviousPage_];
+//            break;
+//        case 1:
+//            [self moveToNextPage_];
+//            break;
+//        default:
+//            [pageDelegate_ tappedWithTouch:pt];
+//            break;
+//    }
+//    
+//}
+//
+//- (void)doubleTapped_:(UITapGestureRecognizer *)gestureRicognizer
+//{
+//    CGPoint pt = [gestureRicognizer locationInView:self];
+//    KLPVTagView* tagView = [self findTagViewAtPoint_:pt];
+//    if (tagView) {
+//        self.selectedTagView = tagView;
+//    }
+//}
+
+//- (void)panned_:(UIPanGestureRecognizer *)gestureRicognizer
+//{
+//    if ([gestureRicognizer state] == UIGestureRecognizerStateBegan) {
+//        if (CGRectContainsPoint(selectedTagView_.bounds,
+//                        [gestureRicognizer locationInView:selectedTagView_])) {
+//            // 選択された付箋上であれば、ドラッグ移動の開始フラグをたてる
+//            dragTagStarted_ = YES;
+//            tagMoved_ = NO;
+//            CGRect pageFrame = [dataSource_ pageFrameOfPosition:selectedTagView_.tag];
+//            dragTagLimit_[0] = CGRectGetMinY(pageFrame) * scale_;
+//            dragTagLimit_[1] = CGRectGetMaxY(pageFrame) * scale_;
+//        }
+//    } else if ([gestureRicognizer state] == UIGestureRecognizerStateChanged) {
+//        if (dragTagStarted_) {
+//            // 付箋ビューのドラッグ移動中のみ移動が有効
+//            // 以下、付箋は90度回転していて、上下にしか移動できないことが前提
+//            CGPoint translation = [gestureRicognizer translationInView:selectedTagView_];
+//            CGFloat dx = translation.x;
+//
+//            CGRect tagFrame = [backgroundView_ convertRect:selectedTagView_.bounds
+//                                                  fromView:selectedTagView_];
+//            CGFloat dxMin = -(dragTagLimit_[1] - CGRectGetMaxY(tagFrame));
+//            CGFloat dxMax = -(dragTagLimit_[0] - CGRectGetMinY(tagFrame));
+//            if (dx < dxMin) dx = dxMin;
+//            if (dx > dxMax) dx = dxMax;
+//            if (fabsf(dx) > 0.1) {
+//                tagMoved_ = YES;
+//                selectedTagView_.transform =
+//                        CGAffineTransformTranslate(selectedTagView_.transform, dx, 0.0);
+//            }
+//        } else {
+//            // ページをまたがるパンは必要がないと判断、パンの可能範囲をページ内に限定
+//            CGPoint translation = [gestureRicognizer translationInView:self];
+//            CGRect cpFrame = dataSource_.currentPageFrame;
+//            CGFloat ymin = cpFrame.origin.y * scale_;
+//            CGFloat ymax = (cpFrame.origin.y + cpFrame.size.height) * scale_ - self.frame.size.height;
+//            CGFloat xmin = cpFrame.origin.x * scale_;
+//            CGFloat xmax = (cpFrame.origin.x + cpFrame.size.width) * scale_ - self.frame.size.width;
+//            KLDBGPrint("■ bounds:%.1f/%.1f %.1f/%.1f\n", xmin, ymin, xmax, ymax);
+//            
+//            CGPoint offset = self.contentOffset;
+//            KLDBGPrint("□ before:%s\n", KLDBGPoint(offset));
+//            offset.y = offset.y - translation.y;
+//            if (offset.y < ymin){
+//                offset.y = ymin;
+//            } else if (offset.y > ymax) {
+//                offset.y = ymax;
+//            }
+//            offset.x = offset.x - translation.x;
+//            if (offset.x < xmin){
+//                offset.x = xmin;
+//            } else if (offset.x > xmax) {
+//                offset.x = xmax;
+//            }
+//            self.contentOffset = offset;
+//            
+//            KLDBGPrint("□ after :%s\n", KLDBGPoint(offset));
+//        }
+//        [gestureRicognizer setTranslation:CGPointZero inView:self];
+//    } else if ([gestureRicognizer state] == UIGestureRecognizerStateEnded) {
+//        if (dragTagStarted_) {
+//            // drag開始状態の後始末
+//            if (tagMoved_) {
+//                [dataSource_ tagViewDidMove:selectedTagView_];
+//            }
+//            dragTagStarted_ = NO;
+//        }       
+//    }
+//}
+
 
 #pragma mark - UIScrollView デリゲート
 
@@ -741,6 +979,25 @@
     CGRect cpFrame = dataSource_.currentPageFrame;
     CGRect tvFrame = CGRectMake(cpFrame.origin.x * scale_, cpFrame.origin.y * scale_, 
                                 cpFrame.size.width * scale_, cpFrame.size.height * scale_);
+    
+    // ページまたぎのパンを出来なくしたのに合わせて、縮小時もページをまたがって終わらないようオフセットを修正
+    CGFloat ymin = tvFrame.origin.y;
+    CGFloat ymax = tvFrame.origin.y + tvFrame.size.height - self.frame.size.height;
+    CGFloat xmin = tvFrame.origin.x;
+    CGFloat xmax = tvFrame.origin.x + tvFrame.size.width - self.frame.size.width;
+    CGPoint offset = self.contentOffset;
+    if (offset.y < ymin){
+        offset.y = ymin;
+    } else if (offset.y > ymax) {
+        offset.y = ymax;
+    }
+    if (offset.x < xmin){
+        offset.x = xmin;
+    } else if (offset.x > xmax) {
+        offset.x = xmax;
+    }
+    self.contentOffset = offset;
+    
     [self createTiledViewWithFrame_:tvFrame];
     [self createTagViews_];
 }

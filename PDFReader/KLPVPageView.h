@@ -25,7 +25,7 @@
  * 
  * UIScrollViewをサブクラス化したのは、layoutSubviewsをオーバーライドするため。
  */
-@interface KLPVPageView : UIScrollView <UIScrollViewDelegate>
+@interface KLPVPageView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 {
     // ページのデータを提供するオブジェクト
     id <KLPVPageViewDataSource> dataSource_;  // Assign
@@ -70,6 +70,24 @@
     // 付箋の編集／削除を指示するためのUI
     UIButton* editTagButton_;
     UIButton* deleteTagButton_;
+    
+//    UISwipeGestureRecognizer *swipeRightRecognizer_;
+//    UISwipeGestureRecognizer *swipeLeftRecognizer_;
+//    UITapGestureRecognizer *singleTapRecognizer_;
+//    UITapGestureRecognizer *doubleTapRecognizer_;
+//    UIPanGestureRecognizer *panRecognizer_;
+    
+    // フリックと認識する最小の移動距離
+    CGFloat minmumDistance_;
+    
+    // フリックと認識する最大のタッチ時間（秒）
+    CGFloat maximumDuration_;
+    
+    // フリック開始時刻
+    NSTimeInterval flickStartTime_;
+    
+    // フリック開始位置
+    CGPoint flickStartPoint_;
 }
 
 @property (nonatomic, assign) id <KLPVPageViewDataSource> dataSource;
