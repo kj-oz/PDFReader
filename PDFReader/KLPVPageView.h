@@ -71,23 +71,23 @@
     UIButton* editTagButton_;
     UIButton* deleteTagButton_;
     
-//    UISwipeGestureRecognizer *swipeRightRecognizer_;
-//    UISwipeGestureRecognizer *swipeLeftRecognizer_;
-//    UITapGestureRecognizer *singleTapRecognizer_;
-//    UITapGestureRecognizer *doubleTapRecognizer_;
-//    UIPanGestureRecognizer *panRecognizer_;
+    // UISwipeGestureRecognizer *swipeRightRecognizer_;
+    // UISwipeGestureRecognizer *swipeLeftRecognizer_;
+    // UITapGestureRecognizer *singleTapRecognizer_;
+    // UITapGestureRecognizer *doubleTapRecognizer_;
+    // UIPanGestureRecognizer *panRecognizer_;
     
     // フリックと認識する最小の移動距離
-    CGFloat minmumDistance_;
+    CGFloat flickMinDistance_;
     
     // フリックと認識する最大のタッチ時間（秒）
-    CGFloat maximumDuration_;
+    CGFloat flickMaxDuration_;
     
-    // フリック開始時刻
-    NSTimeInterval flickStartTime_;
+    // タッチ開始時刻
+    NSTimeInterval touchStartTime_;
     
-    // フリック開始位置
-    CGPoint flickStartPoint_;
+    // タッチ開始位置
+    CGPoint touchStartPoint_;
 }
 
 @property (nonatomic, assign) id <KLPVPageViewDataSource> dataSource;

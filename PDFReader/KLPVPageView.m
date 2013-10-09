@@ -282,21 +282,22 @@
         dir = 0;
     }
     
-//    // ページ遷移には不十分でも、移動量がある程度あれば、まず十分な移動量になるまでアニメーションでスクロールする。
-//    if (newIndex == oldIndex) {
-//        if (offset.x <= dataSource_.previousPageFrame.size.width * scale_ - 
-//            self.frame.size.width * 0.2) {
-//            // 前のページへ移動
-//            [self moveToPreviousPage_];
-//            return;
-//        }
-//        if (offset.x >= dataSource_.nextPageFrame.origin.x * scale_ - 
-//            self.frame.size.width * 0.8) {
-//            // 次のページへ移動
-//            [self moveToNextPage_];
-//            return;
-//        }
-//    }
+    // 動きが不自然、且つ変に揺動することがあったため取りやめ V1.0.3
+    // ページ遷移には不十分でも、移動量がある程度あれば、まず十分な移動量になるまでアニメーションでスクロールする。
+    //    if (newIndex == oldIndex) {
+    //        if (offset.x <= dataSource_.previousPageFrame.size.width * scale_ - 
+    //            self.frame.size.width * 0.2) {
+    //            // 前のページへ移動
+    //            [self moveToPreviousPage_];
+    //            return;
+    //        }
+    //        if (offset.x >= dataSource_.nextPageFrame.origin.x * scale_ - 
+    //            self.frame.size.width * 0.8) {
+    //            // 次のページへ移動
+    //            [self moveToNextPage_];
+    //            return;
+    //        }
+    //    }
     
     // ページ番号の範囲をチェック
     if (newIndex < 0) {
@@ -409,51 +410,52 @@
         // self.canCancelContentTouches = NO;
         
         // 自前でパンを実装すると、フリックがうまく認識されないため、フリックも自前実装に
-//        KLUIFlickGestureRecognizer* fgr = [[KLUIFlickGestureRecognizer alloc] 
-//                                          initWithTarget:self action:@selector(handleFlick_:)];
-//        fgr.permittedDirection = UISwipeGestureRecognizerDirectionRight 
-//                                        | UISwipeGestureRecognizerDirectionLeft;
-//        [self addGestureRecognizer:fgr];
-//        [self.panGestureRecognizer requireGestureRecognizerToFail:fgr];
-//        [fgr release];
+        // KLUIFlickGestureRecognizer* fgr = [[KLUIFlickGestureRecognizer alloc] 
+        //                                   initWithTarget:self action:@selector(handleFlick_:)];
+        // fgr.permittedDirection = UISwipeGestureRecognizerDirectionRight 
+        //                                 | UISwipeGestureRecognizerDirectionLeft;
+        // [self addGestureRecognizer:fgr];
+        // [self.panGestureRecognizer requireGestureRecognizerToFail:fgr];
+        // [fgr release];
         
-        minmumDistance_ = 30.0;
+        flickMinDistance_ = 30.0;
         // 当初0.6にしてみたが、ドラッグがスムースに出来ないので0.2に変更
-        maximumDuration_ = 0.2;
+        flickMaxDuration_ = 0.2;
 
-//        swipeLeftRecognizer_ = [[UISwipeGestureRecognizer alloc]
-//                                initWithTarget:self action:@selector(leftSwiped_:)];
-//        swipeLeftRecognizer_.direction = UISwipeGestureRecognizerDirectionLeft;
-//        [self addGestureRecognizer:swipeLeftRecognizer_];
-//        
-//        swipeRightRecognizer_ = [[UISwipeGestureRecognizer alloc]
-//                                 initWithTarget:self action:@selector(rightSwiped_:)];
-//        swipeRightRecognizer_.direction = UISwipeGestureRecognizerDirectionRight;
-//        [self addGestureRecognizer:swipeRightRecognizer_];
-//        
-//        singleTapRecognizer_ = [[UITapGestureRecognizer alloc]
-//                                initWithTarget:self action:@selector(singleTapped_:)];
-//        singleTapRecognizer_.numberOfTapsRequired = 1;
-//        [self addGestureRecognizer:singleTapRecognizer_];
-//        
-//        doubleTapRecognizer_ = [[UITapGestureRecognizer alloc]
-//                                initWithTarget:self action:@selector(doubleTapped_:)];
-//        doubleTapRecognizer_.numberOfTapsRequired = 2;
-//        [self addGestureRecognizer:doubleTapRecognizer_];
-//
-//        panRecognizer_ = [[UIPanGestureRecognizer alloc]
-//                                initWithTarget:self action:@selector(panned_:)];
-//        [self addGestureRecognizer:panRecognizer_];
-//        
-//        [singleTapRecognizer_ requireGestureRecognizerToFail:doubleTapRecognizer_];
-//        [panRecognizer_ requireGestureRecognizerToFail:swipeLeftRecognizer_];
-//        [panRecognizer_ requireGestureRecognizerToFail:swipeRightRecognizer_];
+        // 各種ジェスチャーリコクナイザでの実装を試みたが、肝心のシングルタップのレスポンスが良くない
+        // swipeLeftRecognizer_ = [[UISwipeGestureRecognizer alloc]
+        //                                initWithTarget:self action:@selector(leftSwiped_:)];
+        // swipeLeftRecognizer_.direction = UISwipeGestureRecognizerDirectionLeft;
+        // [self addGestureRecognizer:swipeLeftRecognizer_];
+        //        
+        // swipeRightRecognizer_ = [[UISwipeGestureRecognizer alloc]
+        //                                 initWithTarget:self action:@selector(rightSwiped_:)];
+        // swipeRightRecognizer_.direction = UISwipeGestureRecognizerDirectionRight;
+        // [self addGestureRecognizer:swipeRightRecognizer_];
+        //        
+        // singleTapRecognizer_ = [[UITapGestureRecognizer alloc]
+        //                                initWithTarget:self action:@selector(singleTapped_:)];
+        // singleTapRecognizer_.numberOfTapsRequired = 1;
+        // [self addGestureRecognizer:singleTapRecognizer_];
+        //        
+        // doubleTapRecognizer_ = [[UITapGestureRecognizer alloc]
+        //                                initWithTarget:self action:@selector(doubleTapped_:)];
+        // doubleTapRecognizer_.numberOfTapsRequired = 2;
+        // [self addGestureRecognizer:doubleTapRecognizer_];
+        //
+        // panRecognizer_ = [[UIPanGestureRecognizer alloc]
+        //                                initWithTarget:self action:@selector(panned_:)];
+        // [self addGestureRecognizer:panRecognizer_];
+        //        
+        // [singleTapRecognizer_ requireGestureRecognizerToFail:doubleTapRecognizer_];
+        // [panRecognizer_ requireGestureRecognizerToFail:swipeLeftRecognizer_];
+        // [panRecognizer_ requireGestureRecognizerToFail:swipeRightRecognizer_];
+        // [self.panGestureRecognizer requireGestureRecognizerToFail:panRecognizer_];
+        // [self.panGestureRecognizer requireGestureRecognizerToFail:swipeLeftRecognizer_];
+        // [self.panGestureRecognizer requireGestureRecognizerToFail:swipeRightRecognizer_];
 
+        // 組み込みのパンは中途半端にパンした際に他のジェスチャーをブロックしてしまうため動作を止める
         self.panGestureRecognizer.delegate = self;
-//        [self.panGestureRecognizer requireGestureRecognizerToFail:panRecognizer_];
-        
-//        [self.panGestureRecognizer requireGestureRecognizerToFail:swipeLeftRecognizer_];
-//        [self.panGestureRecognizer requireGestureRecognizerToFail:swipeRightRecognizer_];
     }
     return self;
 }
@@ -465,8 +467,6 @@
     }
     return YES;
 }
-
-
 
 /**
  * ビューの参照の解放
@@ -531,8 +531,8 @@
 // PanGestureRecognizerをdelegateで動作不能にすることで回避する
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event 
 {
-    flickStartPoint_ = [[touches anyObject] locationInView:self];
-    flickStartTime_ = [NSDate timeIntervalSinceReferenceDate];
+    touchStartPoint_ = [[touches anyObject] locationInView:self];
+    touchStartTime_ = [NSDate timeIntervalSinceReferenceDate];
     
     singleTapped_ = NO;
     waitDoubleTap_ = NO;
@@ -638,10 +638,10 @@
     } else if ([[touches anyObject] tapCount] < 2) {
         // ジェスチャー開始時からの時間と距離
         CGPoint pt = [[touches anyObject] locationInView:self];
-        CGFloat dx = pt.x - flickStartPoint_.x;
-        CGFloat dy = pt.y - flickStartPoint_.y;
+        CGFloat dx = pt.x - touchStartPoint_.x;
+        CGFloat dy = pt.y - touchStartPoint_.y;
         
-        if (ABS(dx) < minmumDistance_ && ABS(dy) < minmumDistance_) {
+        if (ABS(dx) < flickMinDistance_ && ABS(dy) < flickMinDistance_) {
             // 移動していない
             // 最初のタップの場合
             singleTapped_ = YES;
@@ -654,12 +654,12 @@
                 [self performSingleTapWithTouches_:touches];
             }
         } else {
-            CGFloat dt = [NSDate timeIntervalSinceReferenceDate] - flickStartTime_;
+            CGFloat dt = [NSDate timeIntervalSinceReferenceDate] - touchStartTime_;
             
             KLDBGPrint(" E dx:%.1f dy:%.1f dt:%.3f\n", dx, dy, dt);
-            if (dt > maximumDuration_ || ABS(dy) > minmumDistance_) {
+            if (dt > flickMaxDuration_ || ABS(dy) > flickMinDistance_) {
                 // 時間が長過ぎる、縦に移動している：水平フリックではない
-            } else if (ABS(dx) > minmumDistance_) {
+            } else if (ABS(dx) > flickMinDistance_) {
                 UISwipeGestureRecognizerDirection direction = dx > 0 ?
                     UISwipeGestureRecognizerDirectionRight : UISwipeGestureRecognizerDirectionLeft;
                 [self handleFlick_:direction];
@@ -780,16 +780,17 @@
     }
 }
 
+// 各種GestureRecognizerは取りやめ
 //- (void)leftSwiped_:(UISwipeGestureRecognizer *)gestureRicognizer
 //{
 //    [self moveToNextPage_];
 //}
-//
+
 //- (void)rightSwiped_:(UISwipeGestureRecognizer *)gestureRicognizer
 //{
 //    [self moveToPreviousPage_];
 //}
-//
+
 //- (void)singleTapped_:(UITapGestureRecognizer *)gestureRicognizer
 //{
 //    if (self.selectedTagView) {
@@ -827,7 +828,7 @@
 //    }
 //    
 //}
-//
+
 //- (void)doubleTapped_:(UITapGestureRecognizer *)gestureRicognizer
 //{
 //    CGPoint pt = [gestureRicognizer locationInView:self];
